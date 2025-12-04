@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "chapterCode": "MAD-PY-ARAB-CH1",
+    "question_set": "Set 1",
+    "question": "Which letter comes first in Arabic?",
+    "options": ["Alif", "Ba", "Ta", "Tha"],
+    "correct_answer": "Alif"
+  },
+  {
+    "id": "2",
+    "chapterCode": "MAD-PY-ARAB-CH1",
+    "question_set": "Set 1",
+    "question": "What is the second letter in Arabic alphabet?",
+    "options": ["Alif", "Ba", "Ta", "Tha"],
+    "correct_answer": "Ba"
+  },
+  {
+    "id": "3",
+    "chapterCode": "SCH-08-MATH-CH1",
+    "question_set": "Set 1",
+    "question": "What is the value of x in equation 2x + 3 = 7?",
+    "options": ["1", "2", "3", "4"],
+    "correct_answer": "2"
+  },
+  {
+    "id": "4",
+    "chapterCode": "SCH-08-MATH-CH1",
+    "question_set": "Set 1",
+    "question": "Which of the following is a linear equation?",
+    "options": ["y = 2x + 1", "y = x^2 + 2", "y = x^3 + 1", "y = 1/x"],
+    "correct_answer": "y = 2x + 1"
+  },
+  {
+    "id": "5",
+    "chapterCode": "SCH-08-MATH-CH2",
+    "question_set": "Set 1",
+    "question": "What is the sum of interior angles of a triangle?",
+    "options": ["180°", "90°", "360°", "270°"],
+    "correct_answer": "180°"
+  },
+  {
+    "id": "6",
+    "chapterCode": "SCH-08-MATH-CH2",
+    "question_set": "Set 1",
+    "question": "A square has how many sides?",
+    "options": ["3", "4", "5", "6"],
+    "correct_answer": "4"
+  },
+  {
+    "id": "7",
+    "chapterCode": "UNI-S1-CS-CH1",
+    "question_set": "Set 1",
+    "question": "Which language is used for web development?",
+    "options": ["HTML", "Python", "C++", "Java"],
+    "correct_answer": "HTML"
+  },
+  {
+    "id": "8",
+    "chapterCode": "UNI-S1-CS-CH1",
+    "question_set": "Set 1",
+    "question": "Which of the following is a programming paradigm?",
+    "options": ["Object-Oriented", "HTML", "CSS", "HTTP"],
+    "correct_answer": "Object-Oriented"
+  },
+  {
+    "id": "9",
+    "chapterCode": "UNI-S1-CS-CH2",
+    "question_set": "Set 1",
+    "question": "Which data type is used to store whole numbers?",
+    "options": ["int", "float", "char", "string"],
+    "correct_answer": "int"
+  },
+  {
+    "id": "10",
+    "chapterCode": "UNI-S1-CS-CH2",
+    "question_set": "Set 1",
+    "question": "Which operator is used for addition in most programming languages?",
+    "options": ["+", "-", "*", "/"],
+    "correct_answer": "+"
+  }
+]

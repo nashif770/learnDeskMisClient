@@ -1,0 +1,38 @@
+[
+  {
+    "bookCode": "MAD-PY-ARAB",
+    "chapterCode": "MAD-PY-ARAB-CH1",
+    "chapterIndex": "Chapter 1",
+    "chapterTitle": "Introduction to Letters A–B"
+  },
+  {
+    "bookCode": "MAD-PY-ARAB",
+    "chapterCode": "MAD-PY-ARAB-CH2",
+    "chapterIndex": "Chapter 2",
+    "chapterTitle": "Letters C–D"
+  },
+  {
+    "bookCode": "SCH-08-MATH",
+    "chapterCode": "SCH-08-MATH-CH1",
+    "chapterIndex": "Chapter 1",
+    "chapterTitle": "Algebra Basics"
+  },
+  {
+    "bookCode": "SCH-08-MATH",
+    "chapterCode": "SCH-08-MATH-CH2",
+    "chapterIndex": "Chapter 2",
+    "chapterTitle": "Geometry Fundamentals"
+  },
+  {
+    "bookCode": "UNI-S1-CS",
+    "chapterCode": "UNI-S1-CS-CH1",
+    "chapterIndex": "Chapter 1",
+    "chapterTitle": "Introduction to Programming"
+  },
+  {
+    "bookCode": "UNI-S1-CS",
+    "chapterCode": "UNI-S1-CS-CH2",
+    "chapterIndex": "Chapter 2",
+    "chapterTitle": "Variables and Data Types"
+  }
+]

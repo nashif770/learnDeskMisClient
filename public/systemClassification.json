@@ -1,0 +1,44 @@
+[
+  {
+    "system": "madrasa",
+    "systemCode": "MAD101",
+    "boards": "Qawmi / Alia",
+    "grades": ["Play", "Class 1", "Class 2", "Class 3"],
+    "description": "Religious education system focusing on Islamic studies along with basic general subjects."
+  },
+  {
+    "system": "school",
+    "systemCode": "sch101",
+    "boards": "National / International",
+    "grades": ["Play", "Class 1", "Class 2", "Class 3"],
+    "description": "Formal academic system following national or international curricula for early education."
+  },
+  {
+    "system": "college",
+    "systemCode": "col101",
+    "boards": "National / University",
+    "grades": ["Year 1", "Year 2"],
+    "description": "Higher secondary or tertiary education system focusing on general or specialized subjects."
+  },
+  {
+    "system": "technical_institute",
+    "systemCode": "tech101",
+    "boards": "Vocational / Technical Board",
+    "grades": ["Level 1", "Level 2", "Level 3", "Level 4"],
+    "description": "Institutes providing skill-based education and vocational training in technical fields."
+  },
+  {
+    "system": "university",
+    "systemCode": "uni101",
+    "boards": "Accredited University",
+    "grades": ["Undergraduate Year 1", "Undergraduate Year 2", "Undergraduate Year 3", "Postgraduate Year 1", "Postgraduate Year 2"],
+    "description": "Higher education system offering undergraduate and postgraduate programs in various disciplines."
+  },
+  {
+    "system": "online_learning",
+    "systemCode": "ol101",
+    "boards": "MOOCs / Online Platforms",
+    "grades": ["Beginner", "Intermediate", "Advanced", "Professional"],
+    "description": "Flexible online education system offering courses for learners of all levels, often with certifications."
+  }
+]

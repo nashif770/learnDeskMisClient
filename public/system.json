@@ -1,0 +1,164 @@
+{
+  "education_systems": [
+    {
+      "name": "School",
+      "grades": [
+        {
+          "grade": "Grade 1",
+          "level": "primary",
+          "subjects": ["Bangla", "English", "Mathematics", "Science", "Religion", "Social Studies"]
+        },
+        {
+          "grade": "Grade 2",
+          "level": "primary",
+          "subjects": ["Bangla", "English", "Mathematics", "Science", "Religion", "Social Studies"]
+        },
+        {
+          "grade": "Grade 3",
+          "level": "primary",
+          "subjects": ["Bangla", "English", "Mathematics", "Science", "Religion", "Social Studies"]
+        },
+        {
+          "grade": "Grade 4",
+          "level": "primary",
+          "subjects": ["Bangla", "English", "Mathematics", "Science", "Religion", "Social Studies"]
+        },
+        {
+          "grade": "Grade 5",
+          "level": "primary",
+          "subjects": ["Bangla", "English", "Mathematics", "Science", "Religion", "Social Studies"]
+        },
+        {
+          "grade": "Grade 6",
+          "level": "secondary",
+          "subjects": ["Bangla", "English", "Mathematics", "General Science", "Bangladesh and Global Studies", "ICT", "Religion"]
+        },
+        {
+          "grade": "Grade 7",
+          "level": "secondary",
+          "subjects": ["Bangla", "English", "Mathematics", "General Science", "Bangladesh and Global Studies", "ICT", "Religion"]
+        },
+        {
+          "grade": "Grade 8",
+          "level": "secondary",
+          "subjects": ["Bangla", "English", "Mathematics", "General Science", "Bangladesh and Global Studies", "ICT", "Religion"]
+        },
+        {
+          "grade": "Grade 9",
+          "level": "secondary",
+          "subjects": ["Bangla", "English", "Mathematics", "Physics", "Chemistry", "Biology", "ICT", "Bangladesh and Global Studies", "Religion"]
+        },
+        {
+          "grade": "Grade 10",
+          "level": "secondary",
+          "subjects": ["Bangla", "English", "Mathematics", "Physics", "Chemistry", "Biology", "ICT", "Bangladesh and Global Studies", "Religion"]
+        },
+        {
+          "grade": "Grade 11 - Science",
+          "level": "higher_secondary",
+          "subjects": ["Bangla", "English", "Physics", "Chemistry", "Biology", "Mathematics", "ICT"]
+        },
+        {
+          "grade": "Grade 11 - Commerce",
+          "level": "higher_secondary",
+          "subjects": ["Bangla", "English", "Accounting", "Business Organization and Management", "Finance and Banking", "ICT"]
+        },
+        {
+          "grade": "Grade 11 - Humanities",
+          "level": "higher_secondary",
+          "subjects": ["Bangla", "English", "Civics", "Economics", "History", "Geography", "ICT"]
+        },
+        {
+          "grade": "Grade 12 - Science",
+          "level": "higher_secondary",
+          "subjects": ["Bangla", "English", "Physics", "Chemistry", "Biology", "Mathematics", "ICT"]
+        },
+        {
+          "grade": "Grade 12 - Commerce",
+          "level": "higher_secondary",
+          "subjects": ["Bangla", "English", "Accounting", "Business Organization and Management", "Finance and Banking", "ICT"]
+        },
+        {
+          "grade": "Grade 12 - Humanities",
+          "level": "higher_secondary",
+          "subjects": ["Bangla", "English", "Civics", "Economics", "History", "Geography", "ICT"]
+        }
+      ]
+    },
+    {
+      "name": "Madrasa",
+      "grades": [
+        {
+          "grade": "Ibtedayee 1",
+          "level": "primary",
+          "subjects": ["Arabic", "Qur'an", "Aqidah and Fiqh", "Bangla", "English", "Mathematics", "General Knowledge"]
+        },
+        {
+          "grade": "Ibtedayee 2",
+          "level": "primary",
+          "subjects": ["Arabic", "Qur'an", "Aqidah and Fiqh", "Bangla", "English", "Mathematics", "General Knowledge"]
+        },
+        {
+          "grade": "Ibtedayee 3",
+          "level": "primary",
+          "subjects": ["Arabic", "Qur'an", "Aqidah and Fiqh", "Bangla", "English", "Mathematics", "General Knowledge"]
+        },
+        {
+          "grade": "Ibtedayee 4",
+          "level": "primary",
+          "subjects": ["Arabic", "Qur'an", "Aqidah and Fiqh", "Bangla", "English", "Mathematics", "General Knowledge"]
+        },
+        {
+          "grade": "Ibtedayee 5",
+          "level": "primary",
+          "subjects": ["Arabic", "Qur'an", "Aqidah and Fiqh", "Bangla", "English", "Mathematics", "General Knowledge"]
+        },
+        {
+          "grade": "Dakhil 6",
+          "level": "secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Mathematics", "General Science", "ICT"]
+        },
+        {
+          "grade": "Dakhil 7",
+          "level": "secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Mathematics", "General Science", "ICT"]
+        },
+        {
+          "grade": "Dakhil 8",
+          "level": "secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Mathematics", "General Science", "ICT"]
+        },
+        {
+          "grade": "Dakhil 9",
+          "level": "secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Mathematics", "Physics", "Chemistry", "ICT"]
+        },
+        {
+          "grade": "Dakhil 10",
+          "level": "secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Mathematics", "Physics", "Chemistry", "ICT"]
+        },
+        {
+          "grade": "Alim 11 - Science",
+          "level": "higher_secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Physics", "Chemistry", "Biology", "Mathematics", "ICT"]
+        },
+        {
+          "grade": "Alim 11 - Arts",
+          "level": "higher_secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Islamic History", "Economics", "Civics", "ICT"]
+        },
+        {
+          "grade": "Alim 12 - Science",
+          "level": "higher_secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Physics", "Chemistry", "Biology", "Mathematics", "ICT"]
+        },
+        {
+          "grade": "Alim 12 - Arts",
+          "level": "higher_secondary",
+          "subjects": ["Arabic", "Qur'an", "Hadith", "Fiqh", "Bangla", "English", "Islamic History", "Economics", "Civics", "ICT"]
+        }
+      ]
+    }
+  ]
+}

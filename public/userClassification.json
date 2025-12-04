@@ -1,0 +1,92 @@
+[
+  {
+    "userId": "U001",
+    "name": "Amina Rahman",
+    "age": 5,
+    "gender": "Female",
+    "system": "madrasa",
+    "systemCode": "MAD101",
+    "currentGrade": "Play"
+  },
+  {
+    "userId": "U002",
+    "name": "Rafiq Ahmed",
+    "age": 7,
+    "gender": "Male",
+    "system": "school",
+    "systemCode": "sch101",
+    "currentGrade": "Class 2"
+  },
+  {
+    "userId": "U003",
+    "name": "Sara Islam",
+    "age": 6,
+    "gender": "Female",
+    "system": "madrasa",
+    "systemCode": "MAD101",
+    "currentGrade": "Class 1"
+  },
+  {
+    "userId": "U004",
+    "name": "Tanvir Hossain",
+    "age": 18,
+    "gender": "Male",
+    "system": "college",
+    "systemCode": "col101",
+    "currentGrade": "Year 1"
+  },
+  {
+    "userId": "U005",
+    "name": "Nabila Sultana",
+    "age": 17,
+    "gender": "Female",
+    "system": "school",
+    "systemCode": "sch101",
+    "currentGrade": "Class 3"
+  },
+  {
+    "userId": "U006",
+    "name": "Imran Chowdhury",
+    "age": 20,
+    "gender": "Male",
+    "system": "technical_institute",
+    "systemCode": "tech101",
+    "currentGrade": "Level 2"
+  },
+  {
+    "userId": "U007",
+    "name": "Fatema Noor",
+    "age": 21,
+    "gender": "Female",
+    "system": "university",
+    "systemCode": "uni101",
+    "currentGrade": "Undergraduate Year 2"
+  },
+  {
+    "userId": "U008",
+    "name": "Samiul Karim",
+    "age": 25,
+    "gender": "Male",
+    "system": "online_learning",
+    "systemCode": "ol101",
+    "currentGrade": "Intermediate"
+  },
+  {
+    "userId": "U009",
+    "name": "Jannatul Ferdous",
+    "age": 19,
+    "gender": "Female",
+    "system": "college",
+    "systemCode": "col101",
+    "currentGrade": "Year 2"
+  },
+  {
+    "userId": "U010",
+    "name": "Arifuzzaman Khan",
+    "age": 22,
+    "gender": "Male",
+    "system": "technical_institute",
+    "systemCode": "tech101",
+    "currentGrade": "Level 3"
+  }
+]
