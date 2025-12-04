@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full py-4 text-center text-gray-600 space-y-1 bg-white">
+    <footer className="w-full py-4 text-center text-gray-600 space-y-1 bg-white shadow-2xl shadow-black">
       <div>
         &copy; {new Date().getFullYear()} Learn Desk — Information Management
         System

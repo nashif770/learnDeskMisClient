@@ -4,7 +4,16 @@ import Link from "next/link";
 import { useUser } from "@/userContext";
 
 const Navbar = () => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+
+  const handleSignOut = () => {
+    setUser(null);
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out");
+      })
+      .catch((error) => console.log(error));
+  };
 
   // Navigation items
   const navItems = [
@@ -50,6 +59,7 @@ const Navbar = () => {
           <Link
             href="/login"
             className="text-red-600 font-medium hover:text-red-800 transition"
+            onClick={handleSignOut}
           >
             Logout
           </Link>

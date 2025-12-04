@@ -1,11 +1,10 @@
 // app/layout.js
 import { UserProvider } from "@/userContext";
 import "./globals.css";
-import Footer from "./shared/Footer";
-import Navbar from "./shared/Navbar";
+import LayoutWrapper from "@/layoutWrapper";
 
 export const metadata = {
-  title: "Al Furkan Girls Madrasa",
+  title: "LearnDesk MIS Software",
   description:
     "Empowering the next generation of righteous and educated women through faith and learning.",
 };
@@ -13,26 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="flex flex-col min-h-screen text-emerald-700 font-sans antialiased">
-        {/* Navbar - floating */}
-        <UserProvider>
-          <header className="fixed inset-x-0 z-50 pointer-events-auto">
-            <div className="w-full max-w-[1980px] mx-auto">
-              <Navbar />
-            </div>
-          </header>
-
-          {/* Main Content */}
-          <main className="pt-16 flex-gro w-full max-w-[1980px] h-screen mx-auto">
+      <UserProvider>
+        <body className="flex flex-col min-h-screen text-emerald-700 font-sans antialiased">
+          <LayoutWrapper>
+          <main className="flex-grow w-full max-w-[1980px] mx-auto bg-emerald-100">
             {children}
           </main>
-
-          {/* Footer */}
-          <footer className="mt-auto w-full max-w-[1980px] mx-auto">
-            <Footer />
-          </footer>
-        </UserProvider>
-      </body>
+          </LayoutWrapper>
+        </body>
+      </UserProvider>
     </html>
   );
 }

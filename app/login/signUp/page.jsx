@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/firebase_init";
+import SignUpForm from "../logComponent/signUpForm";
 import GoogleAuth from "../logComponent/GoogleAuth";
 
 const Signup = () => {
@@ -29,9 +30,7 @@ const Signup = () => {
         email,
         password
       );
-
       console.log("User created:", userCredential.user);
-
       alert("Signup successful!");
     } catch (err) {
       setError(err.message);
@@ -41,91 +40,23 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-200 via-pink-100 to-pink-200 px-4">
-      <div className="max-w-md w-full bg-white shadow-lg rounded-xl p-8">
-        <h2 className="text-3xl font-bold text-purple-900 text-center mb-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-emerald-50 via-gray-50 to-emerald-50 px-4">
+      <div className=" grid grid-col-1 items-center max-w-md w-full bg-gray-50 shadow-md rounded-xl p-10 sm:p-12 my-3">
+        <h2 className="text-4xl sm:text-3xl font-bold text-emerald-700 text-center mb-8">
           Create Account
         </h2>
-
         {error && (
-          <p className="text-red-600 text-center text-sm mb-3">{error}</p>
+          <p className="text-red-600 text-center text-base mb-4">{error}</p>
         )}
-
-        <form onSubmit={handleSignup} className="space-y-5">
-          {/* Full Name */}
-          <div>
-            <label className="block text-sm font-medium text-purple-700">
-              Full Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              required
-              onChange={(e) => setName(e.target.value)}
-              placeholder="John Doe"
-              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-purple-700">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="example@mail.com"
-              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            />
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-purple-700">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            />
-          </div>
-
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-sm font-medium text-purple-700">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              value={confirmPass}
-              required
-              onChange={(e) => setConfirmPass(e.target.value)}
-              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            />
-          </div>
-
-          {/* Signup Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition"
-          >
-            {loading ? "Creating account..." : "Sign Up"}
-          </button>
-        </form>
-
-        <p className="text-2xl font-bold text-red-400 m-auto">OR</p>
-        <p className="mt-6 text-center text-sm text-purple-700">
-          Already have an account? <GoogleAuth/>
+        <SignUpForm></SignUpForm>
+        <p className="text-center text-gray-500 font-bold my-4 text-lg">OR</p>
+        {/* Google Signup */}
+        <GoogleAuth />
+        <p className="mt-6 text-center text-gray-700 text-base">
+          Already have an account?{" "}
           <a
             href="/login"
-            className="text-pink-600 font-semibold hover:underline"
+            className="text-emerald-600 font-semibold hover:underline"
           >
             Login
           </a>
