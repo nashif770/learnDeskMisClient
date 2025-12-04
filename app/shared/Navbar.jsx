@@ -1,39 +1,63 @@
-'use client';
+"use client";
 import React from "react";
 import Link from "next/link";
+import { useUser } from "@/userContext";
 
 const Navbar = () => {
-  const user = null; // replace with your auth state (null or user object)
+  const { user } = useUser();
+
+  // Navigation items
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Dashboard", href: "/dashboard/" },
+    { label: "Contact", href: "/contact" },
+  ];
 
   return (
     <div className="w-full px-6 bg-white shadow h-16 flex items-center justify-between">
-      
       {/* Brand */}
-      <div className="text-purple-800 font-bold text-xl">
-        Learn Desk MIS
-      </div>
+      <Link href="/">
+        <div className="text-emerald-700 font-bold text-xl cursor-pointer">
+          Learn Desk MIS
+        </div>
+      </Link>
 
       {/* Navigation */}
       <div className="flex items-center space-x-6">
-        <Link href="/" className="text-gray-700 hover:text-purple-600">
-          Home
-        </Link>
+        {/* Static Nav Items */}
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="text-gray-700 hover:text-emerald-600 transition"
+          >
+            {item.label}
+          </Link>
+        ))}
 
-        <Link href="/dashboard/" className="text-gray-700 hover:text-purple-600">
-          Dashboard
-        </Link>
-
-        <Link href="/contact" className="text-gray-700 hover:text-purple-600">
-          Contact
-        </Link>
+        {/* User Profile (only if logged in) */}
+        {user && (
+          <Link
+            href="/dashboard/profile"
+            className="text-emerald-700 font-medium hover:text-emerald-800 transition"
+          >
+            {user.displayName || "Profile"}
+          </Link>
+        )}
 
         {/* Login / Logout */}
         {user ? (
-          <Link href="/logout" className="text-red-600 font-medium hover:text-red-800">
+          <Link
+            href="/login"
+            className="text-red-600 font-medium hover:text-red-800 transition"
+          >
             Logout
           </Link>
         ) : (
-          <Link href="/login" className="text-purple-600 font-medium hover:text-purple-800">
+          <Link
+            href="/login"
+            className="text-emerald-700 font-medium hover:text-emerald-900 transition"
+          >
             Login
           </Link>
         )}

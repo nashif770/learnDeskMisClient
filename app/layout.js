@@ -13,17 +13,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="flex flex-col min-h-screen bg-gradient-to-b from-emerald-50 via-white to-teal-500 text-gray-900 font-sans antialiased">
+      <body className="flex flex-col min-h-screen text-emerald-700 font-sans antialiased">
         {/* Navbar - floating */}
         <UserProvider>
-          <header className="fixed inset-x-0 top-2 z-50 pointer-events-auto px-4 sm:px-6 lg:px-12">
+          <header className="fixed inset-x-0 z-50 pointer-events-auto">
             <div className="w-full max-w-[1980px] mx-auto">
               <Navbar />
             </div>
           </header>
 
           {/* Main Content */}
-          <main className="pt-20 flex-grow bg-gradient-to-b from-emerald-50 via-white to-amber-50 w-full max-w-[1980px] mx-auto">
+          <main className="pt-16 flex-gro w-full max-w-[1980px] h-screen mx-auto">
             {children}
           </main>
 

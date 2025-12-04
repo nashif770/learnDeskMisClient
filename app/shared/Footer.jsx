@@ -3,10 +3,17 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full py-4 text-center text-gray-600 space-y-1">
-      <div>&copy; {new Date().getFullYear()} Learn Desk Information Management System (MIS)</div>
+    <footer className="w-full py-4 text-center text-gray-600 space-y-1 bg-white">
+      <div>
+        &copy; {new Date().getFullYear()} Learn Desk — Information Management
+        System
+      </div>
+
       <div className="text-sm text-gray-500">
-        Built by <Link href="#" className="hover:text-emerald-600 font-medium">Ahmed Nashif</Link>
+        Developed by{" "}
+        <Link href="#" className="font-medium hover:text-emerald-600">
+          Ahmed Nashif
+        </Link>
       </div>
     </footer>
   );
