@@ -19,7 +19,7 @@ const Navbar = () => {
           Home
         </Link>
 
-        <Link href="/dashboard/student" className="text-gray-700 hover:text-purple-600">
+        <Link href="/dashboard/" className="text-gray-700 hover:text-purple-600">
           Dashboard
         </Link>
 

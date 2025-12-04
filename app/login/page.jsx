@@ -1,19 +1,27 @@
 "use client";
 import React, { useState } from "react";
 import GoogleAuth from "./logComponent/GoogleAuth";
-import PhoneAuth from "./logComponent/PhoneAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/firebase_init";
+import EmailAuth from "./logComponent/emailAuth";
+import Link from "next/link";
+import { useUser } from "@/userContext";
 
 const Login = () => {
-  const [userInfo, setUserInfo] = useState(null);
+  // const [user, setuser] = useState(null)
+  const {user, setUser} = useUser()
 
+  
+  console.log(" look at user ",user)
+  
   const handleSignOut = () =>{
+    setUser(null)
     signOut(auth).then(()=>{
-      setUserInfo(null)
+      setUser(null)
       console.log("signed Out")
     }).catch(error=>{console.log(error)})
   }
+
   return (
     <div  
       className="min-h-screen flex flex-col items-center justify-center 
@@ -21,15 +29,16 @@ const Login = () => {
       px-4 sm:px-6 lg:px-8 space-y-6"
     >
       {/* Show logged-in user's name */}
-      {userInfo && (
+      {user && (
         <div>
-          <img src={userInfo.photoURL} alt="" className="rounded-full m-auto" />
+          <img src={user.photoURL} alt="" className="rounded-full m-auto" />
           <p className="text-green-700 font-medium">
-            Logged in as: {userInfo.displayName || userInfo.email || "Unknown User"}
+            Logged in as: {user.displayName || user.email || "Unknown User"}
           </p>
+          <p>{user.email}</p>
         </div>
       )}
-      {userInfo ? (
+      {user ? (
         <div>
           <button
             onClick={handleSignOut}
@@ -40,8 +49,10 @@ const Login = () => {
         </div>
       ) : (
         <div className="flex flex-col justify-center">
-          <PhoneAuth />
-          <GoogleAuth getUserInfo={setUserInfo} />
+          <EmailAuth></EmailAuth>
+          <Link href={"./login/signUp"} className="text-xl m-3"> Don't have an account? <span className=" underline font-bold text-green-500 ">Register</span></Link>
+          <p className="text-2xl font-bold text-red-400 m-auto">OR</p>
+          <GoogleAuth/>
         </div>
       )}
     </div>

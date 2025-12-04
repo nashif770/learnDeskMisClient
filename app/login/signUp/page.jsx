@@ -1,141 +1,132 @@
-'use client';
-import React, { useState } from 'react';
-// import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-// import app from '../firebase'; // Your Firebase config file
+"use client";
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase/firebase_init";
+import GoogleAuth from "../logComponent/GoogleAuth";
 
 const Signup = () => {
-  // const auth = getAuth(app);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const auth = "admin"
-
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
-  const [otp, setOtp] = useState('');
-  const [verificationSent, setVerificationSent] = useState(false);
-  const [confirmationResult, setConfirmationResult] = useState(null);
-
-  // Send OTP
-  const sendOtp = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (password !== confirmPass) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      // Initialize Recaptcha
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        {
-          size: 'invisible',
-          callback: () => {
-            console.log('Recaptcha verified');
-          },
-        },
-        auth
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
       );
 
-      const fullPhone = '+88' + phone; // Add Bangladesh prefix
-      const confirmation = await signInWithPhoneNumber(auth, fullPhone, window.recaptchaVerifier);
-      setConfirmationResult(confirmation);
-      setVerificationSent(true);
-      alert('OTP sent to ' + fullPhone);
-    } catch (error) {
-      console.error(error);
-      alert('Failed to send OTP: ' + error.message);
+      console.log("User created:", userCredential.user);
+
+      alert("Signup successful!");
+    } catch (err) {
+      setError(err.message);
     }
-  };
 
-  // Verify OTP
-  const verifyOtp = async (e) => {
-    e.preventDefault();
-    try {
-      const result = await confirmationResult.confirm(otp);
-      console.log('User signed in:', result.user);
-
-      // Optional: Save user info in Firestore
-      // await setDoc(doc(db, 'users', result.user.uid), { name, phone: '+88'+phone });
-
-      alert('OTP verified! Signup complete.');
-    } catch (error) {
-      console.error(error);
-      alert('Invalid OTP. Try again.');
-    }
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-200 via-pink-100 to-pink-200 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-200 via-pink-100 to-pink-200 px-4">
       <div className="max-w-md w-full bg-white shadow-lg rounded-xl p-8">
-        <h2 className="text-3xl font-bold text-purple-900 text-center mb-6">Sign Up</h2>
+        <h2 className="text-3xl font-bold text-purple-900 text-center mb-6">
+          Create Account
+        </h2>
 
-        {!verificationSent ? (
-          <form onSubmit={sendOtp} className="space-y-6">
-            {/* Name */}
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-purple-700">
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="John Doe"
-                required
-                className="mt-1 block w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-              />
-            </div>
-
-            {/* Phone */}
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-purple-700">
-                Phone Number
-              </label>
-              <div className="mt-1 flex rounded-lg overflow-hidden border border-purple-300 focus-within:ring-purple-500 focus-within:border-purple-500">
-                <span className="px-3 py-2 bg-purple-100 text-purple-700 font-medium select-none">+88</span>
-                <input
-                  type="tel"
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="01XXXXXXXXX"
-                  required
-                  className="w-full px-4 py-2 focus:outline-none"
-                />
-              </div>
-            </div>
-
-            <div id="recaptcha-container"></div>
-
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition"
-            >
-              Send OTP
-            </button>
-          </form>
-        ) : (
-          <form onSubmit={verifyOtp} className="space-y-6">
-            <div>
-              <label htmlFor="otp" className="block text-sm font-medium text-purple-700">
-                Enter OTP
-              </label>
-              <input
-                type="text"
-                id="otp"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                required
-                className="mt-1 block w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-3 px-4 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition"
-            >
-              Verify OTP
-            </button>
-          </form>
+        {error && (
+          <p className="text-red-600 text-center text-sm mb-3">{error}</p>
         )}
 
+        <form onSubmit={handleSignup} className="space-y-5">
+          {/* Full Name */}
+          <div>
+            <label className="block text-sm font-medium text-purple-700">
+              Full Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              required
+              onChange={(e) => setName(e.target.value)}
+              placeholder="John Doe"
+              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-purple-700">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="example@mail.com"
+              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium text-purple-700">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-sm font-medium text-purple-700">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              value={confirmPass}
+              required
+              onChange={(e) => setConfirmPass(e.target.value)}
+              className="mt-1 w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            />
+          </div>
+
+          {/* Signup Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-purple-600 text-white font-semibold rounded-lg shadow hover:bg-purple-700 transition"
+          >
+            {loading ? "Creating account..." : "Sign Up"}
+          </button>
+        </form>
+
+        <p className="text-2xl font-bold text-red-400 m-auto">OR</p>
         <p className="mt-6 text-center text-sm text-purple-700">
-          Already have an account?{' '}
-          <a href="/login" className="text-pink-600 hover:underline font-semibold">
+          Already have an account? <GoogleAuth/>
+          <a
+            href="/login"
+            className="text-pink-600 font-semibold hover:underline"
+          >
             Login
           </a>
         </p>

@@ -1,25 +1,21 @@
 "use client";
-
-import { useState } from "react";
 import { auth } from "@/firebase/firebase_init";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
-import React from "react";
+import React, { useState } from "react";
+import { useUser } from "@/userContext";
 
-const GoogleAuth = ({ getUserInfo }) => {
+const GoogleAuth = () => {
+  const { setUser } = useUser();
   const provider = new GoogleAuthProvider();
 
   const handleGoogleSignIn = () => {
-    console.log("Google sign in click");
-
     signInWithPopup(auth, provider)
       .then((result) => {
-        const userData = result.user;
-
-        console.log("Google User:", userData);
+        const userData = result?.user;
         // send data to parent (Login.jsx)
-        if (getUserInfo) {
-          getUserInfo(userData);
+        if (userData) {
+          setUser(userData);
         }
       })
       .catch((error) => console.log(error));

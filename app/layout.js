@@ -1,4 +1,5 @@
 // app/layout.js
+import { UserProvider } from "@/userContext";
 import "./globals.css";
 import Footer from "./shared/Footer";
 import Navbar from "./shared/Navbar";
@@ -14,21 +15,23 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth">
       <body className="flex flex-col min-h-screen bg-gradient-to-b from-emerald-50 via-white to-teal-500 text-gray-900 font-sans antialiased">
         {/* Navbar - floating */}
-        <header className="fixed inset-x-0 top-2 z-50 pointer-events-auto px-4 sm:px-6 lg:px-12">
-          <div className="w-full max-w-[1980px] mx-auto">
-            <Navbar />
-          </div>
-        </header>
+        <UserProvider>
+          <header className="fixed inset-x-0 top-2 z-50 pointer-events-auto px-4 sm:px-6 lg:px-12">
+            <div className="w-full max-w-[1980px] mx-auto">
+              <Navbar />
+            </div>
+          </header>
 
-        {/* Main Content */}
-        <main className="pt-20 flex-grow bg-gradient-to-b from-emerald-50 via-white to-amber-50 w-full max-w-[1980px] mx-auto">
-          {children}
-        </main>
+          {/* Main Content */}
+          <main className="pt-20 flex-grow bg-gradient-to-b from-emerald-50 via-white to-amber-50 w-full max-w-[1980px] mx-auto">
+            {children}
+          </main>
 
-        {/* Footer */}
-        <footer className="mt-auto w-full max-w-[1980px] mx-auto">
-          <Footer />
-        </footer>
+          {/* Footer */}
+          <footer className="mt-auto w-full max-w-[1980px] mx-auto">
+            <Footer />
+          </footer>
+        </UserProvider>
       </body>
     </html>
   );
