@@ -3,7 +3,7 @@ import { auth } from "@/firebase/firebase_init";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import React from "react";
-import { useUser } from "@/userContext";
+import { useUser } from "@/app/Auth/userContext";
 
 const GoogleAuth = () => {
   const { setUser } = useUser();

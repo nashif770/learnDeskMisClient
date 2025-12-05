@@ -1,43 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/firebase/firebase_init";
 import SignUpForm from "../logComponent/signUpForm";
-import GoogleAuth from "../logComponent/GoogleAuth";
 
 const Signup = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (password !== confirmPass) {
-      setError("Passwords do not match!");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("User created:", userCredential.user);
-      alert("Signup successful!");
-    } catch (err) {
-      setError(err.message);
-    }
-
-    setLoading(false);
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-emerald-50 via-gray-50 to-emerald-50 px-4">
@@ -50,8 +15,7 @@ const Signup = () => {
         )}
         <SignUpForm></SignUpForm>
         <p className="text-center text-gray-500 font-bold my-4 text-lg">OR</p>
-        {/* Google Signup */}
-        <GoogleAuth />
+        
         <p className="mt-6 text-center text-gray-700 text-base">
           Already have an account?{" "}
           <a

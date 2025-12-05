@@ -1,18 +1,20 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { useUser } from "@/userContext";
+import { auth } from "@/firebase/firebase_init";
+import { useUser } from "../Auth/userContext";
+import { signOut } from "firebase/auth";
 
 const Navbar = () => {
   const { user, setUser } = useUser();
 
   const handleSignOut = () => {
-    setUser(null);
     signOut(auth)
       .then(() => {
         console.log("Signed out");
       })
       .catch((error) => console.log(error));
+    setUser(null);
   };
 
   // Navigation items
@@ -56,16 +58,16 @@ const Navbar = () => {
 
         {/* Login / Logout */}
         {user ? (
-          <Link
-            href="/login"
+          <button
+            href="/loginAndRegister"
             className="text-red-600 font-medium hover:text-red-800 transition"
             onClick={handleSignOut}
           >
             Logout
-          </Link>
+          </button>
         ) : (
           <Link
-            href="/login"
+            href="/loginAndRegister"
             className="text-emerald-700 font-medium hover:text-emerald-900 transition"
           >
             Login

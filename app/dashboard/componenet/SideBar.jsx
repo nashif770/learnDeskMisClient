@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { useUser } from "@/userContext";
+import { useUser } from "@/app/Auth/userContext";
 
 const SideBar = () => {
   const { user } = useUser();
@@ -8,7 +8,7 @@ const SideBar = () => {
   const categories = [
     {
       title: "Admin Notifications",
-      mvpRating: 1, // High priority for MVP
+      mvpRating: 2, // High priority for MVP
       links: [
         { label: "User Requests", href: "/dashboard/requests" },
         { label: "System Alerts", href: "/dashboard/notifications" },
@@ -17,7 +17,7 @@ const SideBar = () => {
     },
     {
       title: "Reports & Analytics",
-      mvpRating: 2,
+      mvpRating: 3,
       links: [
         { label: "Reports", href: "/dashboard/reports" },
         { label: "Graphs & Charts", href: "/dashboard/reports/graphs" },
@@ -50,7 +50,7 @@ const SideBar = () => {
     },
     {
       title: "Teachers",
-      mvpRating: 2,
+      mvpRating: 1,
       links: [
         { label: "Add Teacher", href: "/dashboard/teachers/add" },
         { label: "View Teachers", href: "/dashboard/teachers" },
@@ -64,7 +64,7 @@ const SideBar = () => {
     },
     {
       title: "Classes & Exams",
-      mvpRating: 2,
+      mvpRating: 1,
       links: [
         { label: "Add Class", href: "/dashboard/classes/add" },
         { label: "View classes", href: "/dashboard/classes" },
@@ -88,7 +88,7 @@ const SideBar = () => {
     },
     {
       title: "Library & Resources",
-      mvpRating: 4,
+      mvpRating: 5,
       links: [
         { label: "Add Resource", href: "/dashboard/library/add" },
         { label: "View Resources", href: "/dashboard/library" },
@@ -109,16 +109,16 @@ const SideBar = () => {
   ];
 
   return (
-    <aside className="w-64 bg-gray-50 shadow-md min-h-screen p-6 flex flex-col">
-      <Link href={"/"}>
-        <h2 className="text-2xl font-bold text-emerald-700 text-center">
-          Home
+    <aside className="w-64 bg-gray-50 shadow-md p-6 flex flex-col">
+      <Link href={"/dashboard"}>
+        <h2 className="text-xl font-bold text-emerald-700 text-center">
+          Dashboard Home
         </h2>
       </Link>
       <hr className="bg-emerald-400 h-[3px] m-3" />
       <div className="overflow-scroll max-h-screen">
         {categories
-          .filter((category) => category.mvpRating <= 2)
+          .filter((category) => category.mvpRating <= 1)
           .map((category, idx) => (
             <div key={idx} className="mb-4">
               <h3 className="text-emerald-600 font-semibold text-sm px-2 py-1">

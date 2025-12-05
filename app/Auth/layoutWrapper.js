@@ -1,8 +1,8 @@
 // components/LayoutWrapper.js
 "use client";
 import { usePathname } from "next/navigation";
-import Navbar from "./app/shared/Navbar";
-import Footer from "./app/shared/Footer";
+import Navbar from "../shared/Navbar";
+import Footer from "../shared/Footer";
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();

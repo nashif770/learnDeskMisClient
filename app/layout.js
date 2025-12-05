@@ -1,7 +1,7 @@
 // app/layout.js
-import { UserProvider } from "@/userContext";
+import { UserProvider } from "@/app/Auth/userContext";
 import "./globals.css";
-import LayoutWrapper from "@/layoutWrapper";
+import LayoutWrapper from "./Auth/layoutWrapper";
 
 export const metadata = {
   title: "LearnDesk MIS Software",

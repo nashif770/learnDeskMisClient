@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/userContext"; // your global user context
+import { useUser } from "@/app/Auth/userContext"; // your global user context
 import SideBar from "./componenet/SideBar";
 
 export default function DashboardLayout({ children }) {
@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     if (!user) {
       // Redirect to login if no user is logged in
-      router.push("/login");
+      router.push("/loginAndRegister");
     }
   }, [user, router]);
 
@@ -25,9 +25,9 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="flex min-h-screen overflow-hidden">
+    <div className="flex max-h-screen overflow-hidden">
       <SideBar />
-      <main className="flex-1 bg-gray-50 p-6 h-full">{children}</main>
+      <main className="flex-1 bg-gray-50 p-6 overflow-scroll">{children}</main>
     </div>
   );
 }

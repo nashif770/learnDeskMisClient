@@ -1,9 +1,9 @@
 "use client";
-import { useUser } from "@/userContext";
+import { useUser } from "@/app/Auth/userContext";
 import React, { useState } from "react";
 
 const Profile = () => {
-  const { user } = useUser();
+  const { user, signout } = useUser();
   const [requestedRole, setRequestedRole] = useState("");
   const [requestStatus, setRequestStatus] = useState("");
 
