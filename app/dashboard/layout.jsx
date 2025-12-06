@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/Auth/userContext"; // your global user context
-import SideBar from "./componenet/SideBar";
+import SideBar from "./component/SideBar";
 
 export default function DashboardLayout({ children }) {
   const { user } = useUser();
@@ -27,7 +27,7 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="flex max-h-screen overflow-hidden">
       <SideBar />
-      <main className="flex-1 bg-gray-50 p-6 overflow-scroll">{children}</main>
+      <main className="flex-1 text-black p-6 overflow-scroll">{children}</main>
     </div>
   );
 }
