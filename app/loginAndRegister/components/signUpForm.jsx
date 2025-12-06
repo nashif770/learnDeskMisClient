@@ -33,9 +33,12 @@ const SignUpForm = () => {
 
   return (
     <div className="max-w-md w-full bg-gray-50 shadow-md rounded-xl p-6 sm:p-8">
+      <h2 className="text-4xl sm:text-3xl font-bold text-emerald-700 text-center mb-8">
+        Create Account
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Full Name */}
-        <div>
+        {/* <div>
           <label className={tailwindClass.labelClass}>Full Name</label>
           <input
             {...register("name", { required: "Full Name is required" })}
@@ -46,7 +49,7 @@ const SignUpForm = () => {
           {errors.name && (
             <p className="text-red-600 mt-1 text-xs">{errors.name.message}</p>
           )}
-        </div>
+        </div> */}
 
         {/* Email */}
         <div>

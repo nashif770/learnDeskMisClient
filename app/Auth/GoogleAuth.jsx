@@ -16,6 +16,7 @@ const GoogleAuth = () => {
         if (userData) setUser(userData);
       })
       .catch((error) => console.log(error));
+      console.log("google signed in")
   };
 
   return (

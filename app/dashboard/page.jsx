@@ -2,6 +2,7 @@
 import React from "react";
 import { useUser } from "../Auth/userContext";
 import { signOut } from "firebase/auth";
+import Link from "next/link";
 
 const DashboardPage = () => {
   const { user, setUser } = useUser();
@@ -36,6 +37,12 @@ const DashboardPage = () => {
 
         <div className="flex items-center gap-4">
           <span className="text-gray-700">Welcome, {user.displayName}</span>
+          <Link href={"/"}>
+          <button className="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-red-600"
+          >
+            Home
+          </button>
+          </Link>
           <button
             onClick={handleSignOut}
             className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
