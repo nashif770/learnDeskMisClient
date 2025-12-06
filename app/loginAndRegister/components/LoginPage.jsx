@@ -5,7 +5,7 @@ const LoginPage = () => {
   const [mode, setMode] = useState("login"); // "login" or "register"
 
   return (
-    <div className="w-1/2 flex items-center justify-center p-4">
+    <div className="w-full flex items-center justify-center p-4">
       <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-8 transition-all">
         {/* Header */}
         <h2 className="text-2xl font-bold text-center mb-6 text-emerald-700">
@@ -41,7 +41,6 @@ const LoginPage = () => {
             </>
           )}
         </p>
-
       </div>
     </div>
   );

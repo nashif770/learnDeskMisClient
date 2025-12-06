@@ -5,7 +5,7 @@ const SignUpPage = () => {
   const error = null;
 
   return (
-    <div className="w-1/2">
+    <div className="w-full">
       <SignUpForm></SignUpForm>
     </div>
   );

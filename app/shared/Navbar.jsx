@@ -25,7 +25,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="w-full px-6 bg-white shadow h-16 flex items-center justify-between">
+    <div className="sticky top-0 w-full px-6 bg-white shadow h-16 flex items-center justify-between">
       {/* Brand */}
       <Link href="/">
         <div className="text-emerald-700 font-bold text-xl cursor-pointer">

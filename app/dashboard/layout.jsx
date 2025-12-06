@@ -27,7 +27,9 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="flex max-h-screen overflow-hidden">
       <SideBar />
-      <main className="flex-1 text-black p-6 overflow-scroll">{children}</main>
+      <main className="flex-1 text-black p-6 overflow-scroll min-h-dvh">
+        {children}
+      </main>
     </div>
   );
 }

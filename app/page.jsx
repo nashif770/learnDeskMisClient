@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Home = () => {
   return (
-    <main className="flex flex-col items-center justify-start px-4 sm:px-6 md:px-12 gap-12 min-h-screen">
+    <main className="flex flex-col items-center justify-start px-4 sm:px-6 md:px-12 gap-12 h-dvh">
       {/* Hero Section */}
       <section className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-[1980px] gap-8 py-16">
         {/* Text Content */}

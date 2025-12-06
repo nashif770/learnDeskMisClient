@@ -16,15 +16,13 @@ const GoogleAuth = () => {
         if (userData) setUser(userData);
       })
       .catch((error) => console.log(error));
-      console.log("google signed in")
+    console.log("google signed in");
   };
 
   return (
     <button
       onClick={handleGoogleSignIn}
-      className="
-        flex items-center justify-center gap-3 py-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition w-[300px] m-auto
-      "
+      className="flex items-center justify-center gap-3 py-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition w-[300px] m-auto"
     >
       <FcGoogle size={22} />
       <span className="text-gray-700 font-semibold">Continue in Google</span>
