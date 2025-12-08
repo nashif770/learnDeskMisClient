@@ -1,4 +1,5 @@
 import { useUser } from "@/app/Auth/userContext";
+import { auth } from "@/firebase/firebase_init";
 import { signOut } from "firebase/auth";
 
 export const useSignOut = () => {

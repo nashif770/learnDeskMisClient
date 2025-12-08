@@ -29,7 +29,7 @@ const Navbar = () => {
       {/* Brand */}
       <Link href="/">
         <div className="text-emerald-700 font-bold text-xl cursor-pointer">
-          Learn Desk MIS
+          LearnDesk MIS
         </div>
       </Link>
 
@@ -52,7 +52,7 @@ const Navbar = () => {
             href="/dashboard/profile"
             className="text-emerald-700 font-medium hover:text-emerald-800 transition"
           >
-            {user.displayName || "Profile"}
+            {user?.displayName || "Profile"}
           </Link>
         )}
 

@@ -1,49 +1,66 @@
-import GoogleAuth from "@/app/Auth/GoogleAuth";
-import React, { useState } from "react";
+// components/Auth/LoginForm.jsx
+"use client";
+import { auth } from "@/firebase/firebase_init";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useForm } from "react-hook-form";
 
-const LoginPage = () => {
-  const [mode, setMode] = useState("login"); // "login" or "register"
+export default function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const email = data.email;
+    const password = data.password;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((result) => alert("Log In Complete"))
+      .catch((error) => console.log(error));
+  };
 
   return (
-    <div className="w-full flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-8 transition-all">
-        {/* Header */}
-        <h2 className="text-2xl font-bold text-center mb-6 text-emerald-700">
-          {mode === "login" ? "Login to Your Account" : "Create an Account"}
-        </h2>
-
-        {/* Load the correct form */}
-        <div className="mt-4">
-          {/* {mode === "login" ? <LoginForm /> : <RegisterForm />} */}
+    <div className=" w-full bg-white rounded-2xl text-gray-700 p-3">
+      <p className="text-3xl font-bold text-center text-emerald-700">
+        Login Now!
+      </p>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        {/* Email */}
+        <div>
+          <label className="text-sm font-medium">Email</label>
+          <input
+            type="email"
+            className="w-full border rounded-lg p-2 mt-1"
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
         </div>
 
-        {/* Switch between modes */}
-        <p className="text-center text-sm text-gray-600 mt-4">
-          {mode === "login" ? (
-            <>
-              Don't have an account?{" "}
-              <button
-                onClick={() => setMode("register")}
-                className="text-emerald-600 font-semibold hover:underline"
-              >
-                Register
-              </button>
-            </>
-          ) : (
-            <>
-              Already have an account?{" "}
-              <button
-                onClick={() => setMode("login")}
-                className="text-emerald-600 font-semibold hover:underline"
-              >
-                Login
-              </button>
-            </>
+        {/* Password */}
+        <div>
+          <label className="text-sm font-medium">Password</label>
+          <input
+            type="password"
+            className="w-full border rounded-lg p-2 mt-1"
+            {...register("password", { required: "Password is required" })}
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
           )}
-        </p>
-      </div>
+        </div>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition"
+        >
+          {isSubmitting ? "Logging in..." : "Login"}
+        </button>
+      </form>
     </div>
   );
-};
-
-export default LoginPage;
+}

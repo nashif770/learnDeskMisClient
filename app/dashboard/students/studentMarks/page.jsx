@@ -1,18 +1,18 @@
-'use client';
+"use client";
 import useStudents from "@/app/Hooks/useStudents";
-import React, { useState } from "react";
+import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
+import React, { useEffect, useState } from "react";
 
 const studentMarks = () => {
+  const { students } = useStudents();
+  const [filteredData, setFilteredData] = useState(students);
 
-    const {students}= useStudents()
-  const [filterClass, setFilterClass] = useState("");
-  const [search, setSearch] = useState("");
-
-  const filteredStudents = students.filter(
-    (s) =>
-      (filterClass ? s.class === filterClass : true) &&
-      s.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredStudents = filteredData;
+  useEffect(() => {
+    if (students.length > 0) {
+      setFilteredData(students);
+    }
+  }, [students]);
 
   // Calculate totals and percentage based on semesters only
   const calculateSemesterTotalAndPercentage = (student) => {
@@ -27,32 +27,12 @@ const studentMarks = () => {
       <h1 className="text-2xl font-semibold mb-4">📝 Student Marks Overview</h1>
 
       {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-4 items-center">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          className="border p-2 rounded w-full md:w-1/3"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <select
-          className="border p-2 rounded w-full md:w-1/4"
-          value={filterClass}
-          onChange={(e) => setFilterClass(e.target.value)}
-        >
-          <option value="">Filter by Class</option>
-          <option value="Class 7">Class 7</option>
-          <option value="Class 9">Class 9</option>
-        </select>
-
-        <button
-          onClick={() => { setFilterClass(""); setSearch(""); }}
-          className="border px-3 py-2 rounded hover:bg-gray-100"
-        >
-          Reset
-        </button>
-      </div>
+      <UniversalSearchBar
+        data={students}
+        filterKeys={["class"]}
+        sortKeys={["id", "class", "name"]}
+        onFilter={(data) => setFilteredData(data)}
+      ></UniversalSearchBar>
 
       {/* Table */}
       <div className="overflow-x-auto border rounded shadow">
@@ -73,14 +53,19 @@ const studentMarks = () => {
               <th className="p-3 border text-center">1st Sem</th>
               <th className="p-3 border text-center">2nd Sem</th>
               <th className="p-3 border text-center">Final Sem</th>
-              <th className="p-3 border text-center font-semibold">Total Sem</th>
-              <th className="p-3 border text-center font-semibold">Percentage</th>
+              <th className="p-3 border text-center font-semibold">
+                Total Sem
+              </th>
+              <th className="p-3 border text-center font-semibold">
+                Percentage
+              </th>
             </tr>
           </thead>
 
           <tbody>
             {filteredStudents.map((s, index) => {
-              const { total, percentage } = calculateSemesterTotalAndPercentage(s);
+              const { total, percentage } =
+                calculateSemesterTotalAndPercentage(s);
               const ctTotal = s.monthlyTests.reduce((a, b) => a + b, 0);
               return (
                 <tr key={s.id} className="border-t hover:bg-gray-50">
@@ -90,10 +75,18 @@ const studentMarks = () => {
                   <td className="p-3 border">{s.class}</td>
 
                   {/* Class Tests */}
-                  <td className="p-3 border text-center">{s.monthlyTests[0]}</td>
-                  <td className="p-3 border text-center">{s.monthlyTests[1]}</td>
-                  <td className="p-3 border text-center">{s.monthlyTests[2]}</td>
-                  <td className="p-3 border text-center font-semibold">{ctTotal}</td>
+                  <td className="p-3 border text-center">
+                    {s.monthlyTests[0]}
+                  </td>
+                  <td className="p-3 border text-center">
+                    {s.monthlyTests[1]}
+                  </td>
+                  <td className="p-3 border text-center">
+                    {s.monthlyTests[2]}
+                  </td>
+                  <td className="p-3 border text-center font-semibold">
+                    {ctTotal}
+                  </td>
 
                   {/* Mid Terms */}
                   <td className="p-3 border text-center">{s.midTerms[0]}</td>
@@ -106,8 +99,12 @@ const studentMarks = () => {
                   <td className="p-3 border text-center">{s.semesters[2]}</td>
 
                   {/* Total & Percentage based on semesters only */}
-                  <td className="p-3 border text-center font-semibold">{total}</td>
-                  <td className="p-3 border text-center font-semibold">{percentage}%</td>
+                  <td className="p-3 border text-center font-semibold">
+                    {total}
+                  </td>
+                  <td className="p-3 border text-center font-semibold">
+                    {percentage}%
+                  </td>
                 </tr>
               );
             })}

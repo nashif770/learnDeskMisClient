@@ -1,20 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useStudents from "@/app/Hooks/useStudents";
+import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 
 const StudentList = () => {
   const router = useRouter();
-  const {students}= useStudents()
+  const { students } = useStudents();
+  const [filteredData, setFilteredData] = useState(students);
 
-  const [filterClass, setFilterClass] = useState("");
-  const [search, setSearch] = useState("");
+  const filteredStudents = filteredData;
 
-  const filteredStudents = students.filter(
-    (s) =>
-      (filterClass ? s.class === filterClass : true) &&
-      s.name.toLowerCase().includes(search.toLowerCase())
-  );
+  useEffect(() => {
+    if (students.length > 0) {
+      setFilteredData(students);
+    }
+  }, [students]);
 
   const handleDetailsClick = (id) => {
     // Navigate manually to a student profile page
@@ -26,35 +27,12 @@ const StudentList = () => {
       <h1 className="text-2xl font-semibold mb-4">👥 Students List</h1>
 
       {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-4 items-center">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          className="border p-2 rounded w-full md:w-1/3"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <select
-          className="border p-2 rounded w-full md:w-1/4"
-          value={filterClass}
-          onChange={(e) => setFilterClass(e.target.value)}
-        >
-          <option value="">Filter by Class</option>
-          <option value="Class 7">Class 7</option>
-          <option value="Class 9">Class 9</option>
-        </select>
-
-        <button
-          onClick={() => {
-            setFilterClass("");
-            setSearch("");
-          }}
-          className="border px-3 py-2 rounded hover:bg-gray-100"
-        >
-          Reset
-        </button>
-      </div>
+      <UniversalSearchBar
+        data={students}
+        filterKeys={["class"]}
+        sortKeys={["id", "class", "name"]}
+        onFilter={(data) => setFilteredData(data)}
+      ></UniversalSearchBar>
 
       {/* Students Table */}
       <div className="overflow-x-auto border rounded shadow">

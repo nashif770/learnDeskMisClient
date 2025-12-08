@@ -1,22 +1,21 @@
 "use client";
 import useStudents from "@/app/Hooks/useStudents";
-import React, { useState } from "react";
+import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
+import React, { useEffect, useState } from "react";
 
 const StudentPerformance = () => {
-  const {students}= useStudents()
-
-  const [filterClass, setFilterClass] = useState("");
-  const [search, setSearch] = useState("");
-  const [sortOption, setSortOption] = useState("");
+  const { students } = useStudents();
+  const [filteredData, setFilteredData] = useState(students);
 
   const avg = (arr) => (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1);
 
   // Filtered students
-  let filteredStudents = students.filter(
-    (s) =>
-      (filterClass ? s.class === filterClass : true) &&
-      s.name.toLowerCase().includes(search.toLowerCase())
-  );
+  let filteredStudents = filteredData;
+  useEffect(() => {
+    if (students.length > 0) {
+      setFilteredData(students);
+    }
+  }, [students]);
 
   // Map semester averages for sorting
   filteredStudents = filteredStudents.map((s) => ({
@@ -25,14 +24,6 @@ const StudentPerformance = () => {
     avgMidTerm: Number(avg(s.midTerms)),
     semesterAvg: Number(avg(s.semesters)),
   }));
-
-  // Sorting logic
-  if (sortOption) {
-    filteredStudents.sort((a, b) => {
-      if (sortOption === "name") return a.name.localeCompare(b.name);
-      return b[sortOption] - a[sortOption]; // descending for scores
-    });
-  }
 
   // Top and bottom performer
   const sortedBySemester = [...filteredStudents].sort(
@@ -48,48 +39,12 @@ const StudentPerformance = () => {
       </h1>
 
       {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 items-center mb-4">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          className="border p-2 rounded w-full md:w-1/3"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-
-        <select
-          className="border p-2 rounded w-full md:w-1/4"
-          value={filterClass}
-          onChange={(e) => setFilterClass(e.target.value)}
-        >
-          <option value="">Filter by Class</option>
-          <option value="Class 7">Class 7</option>
-          <option value="Class 9">Class 9</option>
-        </select>
-
-        <select
-          className="border p-2 rounded w-full md:w-1/4"
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-        >
-          <option value="">Sort by</option>
-          <option value="name">Name</option>
-          <option value="avgClassTest">Avg Class Test</option>
-          <option value="avgMidTerm">Avg Mid-Term</option>
-          <option value="semesterAvg">Semester Avg</option>
-        </select>
-
-        <button
-          onClick={() => {
-            setFilterClass("");
-            setSearch("");
-            setSortOption("");
-          }}
-          className="border px-3 py-2 rounded hover:bg-gray-100"
-        >
-          Reset
-        </button>
-      </div>
+      <UniversalSearchBar
+        data={students}
+        filterKeys={["class"]}
+        sortKeys={["id", "class", "name"]}
+        onFilter={(data) => setFilteredData(data)}
+      ></UniversalSearchBar>
 
       {/* Summary Metrics */}
       <div className="flex flex-col md:flex-row gap-4">

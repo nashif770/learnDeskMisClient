@@ -3,26 +3,21 @@ import React from "react";
 import { useUser } from "../Auth/userContext";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
+import { auth } from "@/firebase/firebase_init";
+import { Router } from "next/router";
 
 const DashboardPage = () => {
-  const { user, setUser } = useUser();
+  const { user, setUser, setLoading } = useUser();
 
   const handleSignOut = () => {
-    setUser(null);
-    // signOut(auth)
-    //   .then(() => {
-    //     console.log("Signed out");
-    //   })
-    //   .catch((error) => console.log(error));
     signOut(auth)
       .then(() => {
         setUser(null); // optional, for instant UI update
-        toast.success("Logged out successfully!");
-        // router.push("/login");
+        setLoading(true);
+        Router.push("/login");
       })
       .catch((error) => {
         console.error("Logout error:", error);
-        toast.error("Failed to logout!");
       })
       .finally(() => {
         setLoading(false);
@@ -38,10 +33,9 @@ const DashboardPage = () => {
         <div className="flex items-center gap-4">
           <span className="text-gray-700">Welcome, {user.displayName}</span>
           <Link href={"/"}>
-          <button className="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-red-600"
-          >
-            Home
-          </button>
+            <button className="px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-red-600">
+              Home
+            </button>
           </Link>
           <button
             onClick={handleSignOut}

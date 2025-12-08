@@ -20,14 +20,14 @@ const Home = () => {
 
           <div className="flex gap-4">
             <a
-              href="/login/signUp"
+              href="/dashboard/"
               className="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg shadow hover:bg-emerald-700 transition"
             >
               Get Started
             </a>
 
             <Link
-              href="/login"
+              href="/loginAndRegister"
               className="px-6 py-3 border border-emerald-600 text-emerald-700 font-semibold rounded-lg hover:bg-gray-100 transition"
             >
               Login

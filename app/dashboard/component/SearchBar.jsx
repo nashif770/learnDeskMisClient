@@ -1,7 +1,10 @@
-'use client';
+"use client";
+import useStudents from "@/app/Hooks/useStudents";
 import React from "react";
 
 const SearchBar = ({ value, onChange, placeholder = "Search..." }) => {
+  const { students } = useStudents();
+
   return (
     <input
       type="text"

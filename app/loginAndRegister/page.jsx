@@ -1,48 +1,78 @@
 "use client";
-import React from "react";
+
+import React, { useState, useEffect } from "react";
 import { useUser } from "../Auth/userContext";
-import UserInfo from "./components/UserInfo";
-import LoginPage from "./components/LoginPage";
-import SignUpPage from "./components/SignUpPage";
 import GoogleAuth from "../Auth/GoogleAuth";
+import LoginPage from "./components/LoginPage";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import SignUpForm from "./components/signUpForm";
 
-const loginAndRegister = () => {
+const LoginAndRegister = () => {
   const { user } = useUser();
-  // const user = "null";
-  // const router = useRouter();
+  const [mode, setMode] = useState("login"); // login or register
+  const router = useRouter();
 
-  // Redirect to profile if user exists
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/dashboard/profile");
-  //   }
-  // }, [user, router]);
+  // Redirect if user is logged in
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard/profile");
+    }
+  }, [user, router]);
 
   return (
-    <div
-      className="h-dvh flex flex-col gap-2 items-center justify-center 
-        bg-gradient-to-b from-emerald-100 to-emerald-100 p-10 "
-    >
-      <Link href={"/"}>
-        <p className="font-bold text-2xl text-black">Go Back Home</p>
-      </Link>
-      <div className="text-center items-center p-3">
-        {user ? (
-          <p className="text-black p-3">
-            Welcome <span className="font-bold">{user.displayName}</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-emerald-50 to-emerald-100 px-4">
+      {/* Back Home */}
+      <div className="absolute top-6 left-6">
+        <Link href="/">
+          <p className="font-bold text-xl text-emerald-800 hover:underline">
+            ← Back Home
           </p>
-        ) : (
-          <p className="text-black">Log In Bellow</p>
-        )}
+        </Link>
       </div>
-      <div className="flex flex-row justify-center items-center gap-3 bg-gray-400 p-2 rounded-2xl">
-        <LoginPage></LoginPage>
-        <SignUpPage></SignUpPage>
+
+      {/* Card */}
+      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
+        {/* Tabs */}
+        <div className="flex w-full mb-6">
+          <button
+            onClick={() => setMode("login")}
+            className={`flex-1 py-2 text-center font-semibold rounded-l-xl transition
+              ${
+                mode === "login"
+                  ? "bg-emerald-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              }`}
+          >
+            Login
+          </button>
+
+          <button
+            onClick={() => setMode("register")}
+            className={`flex-1 py-2 text-center font-semibold rounded-r-xl transition
+              ${
+                mode === "register"
+                  ? "bg-emerald-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              }`}
+          >
+            Register
+          </button>
+        </div>
+
+        {/* Google Auth */}
+        <div className="flex flex-col items-center mb-4">
+          <GoogleAuth />
+          <p className="text-sm text-gray-500 mt-2">or continue with email</p>
+        </div>
+
+        {/* Forms */}
+        <div className="mt-2">
+          {mode === "login" ? <LoginPage /> : <SignUpForm />}
+        </div>
       </div>
-      {/* <hr className="border-2 w-1/3 border-emerald-500"></hr> */}
-      <GoogleAuth></GoogleAuth>
     </div>
   );
 };
-export default loginAndRegister;
+
+export default LoginAndRegister;
