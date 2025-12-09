@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import useStudents from "@/app/Hooks/useStudents";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import React, { useEffect, useState } from "react";
@@ -7,44 +7,40 @@ const StudentAttendance = () => {
   const { students } = useStudents();
   const [filteredData, setFilteredData] = useState(students);
 
-  // Filtered students based on search and class
-  const filtered = filteredData;
-
   useEffect(() => {
     if (students.length > 0) {
       setFilteredData(students);
     }
   }, [students]);
 
-  // Overhead summary based on filtered students
-  const totalFilteredStudents = filtered.length;
+  const totalFilteredStudents = filteredData.length;
   const averageAttendance = totalFilteredStudents
     ? (
-        filtered.reduce((acc, s) => acc + (s.present / s.total) * 100, 0) /
+        filteredData.reduce((acc, s) => acc + (s.present / s.total) * 100, 0) /
         totalFilteredStudents
       ).toFixed(1)
     : 0;
-  const totalClassDays = filtered[0]?.total || 0;
+  const totalClassDays = filteredData[0]?.total || 0;
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-semibold">📊 Student Attendance Overview</h1>
+      <h1 className="text-2xl font-bold text-emerald-700">📊 Student Attendance Overview</h1>
 
-      {/* Summary */}
-      <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1 p-4 bg-gray-100 rounded shadow text-center">
-          <p className="text-gray-600">Total Students</p>
-          <p className="text-2xl font-bold">{totalFilteredStudents}</p>
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition">
+          <p className="text-gray-500">Total Students</p>
+          <p className="text-3xl font-bold text-emerald-600">{totalFilteredStudents}</p>
         </div>
 
-        <div className="flex-1 p-4 bg-gray-100 rounded shadow text-center">
-          <p className="text-gray-600">Average Attendance %</p>
-          <p className="text-2xl font-bold">{averageAttendance}%</p>
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition">
+          <p className="text-gray-500">Average Attendance %</p>
+          <p className="text-3xl font-bold text-blue-600">{averageAttendance}%</p>
         </div>
 
-        <div className="flex-1 p-4 bg-gray-100 rounded shadow text-center">
-          <p className="text-gray-600">Total Class Days</p>
-          <p className="text-2xl font-bold">{totalClassDays}</p>
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition">
+          <p className="text-gray-500">Total Class Days</p>
+          <p className="text-3xl font-bold text-purple-600">{totalClassDays}</p>
         </div>
       </div>
 
@@ -54,43 +50,45 @@ const StudentAttendance = () => {
         filterKeys={["class"]}
         sortKeys={["id", "class", "name"]}
         onFilter={(data) => setFilteredData(data)}
-      ></UniversalSearchBar>
+      />
 
-      {/* Table */}
-      <div className="overflow-x-auto border rounded shadow">
-        <table className="w-full text-left border-collapse">
-          <thead className="bg-gray-200 text-gray-700">
+      {/* Attendance Table */}
+      <div className="overflow-x-auto mt-4 shadow rounded-lg">
+        <table className="min-w-full bg-white rounded-lg">
+          <thead className="bg-gray-100 text-gray-700">
             <tr>
-              <th className="p-3 border">Id</th>
-              <th className="p-3 border">Name</th>
-              <th className="p-3 border">Class</th>
-              <th className="p-3 border text-center">Days Present</th>
-              <th className="p-3 border text-center">Total Days</th>
-              <th className="p-3 border text-center">Percentage</th>
+              <th className="p-3 border-b">ID</th>
+              <th className="p-3 border-b">Name</th>
+              <th className="p-3 border-b">Class</th>
+              <th className="p-3 border-b text-center">Days Present</th>
+              <th className="p-3 border-b text-center">Total Days</th>
+              <th className="p-3 border-b text-center">Percentage</th>
             </tr>
           </thead>
 
           <tbody>
-            {filtered.map((s) => (
-              <tr key={s.id} className="border-t hover:bg-gray-50">
-                <td className="p-3 border">{s.id}</td>
-                <td className="p-3 border">{s.name}</td>
-                <td className="p-3 border">{s.class}</td>
-                <td className="p-3 border text-center">{s.present}</td>
-                <td className="p-3 border text-center">{s.total}</td>
-                <td className="p-3 border text-center font-semibold">
-                  {((s.present / s.total) * 100).toFixed(1)}%
+            {filteredData.length > 0 ? (
+              filteredData.map((s) => (
+                <tr key={s.id} className="hover:bg-gray-50 transition">
+                  <td className="p-3 border-b">{s.id}</td>
+                  <td className="p-3 border-b">{s.name}</td>
+                  <td className="p-3 border-b">{s.class}</td>
+                  <td className="p-3 border-b text-center">{s.present}</td>
+                  <td className="p-3 border-b text-center">{s.total}</td>
+                  <td className="p-3 border-b text-center font-semibold text-blue-600">
+                    {((s.present / s.total) * 100).toFixed(1)}%
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="p-6 text-center text-gray-400 italic">
+                  No students found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-
-        {filtered.length === 0 && (
-          <div className="p-6 text-center text-gray-500">
-            No students found.
-          </div>
-        )}
       </div>
     </div>
   );

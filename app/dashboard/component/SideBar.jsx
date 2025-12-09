@@ -10,8 +10,9 @@ const SideBar = () => {
     {
       title: "Admin Notifications",
       mvpRating: 2,
-      active: false, // <-- new
+      active: true, // <-- new
       links: [
+        { label: "User Profile", href: "/dashboard/profile" },
         { label: "User Requests", href: "/dashboard/requests" },
         { label: "System Alerts", href: "/dashboard/notifications" },
         { label: "Approval Requests", href: "/dashboard/approvals" },
@@ -24,8 +25,14 @@ const SideBar = () => {
       links: [
         { label: "Reports", href: "/dashboard/reports" },
         { label: "Graphs & Charts", href: "/dashboard/reports/graphs" },
-        { label: "Performance Analytics", href: "/dashboard/reports/performance" },
-        { label: "Attendance Analytics", href: "/dashboard/reports/attendance" },
+        {
+          label: "Performance Analytics",
+          href: "/dashboard/reports/performance",
+        },
+        {
+          label: "Attendance Analytics",
+          href: "/dashboard/reports/attendance",
+        },
         { label: "Exam Analytics", href: "/dashboard/reports/exams" },
         { label: "Fee Reports", href: "/dashboard/reports/fees" },
       ],
@@ -36,11 +43,23 @@ const SideBar = () => {
       active: true,
       links: [
         { label: "Add Student", href: "/dashboard/students/addStudents" },
-        { label: "Manage Students", href: "/dashboard/students/manageStudents" },
-        { label: "Student Attendance", href: "/dashboard/students/studentAttendance/" },
+        {
+          label: "Manage Students",
+          href: "/dashboard/students/manageStudents",
+        },
+        {
+          label: "Student Attendance",
+          href: "/dashboard/students/studentAttendance/",
+        },
         { label: "Student Marks", href: "/dashboard/students/studentMarks" },
-        { label: "Student Performance", href: "/dashboard/students/studentPerformance" },
-        { label: "Student Profiles", href: "/dashboard/students/studentProfile" },
+        {
+          label: "Student Performance",
+          href: "/dashboard/students/studentPerformance",
+        },
+        {
+          label: "Student Profiles",
+          href: "/dashboard/students/studentProfile",
+        },
       ],
     },
     {
@@ -51,8 +70,58 @@ const SideBar = () => {
         { label: "Add Teacher", href: "/dashboard/teachers/add" },
         { label: "View Teachers", href: "/dashboard/teachers" },
         { label: "Teacher Attendance", href: "/dashboard/teachers/attendance" },
-        { label: "Teacher Performance", href: "/dashboard/teachers/performance" },
+        {
+          label: "Teacher Performance",
+          href: "/dashboard/teachers/performance",
+        },
         { label: "Teacher Profiles", href: "/dashboard/teachers/profiles" },
+      ],
+    },
+    {
+      title: "Classes & Exams",
+      mvpRating: 2,
+      active: false,
+      links: [
+        { label: "Add Class", href: "/dashboard/classes/add" },
+        { label: "View classes", href: "/dashboard/classes" },
+        { label: "Exams", href: "/dashboard/exams" },
+        { label: "Exam Results", href: "/dashboard/exams/results" },
+        { label: "Class Analytics", href: "/dashboard/classes/analytics" },
+      ],
+    },
+    {
+      title: "Fees & Payments",
+      mvpRating: 3,
+      active: false,
+      links: [
+        { label: "Fee Management", href: "/dashboard/fees" },
+        { label: "Payments History", href: "/dashboard/fees/history" },
+        { label: "Pending Payments", href: "/dashboard/fees/pending" },
+        {
+          label: "Scholarships & Discounts",
+          href: "/dashboard/fees/scholarships",
+        },
+      ],
+    },
+    {
+      title: "Library & Resources",
+      mvpRating: 4,
+      active: false,
+      links: [
+        { label: "Add Resource", href: "/dashboard/library/add" },
+        { label: "View Resources", href: "/dashboard/library" },
+        { label: "Resource Requests", href: "/dashboard/library/requests" },
+      ],
+    },
+    {
+      title: "System Settings",
+      mvpRating: 1,
+      active: false,
+      links: [
+        { label: "User Management", href: "/dashboard/system/users" },
+        { label: "Roles & Permissions", href: "/dashboard/system/roles" },
+        { label: "Notifications", href: "/dashboard/system/notifications" },
+        { label: "Settings", href: "/dashboard/system/settings" },
       ],
     },
     // Add the rest similarly...

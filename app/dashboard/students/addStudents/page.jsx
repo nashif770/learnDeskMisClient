@@ -13,66 +13,38 @@ const AddStudents = () => {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
-    reset()
+    reset();
   };
 
   const renderField = (field) => {
+    const commonClass =
+      "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition";
+
     switch (field.type) {
       case "text":
-        return (
-          <input
-            type="text"
-            className="w-full border rounded p-2"
-            {...register(field.name)}
-          />
-        );
+        return <input type="text" className={commonClass} {...register(field.name)} />;
 
       case "textarea":
-        return (
-          <textarea
-            rows={3}
-            className="w-full border rounded p-2"
-            {...register(field.name)}
-          />
-        );
+        return <textarea rows={3} className={commonClass} {...register(field.name)} />;
 
       case "select":
         return (
-          <select
-            className="w-full border rounded p-2"
-            {...register(field.name)}
-          >
+          <select className={commonClass} {...register(field.name)}>
             <option value="">Select</option>
             {field.options?.map((opt, i) => (
-              <option key={i} value={opt}>
-                {opt}
-              </option>
+              <option key={i} value={opt}>{opt}</option>
             ))}
           </select>
         );
 
       case "file":
-        return (
-          <input
-            type="file"
-            className="w-full border rounded p-2"
-            {...register(field.name)}
-          />
-        );
+        return <input type="file" className={commonClass} {...register(field.name)} />;
 
       case "checkbox":
-        return (
-          <input type="checkbox" className="h-4 w-4" {...register(field.name)} />
-        );
+        return <input type="checkbox" className="h-4 w-4" {...register(field.name)} />;
 
       case "date":
-        return (
-          <input
-            type="date"
-            className="w-full border rounded p-2"
-            {...register(field.name)}
-          />
-        );
+        return <input type="date" className={commonClass} {...register(field.name)} />;
 
       default:
         return null;
@@ -80,37 +52,38 @@ const AddStudents = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow rounded">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Add Students</h2>
+    <div className="max-w-5xl mx-auto p-6 bg-gray-50">
+      <h2 className="text-3xl font-bold text-emerald-700 mb-8 text-center">Add Students</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
-
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-12 bg-white p-6 rounded-2xl shadow-md">
         {formCategories?.map((section, idx) => (
-          <div key={idx} className="space-y-4">
-
+          <div key={idx} className="space-y-6">
             {/* Category Title */}
-            <h3 className="text-xl font-semibold border-b pb-2">
-              {section.category}
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-700 border-b pb-2 mb-4">{section.category}</h3>
 
             {/* Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {section.fields.map((field, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  <label className="font-medium">{field.label}</label>
+                <div key={i} className="flex flex-col gap-2">
+                  <label className="font-medium text-gray-600">{field.label}</label>
                   {renderField(field)}
+                  {errors[field.name] && (
+                    <span className="text-red-500 text-sm">{errors[field.name]?.message}</span>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         ))}
 
-        <button
-          type="submit"
-          className="mt-6 bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700"
-        >
-          Submit
-        </button>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="bg-emerald-600 text-white px-6 py-3 rounded-lg shadow hover:bg-emerald-700 transition"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

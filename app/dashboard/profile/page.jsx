@@ -1,106 +1,122 @@
 "use client";
-import { useUser } from "@/app/Auth/userContext";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FaUserCircle, FaSignOutAlt, FaEdit } from "react-icons/fa";
 
 const Profile = () => {
-  const { user, signout } = useUser();
+  const router = useRouter();
   const [requestedRole, setRequestedRole] = useState("");
   const [requestStatus, setRequestStatus] = useState("");
 
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-gray-500">No user info available.</p>
-      </div>
-    );
-  }
+  // Placeholder user data
+  const user = {
+    displayName: "John Doe",
+    email: "johndoe@example.com",
+    role: "Admin",
+    uid: "123456",
+    photoURL: "/default-avatar.png",
+    center: "Sunrise High School",
+    batch: "2025-2026",
+    phone: "+1-555-1234",
+  };
+
+  const signout = () => {
+    alert("Signed out");
+  };
 
   const handleRoleRequest = (e) => {
     e.preventDefault();
-
     if (!requestedRole) {
       setRequestStatus("Please select a role to request.");
       return;
     }
-
-    console.log(`${user.displayName} requested role: ${requestedRole}`);
-    setRequestStatus(
-      `Your request to become a ${requestedRole} has been submitted.`
-    );
+    setRequestStatus(`Your request to become a ${requestedRole} has been submitted.`);
     setRequestedRole("");
   };
 
-  return (
-    <div className="max-w-3xl mx-auto bg-gray-50 shadow-md rounded-xl p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-emerald-700 mb-4">Profile</h1>
+  const handleEdit = () => {
+    router.push("profile/editProfile");
+  };
 
-      {/* User Info */}
-      <div className="flex items-center space-x-4">
-        <img
-          src={user.photoURL || "/default-avatar.png"}
-          alt={user.displayName || "User Avatar"}
-          className="w-20 h-20 rounded-full object-cover border-2 border-emerald-500"
-        />
-        <div>
-          <h2 className="text-xl font-semibold text-gray-800">
-            {user.displayName || "Unknown User"}
-          </h2>
-          <p className="text-gray-500">{user.email}</p>
-          <p className="text-gray-500">
-            Current Role:{" "}
-            <span className="font-medium text-emerald-700">
-              {user.role || "Guest"}
-            </span>
-          </p>
+  return (
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold text-emerald-700">Profile</h1>
+        <button
+          onClick={handleEdit}
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          <FaEdit /> Edit
+        </button>
+      </div>
+
+      {/* Profile Card */}
+      <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+        <div className="flex flex-col items-center">
+          <img
+            src={user.photoURL}
+            alt="avatar"
+            className="w-32 h-32 rounded-full object-cover border-4 border-emerald-200"
+          />
+          <button
+            onClick={signout}
+            className="mt-4 flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+          >
+            <FaSignOutAlt /> Sign Out
+          </button>
+        </div>
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex flex-col">
+            <span className="text-gray-500 font-medium">Name</span>
+            <span className="text-lg font-semibold">{user.displayName}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-500 font-medium">Email</span>
+            <span className="text-lg font-semibold">{user.email}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-500 font-medium">Phone</span>
+            <span className="text-lg font-semibold">{user.phone}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-500 font-medium">Role</span>
+            <span className="text-lg font-semibold">{user.role}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-500 font-medium">School</span>
+            <span className="text-lg font-semibold">{user.center}</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-gray-500 font-medium">Batch</span>
+            <span className="text-lg font-semibold">{user.batch}</span>
+          </div>
         </div>
       </div>
 
-      {/* Additional Info */}
-      <div className="space-y-2 text-gray-700 text-sm">
-        <p>
-          <span className="font-medium text-emerald-700">Email:</span>{" "}
-          {user.email}
-        </p>
-        <p>
-          <span className="font-medium text-emerald-700">Name:</span>{" "}
-          {user.displayName || "N/A"}
-        </p>
-        <p>
-          <span className="font-medium text-emerald-700">User ID:</span>{" "}
-          {user.uid}
-        </p>
-      </div>
-
-      {/* Role Request Form */}
-      <div className="border-t border-gray-300 pt-4 mt-4">
-        <h3 className="text-lg font-semibold text-emerald-700 mb-2">
-          Request Role Change
-        </h3>
-        <form onSubmit={handleRoleRequest} className="space-y-4">
-          <label className="block text-gray-700">
-            Select Role:
-            <select
-              value={requestedRole}
-              onChange={(e) => setRequestedRole(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500"
-            >
-              <option value="">-- Choose Role --</option>
-              <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
-              <option value="HT">Head Teacher</option>
-              <option value="admin">Admin</option>
-            </select>
-          </label>
+      {/* Role Request */}
+      <div className="bg-white shadow-md rounded-2xl p-6">
+        <h2 className="text-xl font-bold text-purple-700 mb-4">Request Role Change</h2>
+        <form onSubmit={handleRoleRequest} className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+          <select
+            value={requestedRole}
+            onChange={(e) => setRequestedRole(e.target.value)}
+            className="w-full sm:w-1/3 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-300 focus:outline-none"
+          >
+            <option value="">-- Choose Role --</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="HT">Head Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
           <button
             type="submit"
-            className="w-full py-3 px-4 bg-emerald-600 text-white font-semibold rounded-lg shadow hover:bg-emerald-700 transition"
+            className="bg-emerald-600 text-white px-6 py-2 rounded-lg shadow hover:bg-emerald-700 transition"
           >
             Submit Request
           </button>
         </form>
-        {requestStatus && (
-          <p className="mt-2 text-sm text-green-600">{requestStatus}</p>
-        )}
+        {requestStatus && <p className="text-green-600 mt-3 font-medium">{requestStatus}</p>}
       </div>
     </div>
   );
