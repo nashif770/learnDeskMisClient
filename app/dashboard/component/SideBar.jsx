@@ -8,14 +8,15 @@ const SideBar = () => {
   // Sidebar links categorized with active/inactive status
   const categories = [
     {
-      title: "Admin Notifications",
+      title: "Admin",
       mvpRating: 2,
-      active: true, // <-- new
+      active: true,
       links: [
-        { label: "User Profile", href: "/dashboard/profile" },
-        { label: "User Requests", href: "/dashboard/requests" },
-        { label: "System Alerts", href: "/dashboard/notifications" },
-        { label: "Approval Requests", href: "/dashboard/approvals" },
+        { label: "Profile", href: "/dashboard/profile" },
+        { label: "Admin Overview", href: "/dashboard/adminSection" },
+        { label: "Users & Roles", href: "/dashboard/adminSection/usersAndRoles" },
+        { label: "Requests & Approvals", href: "/dashboard/adminSection/requests" },
+        { label: "System Alerts", href: "/dashboard/adminSection/systemAlerts" },
       ],
     },
     {

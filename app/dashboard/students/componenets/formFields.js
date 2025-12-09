@@ -3,10 +3,10 @@ export const formCategories = [
     category: "Student Personal Information",
     fields: [
     //   { label: "Form No", name: "formNo", type: "text" },
-      { label: "Student Name (English)", name: "studentNameEn", type: "text" },
-      { label: "Student Name (Bengali)", name: "studentNameBn", type: "text" },
+      { label: "Name (English)", name: "userNameEn", type: "text" },
+      { label: "Name (Bengali)", name: "userNameBn", type: "text" },
       { label: "Date of Birth", name: "dobReg", type: "date" },
-      { label: "Registration No", name: "dobReg", type: "text" },
+      { label: "Birth Reg / NID No", name: "dobReg", type: "text" },
       {
         label: "Place of Birth (Village/Ward/Union)",
         name: "birthPlace",
