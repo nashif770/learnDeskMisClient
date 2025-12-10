@@ -93,7 +93,7 @@ const SideBar = () => {
     {
       title: "Fees & Payments",
       mvpRating: 3,
-      active: false,
+      active: true,
       links: [
         { label: "Fee Management", href: "/dashboard/fees" },
         { label: "Payments History", href: "/dashboard/fees/history" },

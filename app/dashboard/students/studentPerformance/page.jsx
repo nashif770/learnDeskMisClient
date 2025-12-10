@@ -1,10 +1,11 @@
 "use client";
-import useStudents from "@/app/Hooks/useStudents";
+import useUserData from "@/app/Hooks/useUserData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import React, { useEffect, useState } from "react";
 
 const StudentPerformance = () => {
-  const { students } = useStudents();
+  const { userData } = useUserData();
+  const students = userData;
   const [filteredData, setFilteredData] = useState(students);
 
   const avg = (arr) =>
@@ -36,7 +37,9 @@ const StudentPerformance = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-semibold">📊 Student Performance Overview</h1>
+      <h1 className="text-2xl font-semibold">
+        📊 Student Performance Overview
+      </h1>
 
       {/* Filters */}
       <UniversalSearchBar
@@ -102,14 +105,19 @@ const StudentPerformance = () => {
               <th className="p-3 border text-center">Sem1</th>
               <th className="p-3 border text-center">Sem2</th>
               <th className="p-3 border text-center">Final Sem</th>
-              <th className="p-3 border text-center font-semibold">Semester Avg</th>
+              <th className="p-3 border text-center font-semibold">
+                Semester Avg
+              </th>
               <th className="p-3 border text-center font-semibold">Action</th>
             </tr>
           </thead>
 
           <tbody>
             {filteredStudents.map((s, index) => (
-              <tr key={s.id} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
+              <tr
+                key={s.id}
+                className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
+              >
                 <td className="p-3 border">{index + 1}</td>
                 <td className="p-3 border">{s.id}</td>
                 <td className="p-3 border">{s.name}</td>
@@ -119,7 +127,11 @@ const StudentPerformance = () => {
                 <td className="p-3 border text-center">{s.semesters[0]}</td>
                 <td className="p-3 border text-center">{s.semesters[1]}</td>
                 <td className="p-3 border text-center">{s.semesters[2]}</td>
-                <td className={`p-3 border text-center font-semibold ${getSemesterColor(s.semesterAvg)}`}>
+                <td
+                  className={`p-3 border text-center font-semibold ${getSemesterColor(
+                    s.semesterAvg
+                  )}`}
+                >
                   {s.semesterAvg}
                 </td>
                 <td className="p-3 border text-center font-semibold space-x-1">
@@ -138,7 +150,10 @@ const StudentPerformance = () => {
 
             {filteredStudents.length === 0 && (
               <tr>
-                <td colSpan="11" className="p-4 text-center text-gray-500 italic border">
+                <td
+                  colSpan="11"
+                  className="p-4 text-center text-gray-500 italic border"
+                >
                   No students found.
                 </td>
               </tr>

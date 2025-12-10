@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import useStudents from "@/app/Hooks/useStudents";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
+import useUserData from "@/app/Hooks/useUserData";
 
 const StudentList = () => {
   const router = useRouter();
-  const { students } = useStudents();
+    const { userData } = useUserData();
+  const students = userData
   const [filteredData, setFilteredData] = useState(students);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
-'use client';
-import useStudents from "@/app/Hooks/useStudents";
+"use client";
+import useUserData from "@/app/Hooks/useUserData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import React, { useEffect, useState } from "react";
 
 const StudentAttendance = () => {
-  const { students } = useStudents();
+  const { userData } = useUserData();
+  const students = userData;
+
   const [filteredData, setFilteredData] = useState(students);
 
   useEffect(() => {
@@ -24,18 +26,24 @@ const StudentAttendance = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-emerald-700">📊 Student Attendance Overview</h1>
+      <h1 className="text-2xl font-bold text-emerald-700">
+        📊 Student Attendance Overview
+      </h1>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition">
           <p className="text-gray-500">Total Students</p>
-          <p className="text-3xl font-bold text-emerald-600">{totalFilteredStudents}</p>
+          <p className="text-3xl font-bold text-emerald-600">
+            {totalFilteredStudents}
+          </p>
         </div>
 
         <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition">
           <p className="text-gray-500">Average Attendance %</p>
-          <p className="text-3xl font-bold text-blue-600">{averageAttendance}%</p>
+          <p className="text-3xl font-bold text-blue-600">
+            {averageAttendance}%
+          </p>
         </div>
 
         <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition">
@@ -82,7 +90,10 @@ const StudentAttendance = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-6 text-center text-gray-400 italic">
+                <td
+                  colSpan="6"
+                  className="p-6 text-center text-gray-400 italic"
+                >
                   No students found.
                 </td>
               </tr>

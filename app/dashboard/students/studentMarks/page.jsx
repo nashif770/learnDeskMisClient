@@ -1,10 +1,12 @@
-'use client';
-import useStudents from "@/app/Hooks/useStudents";
+"use client";
+import useUserData from "@/app/Hooks/useUserData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import React, { useEffect, useState } from "react";
 
 const StudentMarks = () => {
-  const { students } = useStudents();
+  const { userData } = useUserData();
+  const students = userData;
+
   const [filteredData, setFilteredData] = useState(students);
 
   useEffect(() => {
@@ -24,7 +26,8 @@ const StudentMarks = () => {
     totalStudents > 0
       ? (
           filteredData.reduce(
-            (acc, s) => acc + calculateSemesterTotalAndPercentage(s).percentage * 1,
+            (acc, s) =>
+              acc + calculateSemesterTotalAndPercentage(s).percentage * 1,
             0
           ) / totalStudents
         ).toFixed(1)
@@ -32,7 +35,9 @@ const StudentMarks = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-emerald-700">📝 Student Marks Overview</h1>
+      <h1 className="text-2xl font-bold text-emerald-700">
+        📝 Student Marks Overview
+      </h1>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -73,21 +78,33 @@ const StudentMarks = () => {
               <th className="p-3 border text-center">1st Sem</th>
               <th className="p-3 border text-center">2nd Sem</th>
               <th className="p-3 border text-center">Final Sem</th>
-              <th className="p-3 border text-center font-semibold">Total Sem</th>
-              <th className="p-3 border text-center font-semibold">Percentage</th>
+              <th className="p-3 border text-center font-semibold">
+                Total Sem
+              </th>
+              <th className="p-3 border text-center font-semibold">
+                Percentage
+              </th>
             </tr>
           </thead>
 
           <tbody>
             {filteredData.length > 0 ? (
               filteredData.map((s, index) => {
-                const { total, percentage } = calculateSemesterTotalAndPercentage(s);
+                const { total, percentage } =
+                  calculateSemesterTotalAndPercentage(s);
                 const ctTotal = s.monthlyTests.reduce((a, b) => a + b, 0);
                 const percentageColor =
-                  percentage >= 75 ? "text-green-600" : percentage >= 50 ? "text-yellow-600" : "text-red-600";
+                  percentage >= 75
+                    ? "text-green-600"
+                    : percentage >= 50
+                    ? "text-yellow-600"
+                    : "text-red-600";
 
                 return (
-                  <tr key={s.id} className="border-t hover:bg-gray-50 transition">
+                  <tr
+                    key={s.id}
+                    className="border-t hover:bg-gray-50 transition"
+                  >
                     <td className="p-3 border">{index + 1}</td>
                     <td className="p-3 border">{s.id}</td>
                     <td className="p-3 border">{s.name}</td>
@@ -95,28 +112,45 @@ const StudentMarks = () => {
 
                     {/* Class Tests */}
                     {s.monthlyTests.map((test, i) => (
-                      <td key={i} className="p-3 border text-center">{test}</td>
+                      <td key={i} className="p-3 border text-center">
+                        {test}
+                      </td>
                     ))}
-                    <td className="p-3 border text-center font-semibold">{ctTotal}</td>
+                    <td className="p-3 border text-center font-semibold">
+                      {ctTotal}
+                    </td>
 
                     {/* Mid Terms */}
                     {s.midTerms.map((mid, i) => (
-                      <td key={i} className="p-3 border text-center">{mid}</td>
+                      <td key={i} className="p-3 border text-center">
+                        {mid}
+                      </td>
                     ))}
 
                     {/* Semesters */}
                     {s.semesters.map((sem, i) => (
-                      <td key={i} className="p-3 border text-center">{sem}</td>
+                      <td key={i} className="p-3 border text-center">
+                        {sem}
+                      </td>
                     ))}
 
-                    <td className="p-3 border text-center font-semibold">{total}</td>
-                    <td className={`p-3 border text-center font-semibold ${percentageColor}`}>{percentage}%</td>
+                    <td className="p-3 border text-center font-semibold">
+                      {total}
+                    </td>
+                    <td
+                      className={`p-3 border text-center font-semibold ${percentageColor}`}
+                    >
+                      {percentage}%
+                    </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="16" className="p-6 text-center text-gray-400 italic">
+                <td
+                  colSpan="16"
+                  className="p-6 text-center text-gray-400 italic"
+                >
                   No students found.
                 </td>
               </tr>

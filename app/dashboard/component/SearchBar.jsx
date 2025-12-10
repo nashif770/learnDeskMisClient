@@ -1,5 +1,5 @@
 "use client";
-import useStudents from "@/app/Hooks/useStudents";
+import useStudents from "@/app/Hooks/useUserData";
 import React from "react";
 
 const SearchBar = ({ value, onChange, placeholder = "Search..." }) => {

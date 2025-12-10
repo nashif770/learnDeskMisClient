@@ -1,12 +1,17 @@
 'use client';
-import useStudents from "@/app/Hooks/useStudents";
+import useUserData from "@/app/Hooks/useUserData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ManageStudents = () => {
-  const { students } = useStudents();
+  const { userData } = useUserData();
+  const students = userData
+  
   const [filteredData, setFilteredData] = useState(students);
+
+
+  console.log("Help",students)
 
   useEffect(() => {
     if (students.length > 0) {
