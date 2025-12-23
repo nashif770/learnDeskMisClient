@@ -47,7 +47,7 @@ const ManageStudents = () => {
           <thead className="bg-gray-100 text-gray-700">
             <tr>
               <th className="p-3 border-b">#</th>
-              <th className="p-3 border-b">Student ID</th>
+              <th className="p-3 border-b">Student Id</th>
               <th className="p-3 border-b">Name</th>
               <th className="p-3 border-b">Class</th>
               <th className="p-3 border-b">Mobile</th>
