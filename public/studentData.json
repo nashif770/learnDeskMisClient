@@ -1,0 +1,581 @@
+[
+  {
+    "id": 101,
+    "uid": "user-101",
+    "role": "student",
+    "userdata": {
+      "name": "Apu Rahman",
+      "email": "apu.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000001",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {
+        "name": "Guest User",
+        "accessLevel": "limited",
+        "notes": "Temporary visitor access"
+      },
+      "student": {
+        "class": "Class 6",
+        "section": "A",
+        "roll": "2",
+        "age": 11
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 102,
+    "uid": "user-102",
+    "role": "student",
+    "userdata": {
+      "name": "Nashif Ahmed",
+      "email": "nashif.ahmed@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000002",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Class 6",
+        "section": "B",
+        "roll": "3",
+        "age": 11
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 103,
+    "uid": "user-103",
+    "role": "student",
+    "userdata": {
+      "name": "Lipu Rahman",
+      "email": "lipu.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000003",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Class 9",
+        "section": "A",
+        "roll": "5",
+        "age": 15
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 104,
+    "uid": "user-104",
+    "role": "student",
+    "userdata": {
+      "name": "Ashiq Ahmed",
+      "email": "ashiq.ahmed@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000004",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Class 3",
+        "section": "A",
+        "roll": "4",
+        "age": 8
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 105,
+    "uid": "user-105",
+    "role": "student",
+    "userdata": {
+      "name": "Tonmoy Rahman",
+      "email": "tonmoy.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000005",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Class 1",
+        "section": "B",
+        "roll": "1",
+        "age": 6
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 106,
+    "uid": "user-106",
+    "role": "student",
+    "userdata": {
+      "name": "Susmoy Rahman",
+      "email": "susmoy.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000006",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Class 1",
+        "section": "A",
+        "roll": "2",
+        "age": 6
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 107,
+    "uid": "user-107",
+    "role": "student",
+    "userdata": {
+      "name": "Ahasan Rahman",
+      "email": "ahasan.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000007",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Play",
+        "section": "A",
+        "roll": "1",
+        "age": 4
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 108,
+    "uid": "user-108",
+    "role": "student",
+    "userdata": {
+      "name": "Shishir Rahman",
+      "email": "shishir.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000008",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Nursery",
+        "section": "A",
+        "roll": "1",
+        "age": 3
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 109,
+    "uid": "user-109",
+    "role": "student",
+    "userdata": {
+      "name": "Salman Rahman",
+      "email": "salman.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000009",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Class 2",
+        "section": "B",
+        "roll": "3",
+        "age": 7
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 110,
+    "uid": "user-110",
+    "role": "student",
+    "userdata": {
+      "name": "Rubayed Rahman",
+      "email": "rubayed.rahman@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0170000010",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {
+        "class": "Elementary",
+        "section": "A",
+        "roll": "1",
+        "age": 5
+      },
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 111,
+    "uid": "user-111",
+    "role": "staff",
+    "userdata": {
+      "name": "Meherose Rahman",
+      "email": "meherose@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0171111111",
+      "gender": "Female"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {
+        "position": "Lab Assistant",
+        "department": "Computer Science",
+        "joiningDate": "2022-01-15",
+        "experienceYears": 2,
+        "workEmail": "meherose@school.com",
+        "phone": "0171111111",
+        "responsibilities": [
+          "Lab maintenance",
+          "Student assistance",
+          "Equipment management"
+        ]
+      },
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 112,
+    "uid": "user-112",
+    "role": "teacher",
+    "userdata": {
+      "name": "Najma Akter",
+      "email": "najma@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0172222222",
+      "gender": "Female"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {},
+      "teacher": {
+        "subjects": ["English", "History"],
+        "classInCharge": "Class 6B",
+        "joiningDate": "2021-03-10",
+        "experienceYears": 5,
+        "workEmail": "najma@school.com",
+        "phone": "0172222222",
+        "additionalDuties": [
+          "Exam preparation",
+          "Student counseling",
+          "Club supervision"
+        ]
+      },
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 113,
+    "uid": "user-113",
+    "role": "teacher",
+    "userdata": {
+      "name": "Awlad Hossain",
+      "email": "awlad@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0173333333",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {},
+      "teacher": {
+        "subjects": ["Math", "Physics"],
+        "classInCharge": "Class 9A",
+        "joiningDate": "2020-02-15",
+        "experienceYears": 6,
+        "workEmail": "awlad@school.com",
+        "phone": "0173333333",
+        "additionalDuties": [
+          "Exam preparation",
+          "Student counseling",
+          "Club supervision"
+        ]
+      },
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 114,
+    "uid": "user-114",
+    "role": "headteacher",
+    "userdata": {
+      "name": "Aliya Rahman",
+      "email": "headteacher@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0174444444",
+      "gender": "Female"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {},
+      "teacher": {},
+      "headteacher": {
+        "managedClasses": ["1A", "2A", "3B", "6A", "6B"],
+        "experienceYears": 15,
+        "officeEmail": "headteacher@school.com",
+        "phone": "0174444444",
+        "responsibilities": [
+          "School administration",
+          "Teacher supervision",
+          "Curriculum oversight"
+        ],
+        "officeHours": "9:00 AM - 5:00 PM"
+      },
+      "admin": {}
+    }
+  },
+  {
+    "id": 115,
+    "uid": "user-115",
+    "role": "admin",
+    "userdata": {
+      "name": "Azizur Rahman",
+      "email": "admin@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0175555555",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {
+        "permissions": [
+          "manageUsers",
+          "manageCourses",
+          "viewReports",
+          "assignRoles",
+          "updateSchoolInfo"
+        ],
+        "officeEmail": "admin@school.com",
+        "phone": "0175555555",
+        "roleDescription": "Full system administrator with all permissions",
+        "createdAt": "2023-01-01T10:30:00Z",
+        "lastUpdated": "2024-10-10T15:45:00Z"
+      }
+    }
+  },
+  {
+    "id": 116,
+    "uid": "user-116",
+    "role": "guest",
+    "userdata": {
+      "name": "Temporary Guest",
+      "email": "guest1@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0176666666",
+      "gender": "Female"
+    },
+    "roles": {
+      "guest": {
+        "name": "Temporary Guest",
+        "email": "guest1@example.com",
+        "accessLevel": "limited",
+        "visitPurpose": "View school info only",
+        "sessionExpiry": "2025-01-01T00:00:00Z",
+        "notes": "Temporary visitor access. Cannot access sensitive data."
+      },
+      "student": {},
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 117,
+    "uid": "user-117",
+    "role": "guest",
+    "userdata": {
+      "name": "Visitor User",
+      "email": "guest2@example.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0177777777",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {
+        "name": "Visitor User",
+        "email": "guest2@example.com",
+        "accessLevel": "limited",
+        "visitPurpose": "School event only",
+        "sessionExpiry": "2025-06-01T00:00:00Z",
+        "notes": "Temporary visitor access. Cannot access sensitive data."
+      },
+      "student": {},
+      "staff": {},
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 118,
+    "uid": "user-118",
+    "role": "teacher",
+    "userdata": {
+      "name": "Farjana Akter",
+      "email": "farjana@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0178888888",
+      "gender": "Female"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {},
+      "teacher": {
+        "subjects": ["Biology", "Chemistry"],
+        "classInCharge": "Class 10A",
+        "joiningDate": "2019-09-01",
+        "experienceYears": 8,
+        "workEmail": "farjana@school.com",
+        "phone": "0178888888",
+        "additionalDuties": ["Lab supervision", "Student counseling"]
+      },
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 119,
+    "uid": "user-119",
+    "role": "staff",
+    "userdata": {
+      "name": "Jalil Ahmed",
+      "email": "jalil@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0179999999",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {
+        "position": "Accountant",
+        "department": "Finance",
+        "joiningDate": "2020-05-20",
+        "experienceYears": 4,
+        "workEmail": "jalil@school.com",
+        "phone": "0179999999",
+        "responsibilities": [
+          "Fee management",
+          "Salary processing",
+          "Budget planning"
+        ]
+      },
+      "teacher": {},
+      "headteacher": {},
+      "admin": {}
+    }
+  },
+  {
+    "id": 120,
+    "uid": "user-120",
+    "role": "headteacher",
+    "userdata": {
+      "name": "Tonmoy Hossain",
+      "email": "tonmoy.head@school.com",
+      "photoURL": "/default-avatar.png",
+      "schoolId": "school-001",
+      "mobile": "0171010101",
+      "gender": "Male"
+    },
+    "roles": {
+      "guest": {},
+      "student": {},
+      "staff": {},
+      "teacher": {},
+      "headteacher": {
+        "managedClasses": ["1A", "2B", "3A", "4C", "5B"],
+        "experienceYears": 20,
+        "officeEmail": "tonmoy.head@school.com",
+        "phone": "0171010101",
+        "responsibilities": [
+          "Overall school administration",
+          "Teacher supervision",
+          "Strategic planning"
+        ],
+        "officeHours": "8:00 AM - 4:00 PM"
+      },
+      "admin": {}
+    }
+  }
+]

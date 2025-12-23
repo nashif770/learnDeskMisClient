@@ -1,20 +1,22 @@
 'use client';
-import useUserData from "@/app/Hooks/useUserData";
+import useStudentData from "@/app/Hooks/useStudentData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ManageStudents = () => {
-  const { userData } = useUserData();
-  const students = userData
+  const {studentData} = useStudentData();
+  
+  const students = studentData
+
+  console.log("just checking", studentData)
   
   const [filteredData, setFilteredData] = useState(students);
-
 
   console.log("Help",students)
 
   useEffect(() => {
-    if (students.length > 0) {
+    if (students?.length > 0) {
       setFilteredData(students);
     }
   }, [students]);
@@ -56,13 +58,14 @@ const ManageStudents = () => {
           <tbody>
             {filteredData.length > 0 ? (
               filteredData.map((student, index) => (
+                // console.log("Students help",student.id)
                 <tr
                   key={student.id}
                   className="hover:bg-gray-50 transition-colors duration-200"
                 >
                   <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">{student.id}</td>
-                  <td className="p-3 border-b">{student.name}</td>
+                  <td className="p-3 border-b">{student?.userdata.name}</td>
                   <td className="p-3 border-b">{student.class}</td>
                   <td className="p-3 border-b">{student.mobile}</td>
                   <td className="p-3 border-b text-center">
@@ -80,7 +83,8 @@ const ManageStudents = () => {
                   </td>
                 </tr>
               ))
-            ) : (
+            ) 
+            : (
               <tr>
                 <td colSpan="6" className="p-4 text-center text-gray-500 italic">
                   No students found.
