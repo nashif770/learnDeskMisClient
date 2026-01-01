@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
-import useUserData from "@/app/Hooks/useUserData";
+import useStudentData from "@/app/Hooks/useStudentData";
 
 const StudentList = () => {
+  const { studentData, setStudentData } = useStudentData(); // Make sure your hook exposes a setter if possible
   const router = useRouter();
-    const { userData } = useUserData();
-  const students = userData
+  const students = studentData;
   const [filteredData, setFilteredData] = useState(students);
 
   useEffect(() => {
@@ -55,8 +55,8 @@ const StudentList = () => {
                   className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
                 >
                   <td className="p-3 border">{index + 1}</td>
-                  <td className="p-3 border">{s.id}</td>
-                  <td className="p-3 border">{s.name}</td>
+                  <td className="p-3 border">{s.Id}</td>
+                  <td className="p-3 border">{s.userNameEn}</td>
                   <td className="p-3 border">{s.class}</td>
                   <td className="p-3 border">{s.roll}</td>
                   <td className="p-3 border">{s.mobile}</td>
@@ -64,7 +64,7 @@ const StudentList = () => {
                   <td className="p-3 border">{s.motherName}</td>
                   <td className="p-3 border text-center">
                     <button
-                      onClick={() => handleDetailsClick(s.id)}
+                      onClick={() => handleDetailsClick(s.Id)}
                       className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
                     >
                       Details

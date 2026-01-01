@@ -20,25 +20,53 @@ const SignUpForm = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const password = watch("password");
+
   const onSubmit = async (data) => {
     const email = data.email;
     const password = data.password;
-    //create user
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
-        // console.log(result);
-        alert("Account Created");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  const password = watch("password");
+    try {
+      // 1️⃣ Create Firebase user
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const firebaseUser = result.user;
+
+      // 2️⃣ Prepare user data for backend
+      const userData = {
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        createdAt: new Date().toISOString(),
+        role: "guest", // default role
+        status: "pending", // default status
+      };
+
+      // 3️⃣ Send to backend
+      const res = await fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(errorText || "Failed to save user to backend");
+      }
+
+      const backendResult = await res.json();
+      console.log("Backend response:", backendResult);
+
+      alert("Account created successfully!");
+
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert(error.message || "Something went wrong");
+    }
+  };
 
   return (
     <div className="max-w-md w-full bg-white shadow-md rounded-lg p-6 text-black">
-      {/* Smaller Title */}
       <h2 className="text-2xl font-bold text-emerald-700 text-center mb-4">
         Create Account
       </h2>
@@ -74,9 +102,7 @@ const SignUpForm = () => {
             className={tailwindClass.inputClass}
           />
           {errors.password && (
-            <p className="text-red-600 mt-1 text-xs">
-              {errors.password.message}
-            </p>
+            <p className="text-red-600 mt-1 text-xs">{errors.password.message}</p>
           )}
         </div>
 
@@ -94,9 +120,7 @@ const SignUpForm = () => {
             className={tailwindClass.inputClass}
           />
           {errors.confirmPass && (
-            <p className="text-red-600 mt-1 text-xs">
-              {errors.confirmPass.message}
-            </p>
+            <p className="text-red-600 mt-1 text-xs">{errors.confirmPass.message}</p>
           )}
         </div>
 

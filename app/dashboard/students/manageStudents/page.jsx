@@ -1,25 +1,32 @@
-'use client';
+"use client";
 import useStudentData from "@/app/Hooks/useStudentData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ManageStudents = () => {
-  const {studentData} = useStudentData();
-  
-  const students = studentData
-
-  console.log("just checking", studentData)
-  
-  const [filteredData, setFilteredData] = useState(students);
-
-  console.log("Help",students)
+  const { studentData, setStudentData } = useStudentData(); // Make sure your hook exposes a setter if possible
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    if (students?.length > 0) {
-      setFilteredData(students);
+    if (studentData?.length > 0) {
+      setFilteredData(studentData);
     }
-  }, [students]);
+  }, [studentData]);
+
+  // Remove student function
+  const handleRemove = (studentId) => {
+    if (confirm("Are you sure you want to remove this student?")) {
+      // Remove from original data
+      const updatedStudents = studentData.filter(
+        (student) => student.id !== studentId
+      );
+
+      // Update both main data and filtered data
+      setStudentData(updatedStudents);
+      setFilteredData(updatedStudents);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -35,7 +42,7 @@ const ManageStudents = () => {
 
       {/* Search */}
       <UniversalSearchBar
-        data={students}
+        data={studentData}
         filterKeys={["class"]}
         sortKeys={["id", "class", "name"]}
         onFilter={(data) => setFilteredData(data)}
@@ -49,7 +56,8 @@ const ManageStudents = () => {
               <th className="p-3 border-b">#</th>
               <th className="p-3 border-b">Student Id</th>
               <th className="p-3 border-b">Name</th>
-              <th className="p-3 border-b">Class</th>
+              <th className="p-3 border-b">Father's Name</th>
+              <th className="p-3 border-b">Mother's Name</th>
               <th className="p-3 border-b">Mobile</th>
               <th className="p-3 border-b text-center">Actions</th>
             </tr>
@@ -58,35 +66,34 @@ const ManageStudents = () => {
           <tbody>
             {filteredData.length > 0 ? (
               filteredData.map((student, index) => (
-                // console.log("Students help",student.id)
                 <tr
                   key={student.id}
                   className="hover:bg-gray-50 transition-colors duration-200"
                 >
                   <td className="p-3 border-b">{index + 1}</td>
-                  <td className="p-3 border-b">{student.id}</td>
-                  <td className="p-3 border-b">{student?.userdata.name}</td>
-                  <td className="p-3 border-b">{student.class}</td>
-                  <td className="p-3 border-b">{student.mobile}</td>
+                  <td className="p-3 border-b">{student?.Id}</td>
+                  <td className="p-3 border-b">{student?.userNameEn}</td>
+                  <td className="p-3 border-b">{student?.fatherName}</td>
+                  <td className="p-3 border-b">{student?.motherName}</td>
+                  <td className="p-3 border-b">{student?.mobile}</td>
                   <td className="p-3 border-b text-center">
                     <div className="flex justify-center gap-2">
-                      <button className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm transition">
-                        Details
-                      </button>
-                      <button className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm transition">
-                        Promote
-                      </button>
-                      <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm transition">
+                      <button
+                        onClick={() => handleRemove(student.id)}
+                        className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-sm transition"
+                      >
                         Remove
                       </button>
                     </div>
                   </td>
                 </tr>
               ))
-            ) 
-            : (
+            ) : (
               <tr>
-                <td colSpan="6" className="p-4 text-center text-gray-500 italic">
+                <td
+                  colSpan="6"
+                  className="p-4 text-center text-gray-500 italic"
+                >
                   No students found.
                 </td>
               </tr>

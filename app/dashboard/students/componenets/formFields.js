@@ -2,11 +2,11 @@ export const formCategories = [
   {
     category: "Student Personal Information",
     fields: [
-    //   { label: "Form No", name: "formNo", type: "text" },
+      //   { label: "Form No", name: "formNo", type: "text" },
       { label: "Name (English)", name: "userNameEn", type: "text" },
       { label: "Name (Bengali)", name: "userNameBn", type: "text" },
       { label: "Date of Birth", name: "dobReg", type: "date" },
-      { label: "Birth Reg / NID No", name: "dobReg", type: "text" },
+      { label: "Birth Registration Number ", name: "BNID", type: "text" },
       {
         label: "Place of Birth (Village/Ward/Union)",
         name: "birthPlace",
@@ -29,7 +29,11 @@ export const formCategories = [
         name: "currentAddress",
         type: "text",
       },
-      { label: "Post Office (Current)", name: "currentPostOffice", type: "text" },
+      {
+        label: "Post Office (Current)",
+        name: "currentPostOffice",
+        type: "text",
+      },
       { label: "Post Code (Current)", name: "currentPostCode", type: "text" },
       { label: "Police Station (Thana)", name: "currentThana", type: "text" },
       { label: "Sub-District (Upazila)", name: "currentUpazila", type: "text" },
@@ -79,7 +83,11 @@ export const formCategories = [
     fields: [
       { label: "Mobile Number", name: "mobile", type: "text" },
       { label: "Educational Qualification", name: "education", type: "text" },
-      { label: "Extra Curriculumn Activity", name: "extraCurriculumn", type: "text" },
+      {
+        label: "Extra Curriculumn Activity",
+        name: "extraCurriculumn",
+        type: "text",
+      },
     ],
   },
 
@@ -96,7 +104,11 @@ export const formCategories = [
 
       { label: "Guardian Name", name: "guardianName", type: "text" },
       { label: "Guardian Mobile", name: "guardianMobile", type: "text" },
-      { label: "Guardian Relationship", name: "guardianRelation", type: "text" },
+      {
+        label: "Guardian Relationship",
+        name: "guardianRelation",
+        type: "text",
+      },
       { label: "Note About Guardian", name: "guardianNote", type: "textarea" },
     ],
   },
@@ -139,26 +151,4 @@ export const formCategories = [
       },
     ],
   },
-//   {
-//     category: "Signatures",
-//     fields: [
-//       {
-//         label: "Signature of Guardian",
-//         name: "docEducation",
-//         type: "text",
-//       },
-
-//       {
-//         label: "Signature of Muhtamim",
-//         name: "docNIDBirth",
-//         type: "text",
-//       },
-
-//       {
-//         label: "Signature of Admin",
-//         name: "docGuardianNID",
-//         type: "text",
-//       },
-//     ],
-//   },
 ];

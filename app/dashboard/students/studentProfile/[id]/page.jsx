@@ -1,15 +1,20 @@
 "use client";
-import useUserData from "@/app/Hooks/useUserData";
+import useStudentData from "@/app/Hooks/useStudentData";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const StudentProfile = () => {
   const params = useParams();
   const studentId = Number(params.id); // get from URL and convert to number
-  const { userData } = useUserData();
-  const students = userData;
+    const { studentData, setStudentData } = useStudentData(); // Make sure your hook 
+  const students = studentData;
 
-  const student = students.find((s) => s.id === studentId);
+  const student = students.find((s) => console.log(studentId) 
+  // s.Id === studentId
+);
+
+  console.log("tramparam", student)
+
   if (!student)
     return (
       <div className="p-6 text-center text-gray-500">No student found</div>

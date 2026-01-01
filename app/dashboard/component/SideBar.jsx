@@ -52,7 +52,6 @@ const SideBar = () => {
           label: "Student Attendance",
           href: "/dashboard/students/studentAttendance/",
         },
-        { label: "Student Marks", href: "/dashboard/students/studentMarks" },
         {
           label: "Student Performance",
           href: "/dashboard/students/studentPerformance",
