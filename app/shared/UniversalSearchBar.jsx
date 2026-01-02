@@ -58,17 +58,17 @@ const UniversalSearchBar = ({
       />
 
       {/* Dynamic Dropdown Filters */}
-      {filterKeys.map((key) => (
+      {filterKeys.map((key, index) => (
         <select
-          key={key}
+          key={index}
           className="border p-2 rounded w-full md:w-1/4"
           value={filters[key] || ""}
           onChange={(e) => setFilters({ ...filters, [key]: e.target.value })}
         >
           <option value="">{`Filter by ${key}`}</option>
 
-          {[...new Set(data.map((item) => item[key]))].map((val) => (
-            <option key={val} value={val}>
+          {[...new Set(data.map((item) => item[key]))].map((val, index) => (
+            <option key={index} value={val}>
               {val}
             </option>
           ))}
