@@ -98,7 +98,7 @@ const StudentProfilePage = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 -mt-10">
+      <div className="max-w-7xl mx-auto px-6 mt-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* LEFT COLUMN: Core Dossier */}
