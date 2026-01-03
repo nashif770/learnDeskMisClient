@@ -28,7 +28,11 @@ const SignUpForm = () => {
 
     try {
       // 1️⃣ Create Firebase user
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const firebaseUser = result.user;
 
       // 2️⃣ Prepare user data for backend
@@ -40,16 +44,19 @@ const SignUpForm = () => {
         status: "pending", // default status
       };
 
-      console.log("User", userData)
+      console.log("User", userData);
 
       // 3️⃣ Send to backend
-      const res = await fetch("http://localhost:5000/userData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+      const res = await fetch(
+        "https://learndeskmisserver.onrender.com/userData",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -60,7 +67,6 @@ const SignUpForm = () => {
       console.log("Backend response:", backendResult);
 
       alert("Account created successfully!");
-
     } catch (error) {
       console.error("Registration error:", error);
       alert(error.message || "Something went wrong");
@@ -104,7 +110,9 @@ const SignUpForm = () => {
             className={tailwindClass.inputClass}
           />
           {errors.password && (
-            <p className="text-red-600 mt-1 text-xs">{errors.password.message}</p>
+            <p className="text-red-600 mt-1 text-xs">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -122,7 +130,9 @@ const SignUpForm = () => {
             className={tailwindClass.inputClass}
           />
           {errors.confirmPass && (
-            <p className="text-red-600 mt-1 text-xs">{errors.confirmPass.message}</p>
+            <p className="text-red-600 mt-1 text-xs">
+              {errors.confirmPass.message}
+            </p>
           )}
         </div>
 

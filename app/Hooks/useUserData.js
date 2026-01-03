@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://learndeskmisserver.onrender.com";
 
 const useUserData = () => {
   const [userData, setUserData] = useState([]);

@@ -13,7 +13,7 @@ const useStudentData = () => {
     setError(null);
 
     try {
-      const res = await axios.get(`http://localhost:5000/studentData`);
+      const res = await axios.get(`https://learndeskmisserver.onrender.com/studentData`);
       setStudentData(res.data);
     } catch (err) {
       console.error("Failed to fetch student data", err);

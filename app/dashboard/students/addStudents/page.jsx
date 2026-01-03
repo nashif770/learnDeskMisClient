@@ -23,13 +23,16 @@ const AddStudents = () => {
   const onSubmit = async (data) => {
     try {
       setSubmitting(true);
-      const res = await fetch("http://localhost:5000/studentData/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        "https://learndeskmisserver.onrender.com/studentData/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
       const result = await res.json();
-      
+
       if (!res.ok) throw new Error(result.message || "Failed to submit");
       reset();
       alert("🎉 Student successfully added to the database!");
@@ -38,7 +41,7 @@ const AddStudents = () => {
       alert("❌ Submission failed. Please check your connection.");
     } finally {
       setSubmitting(false);
-      console.log('submitted false')
+      console.log("submitted false");
     }
   };
 
@@ -132,10 +135,7 @@ const AddStudents = () => {
         className="max-w-5xl mx-auto space-y-8"
       >
         {formCategories.map((section, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-3xl border p-8"
-          >
+          <div key={idx} className="bg-white rounded-3xl border p-8">
             <div className="flex items-center gap-4 mb-8">
               <span className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 font-bold flex items-center justify-center">
                 {idx + 1}
