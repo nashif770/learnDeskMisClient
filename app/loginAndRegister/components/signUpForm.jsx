@@ -40,8 +40,10 @@ const SignUpForm = () => {
         status: "pending", // default status
       };
 
+      console.log("User", userData)
+
       // 3️⃣ Send to backend
-      const res = await fetch("http://localhost:5000/users", {
+      const res = await fetch("http://localhost:5000/userData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
