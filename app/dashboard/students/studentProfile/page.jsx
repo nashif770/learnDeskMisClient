@@ -93,7 +93,7 @@ const StudentList = () => {
                       key={s._id}
                       className="group hover:bg-blue-50/20 transition-all cursor-default"
                     >
-                      {console.log("filterd student", s)}
+                      {console.log("filtered student", s)}
                       <td className="px-10 py-8 text-base font-black text-slate-300 font-mono">
                         {String(index + 1).padStart(2, "0")}
                       </td>
