@@ -1,32 +1,44 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { formCategories } from "../componenets/formFields";
 import { useForm } from "react-hook-form";
 
 const AddStudents = () => {
+  const [submitting, setSubmitting] = useState(false);
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors }, // ✅ only errors kept
   } = useForm();
+
+  // ✅ Optional side-effect (logging / analytics / toast hook)
+  useEffect(() => {
+    if (submitting) {
+      console.log(`Submitting student data ${submitting}`);
+    }
+  }, [submitting]);
 
   const onSubmit = async (data) => {
     try {
+      setSubmitting(true);
       const res = await fetch("http://localhost:5000/studentData/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
       const result = await res.json();
+      
       if (!res.ok) throw new Error(result.message || "Failed to submit");
-
       reset();
       alert("🎉 Student successfully added to the database!");
     } catch (error) {
       console.error(error);
       alert("❌ Submission failed. Please check your connection.");
+    } finally {
+      setSubmitting(false);
+      console.log('submitted false')
     }
   };
 
@@ -36,38 +48,68 @@ const AddStudents = () => {
 
     switch (field.type) {
       case "text":
-        return <input type="text" placeholder={`Enter ${field.label.toLowerCase()}...`} className={commonClass} {...register(field.name)} />;
+        return (
+          <input
+            type="text"
+            placeholder={`Enter ${field.label.toLowerCase()}...`}
+            className={commonClass}
+            {...register(field.name)}
+          />
+        );
 
       case "textarea":
-        return <textarea rows={3} placeholder={`Provide details about ${field.label.toLowerCase()}...`} className={commonClass} {...register(field.name)} />;
+        return (
+          <textarea
+            rows={3}
+            placeholder={`Provide details about ${field.label.toLowerCase()}...`}
+            className={commonClass}
+            {...register(field.name)}
+          />
+        );
 
       case "select":
         return (
           <select className={commonClass} {...register(field.name)}>
-            <option value="" className="text-gray-400">Select Option</option>
+            <option value="">Select Option</option>
             {field.options?.map((opt, i) => (
-              <option key={i} value={opt}>{opt}</option>
+              <option key={i} value={opt}>
+                {opt}
+              </option>
             ))}
           </select>
         );
 
       case "file":
         return (
-          <div className="relative group">
-            <input type="file" className={`${commonClass} file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100`} {...register(field.name)} />
-          </div>
+          <input
+            type="file"
+            className={commonClass}
+            {...register(field.name)}
+          />
         );
 
       case "checkbox":
         return (
-          <div className="flex items-center h-full pt-2">
-            <input type="checkbox" className="h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 transition-all cursor-pointer" {...register(field.name)} />
-            <span className="ml-2 text-sm text-gray-500">Enable this option</span>
+          <div className="flex items-center pt-2">
+            <input
+              type="checkbox"
+              className="h-5 w-5 text-emerald-600"
+              {...register(field.name)}
+            />
+            <span className="ml-2 text-sm text-gray-500">
+              Enable this option
+            </span>
           </div>
         );
 
       case "date":
-        return <input type="date" className={commonClass} {...register(field.name)} />;
+        return (
+          <input
+            type="date"
+            className={commonClass}
+            {...register(field.name)}
+          />
+        );
 
       default:
         return null;
@@ -76,12 +118,11 @@ const AddStudents = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-10">
-      {/* Header */}
       <div className="max-w-5xl mx-auto mb-10 text-center">
-        <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-2">
+        <h2 className="text-4xl font-black text-slate-900 mb-2">
           New Student Registration
         </h2>
-        <p className="text-slate-500 font-medium text-lg">
+        <p className="text-slate-500 text-lg">
           Please fill in the information below to create a new student record.
         </p>
       </div>
@@ -90,32 +131,29 @@ const AddStudents = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-5xl mx-auto space-y-8"
       >
-        {formCategories?.map((section, idx) => (
-          <div key={idx} className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 transition-all hover:shadow-md">
-            {/* Category Title */}
+        {formCategories.map((section, idx) => (
+          <div
+            key={idx}
+            className="bg-white rounded-3xl border p-8"
+          >
             <div className="flex items-center gap-4 mb-8">
-              <span className="flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 font-bold text-lg">
+              <span className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 font-bold flex items-center justify-center">
                 {idx + 1}
               </span>
-              <h3 className="text-xl font-bold text-slate-800">
-                {section.category}
-              </h3>
-              <div className="flex-1 h-px bg-slate-100"></div>
+              <h3 className="text-xl font-bold">{section.category}</h3>
             </div>
 
-            {/* Fields Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {section.fields.map((field, i) => (
-                <div key={i} className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">
+                <div key={i}>
+                  <label className="text-xs font-bold uppercase text-slate-500">
                     {field.label}
                   </label>
                   {renderField(field)}
                   {errors[field.name] && (
-                    <span className="text-rose-500 text-[11px] font-bold mt-1 flex items-center gap-1">
-                      <span className="w-1 h-1 bg-rose-500 rounded-full"></span>
+                    <p className="text-red-500 text-xs">
                       {errors[field.name]?.message}
-                    </span>
+                    </p>
                   )}
                 </div>
               ))}
@@ -123,23 +161,25 @@ const AddStudents = () => {
           </div>
         ))}
 
-        {/* Action Buttons */}
-        <div className="flex items-center justify-center gap-4 pt-6">
+        <div className="flex justify-center gap-4 pt-6">
           <button
             type="button"
             onClick={() => reset()}
-            className="px-8 py-3.5 rounded-2xl text-slate-500 font-bold hover:bg-slate-100 transition-all"
+            className="px-8 py-3 rounded-xl text-slate-500"
           >
             Reset Form
           </button>
+
           <button
             type="submit"
-            disabled={isSubmitting}
-            className={`px-12 py-3.5 rounded-2xl bg-emerald-600 text-white font-black shadow-lg shadow-emerald-200 transition-all active:scale-95 ${
-              isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:bg-emerald-700 hover:-translate-y-1"
+            disabled={submitting}
+            className={`px-12 py-3 rounded-xl text-white font-bold ${
+              submitting
+                ? "bg-emerald-400 cursor-not-allowed"
+                : "bg-emerald-600 hover:bg-emerald-700"
             }`}
           >
-            {isSubmitting ? "Saving Student..." : "Complete Registration"}
+            {submitting ? "Saving Student..." : "Complete Registration"}
           </button>
         </div>
       </form>
