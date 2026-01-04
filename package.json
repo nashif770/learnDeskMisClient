@@ -16,9 +16,9 @@
     "firebase": "^12.6.0",
     "framer-motion": "^12.23.25",
     "lucide-react": "^0.552.0",
-    "next": "^16.1.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-hook-form": "^7.68.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
@@ -29,7 +29,7 @@
     "@tailwindcss/postcss": "^4",
     "baseline-browser-mapping": "^2.9.11",
     "eslint": "^9",
-    "eslint-config-next": "15.3.2",
+    "eslint-config-next": "16.1.1",
     "tailwindcss": "^4"
   }
 }

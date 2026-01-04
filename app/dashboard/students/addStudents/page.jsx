@@ -122,10 +122,10 @@ const AddStudents = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-10">
       <div className="max-w-5xl mx-auto mb-10 text-center">
-        <h2 className="text-4xl font-black text-slate-900 mb-2">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">
           New Student Registration
         </h2>
-        <p className="text-slate-500 text-lg">
+        <p className="text-slate-600 text-base md:text-lg">
           Please fill in the information below to create a new student record.
         </p>
       </div>
@@ -135,23 +135,28 @@ const AddStudents = () => {
         className="max-w-5xl mx-auto space-y-8"
       >
         {formCategories.map((section, idx) => (
-          <div key={idx} className="bg-white rounded-3xl border p-8">
-            <div className="flex items-center gap-4 mb-8">
-              <span className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 font-bold flex items-center justify-center">
+          <div
+            key={idx}
+            className="bg-white rounded-3xl border border-gray-200 p-6 md:p-8 shadow-sm"
+          >
+            <div className="flex items-center gap-4 mb-6 md:mb-8">
+              <span className="w-8 h-8 md:w-10 md:h-10 rounded-2xl bg-emerald-50 text-emerald-600 font-bold flex items-center justify-center">
                 {idx + 1}
               </span>
-              <h3 className="text-xl font-bold">{section.category}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-slate-900">
+                {section.category}
+              </h3>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {section.fields.map((field, i) => (
-                <div key={i}>
-                  <label className="text-xs font-bold uppercase text-slate-500">
+                <div key={i} className="flex flex-col gap-1">
+                  <label className="text-xs font-bold uppercase text-slate-600">
                     {field.label}
                   </label>
                   {renderField(field)}
                   {errors[field.name] && (
-                    <p className="text-red-500 text-xs">
+                    <p className="text-red-600 text-xs mt-1">
                       {errors[field.name]?.message}
                     </p>
                   )}
@@ -161,11 +166,11 @@ const AddStudents = () => {
           </div>
         ))}
 
-        <div className="flex justify-center gap-4 pt-6">
+        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
           <button
             type="button"
             onClick={() => reset()}
-            className="px-8 py-3 rounded-xl text-slate-500"
+            className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
           >
             Reset Form
           </button>
@@ -173,7 +178,7 @@ const AddStudents = () => {
           <button
             type="submit"
             disabled={submitting}
-            className={`px-12 py-3 rounded-xl text-white font-bold ${
+            className={`px-12 py-3 rounded-xl text-white font-bold transition ${
               submitting
                 ? "bg-emerald-400 cursor-not-allowed"
                 : "bg-emerald-600 hover:bg-emerald-700"

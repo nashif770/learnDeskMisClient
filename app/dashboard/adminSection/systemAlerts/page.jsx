@@ -7,7 +7,7 @@ import {
   CheckCircleIcon,
   BellAlertIcon,
   ClockIcon,
-  TrashIcon
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 
 const SystemAlerts = () => {
@@ -45,92 +45,105 @@ const SystemAlerts = () => {
   const typeConfig = {
     warning: {
       icon: <ExclamationTriangleIcon className="w-5 h-5" />,
-      theme: "bg-amber-50 text-amber-600 border-amber-100",
-      indicator: "bg-amber-500"
+      bg: "bg-amber-100",
+      text: "text-amber-800",
+      indicator: "bg-amber-500",
     },
     info: {
       icon: <InformationCircleIcon className="w-5 h-5" />,
-      theme: "bg-blue-50 text-blue-600 border-blue-100",
-      indicator: "bg-blue-500"
+      bg: "bg-blue-100",
+      text: "text-blue-800",
+      indicator: "bg-blue-500",
     },
     success: {
       icon: <CheckCircleIcon className="w-5 h-5" />,
-      theme: "bg-emerald-50 text-emerald-600 border-emerald-100",
-      indicator: "bg-emerald-500"
+      bg: "bg-emerald-100",
+      text: "text-emerald-800",
+      indicator: "bg-emerald-500",
     },
     error: {
       icon: <BellAlertIcon className="w-5 h-5" />,
-      theme: "bg-rose-50 text-rose-600 border-rose-100",
-      indicator: "bg-rose-500"
+      bg: "bg-rose-100",
+      text: "text-rose-800",
+      indicator: "bg-rose-500",
     },
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] p-4 md:p-10 space-y-8">
-      
-      {/* Header with Actions */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div className="min-h-screen bg-slate-50 px-4 py-6 md:p-10 space-y-8">
+
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight">System Alerts</h1>
-          <p className="text-slate-500 font-medium">Monitor critical system events and logs.</p>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+            System Alerts
+          </h1>
+          <p className="text-slate-600">
+            Monitor important system events and logs
+          </p>
         </div>
-        <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-all shadow-sm">
+
+        <button className="flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-900 hover:text-white transition">
           <TrashIcon className="w-4 h-4" />
-          Clear All Logs
+          Clear Logs
         </button>
       </div>
 
-      {/* Alerts Feed */}
+      {/* Alerts */}
       <div className="max-w-4xl space-y-4 relative">
-        {/* The Timeline Line */}
-        <div className="absolute left-[26px] top-2 bottom-2 w-0.5 bg-slate-100 hidden md:block" />
 
-        {alerts.map((alert) => {
+        {/* Timeline (Desktop Only) */}
+        <div className="absolute left-6 top-0 bottom-0 w-px bg-slate-200 hidden md:block" />
+
+        {alerts.map(alert => {
           const config = typeConfig[alert.type];
 
           return (
             <div
               key={alert.id}
-              className={`group relative bg-white border border-slate-100 p-5 rounded-[2rem] shadow-sm hover:shadow-md transition-all flex gap-5 items-start md:ml-2`}
+              className="relative bg-white border border-slate-200 rounded-xl p-4 md:p-6 shadow-sm hover:shadow-md transition flex gap-4"
             >
-              {/* Type Icon Container */}
-              <div className={`relative z-10 flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center border-4 border-white shadow-sm ${config.theme}`}>
+              {/* Indicator */}
+              <div className={`absolute left-0 top-6 w-1 h-10 rounded-r ${config.indicator}`} />
+
+              {/* Icon */}
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${config.bg} ${config.text}`}>
                 {config.icon}
               </div>
 
               {/* Content */}
-              <div className="flex-1">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-1">
-                  <h3 className="font-black text-slate-800 tracking-tight">
+              <div className="flex-1 space-y-1">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                  <h3 className="font-bold text-slate-900">
                     {alert.title}
                   </h3>
-                  <div className="flex items-center gap-1.5 text-slate-400">
-                    <ClockIcon className="w-3.5 h-3.5" />
-                    <span className="text-[10px] font-bold uppercase tracking-wider">{alert.time}</span>
+                  <div className="flex items-center gap-1 text-slate-500 text-xs font-semibold">
+                    <ClockIcon className="w-4 h-4" />
+                    {alert.time}
                   </div>
                 </div>
-                <p className="text-sm text-slate-500 font-medium leading-relaxed">
+
+                <p className="text-sm text-slate-700 leading-relaxed">
                   {alert.message}
                 </p>
               </div>
 
-              {/* Quick Action (Visible on Hover) */}
-              <button className="opacity-0 group-hover:opacity-100 p-2 text-slate-300 hover:text-rose-500 transition-all">
+              {/* Action */}
+              <button className="md:opacity-0 md:group-hover:opacity-100 p-2 text-slate-400 hover:text-rose-600 transition">
                 <TrashIcon className="w-4 h-4" />
               </button>
-
-              {/* Status Indicator Dot */}
-              <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full ${config.indicator}`} />
             </div>
           );
         })}
       </div>
 
-      {/* Empty State Logic (If needed) */}
+      {/* Empty State */}
       {alerts.length === 0 && (
-        <div className="text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
-          <CheckCircleIcon className="w-12 h-12 text-emerald-200 mx-auto mb-4" />
-          <p className="text-slate-400 font-black uppercase tracking-widest text-xs">All Systems Nominal</p>
+        <div className="text-center py-20 bg-white rounded-2xl border border-dashed">
+          <CheckCircleIcon className="w-12 h-12 text-emerald-300 mx-auto mb-3" />
+          <p className="text-slate-500 font-semibold">
+            All systems are running normally
+          </p>
         </div>
       )}
     </div>

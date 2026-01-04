@@ -11,12 +11,21 @@ const EditProfile = () => {
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
 
+  // ✅ Only update state if user values are different
   useEffect(() => {
     if (user) {
-      setName(user.displayName || "");
-      setEmail(user.email || "");
+      setName(prev => prev !== user.displayName ? user.displayName : prev);
+      setEmail(prev => prev !== user.email ? user.email : prev);
     }
   }, [user]);
+
+  // Auto-hide status after 5 seconds
+  useEffect(() => {
+    if (status.message) {
+      const timer = setTimeout(() => setStatus({ type: "", message: "" }), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,16 +76,16 @@ const EditProfile = () => {
         <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
           <div className="bg-emerald-600 h-24 w-full relative">
             <div className="absolute -bottom-12 left-10">
-                <div className="relative">
-                  <img 
-                    src={user.photoURL || "/default-avatar.png"} 
-                    className="w-24 h-24 rounded-3xl border-4 border-white shadow-lg object-cover bg-white"
-                    alt="Current Avatar"
-                  />
-                  <div className="absolute -right-2 -bottom-2 p-2 bg-white rounded-xl shadow-md text-emerald-600 text-xs">
-                    <FaUserEdit />
-                  </div>
+              <div className="relative">
+                <img 
+                  src={user.photoURL || "/default-avatar.png"} 
+                  className="w-24 h-24 rounded-3xl border-4 border-white shadow-lg object-cover bg-white"
+                  alt="Current Avatar"
+                />
+                <div className="absolute -right-2 -bottom-2 p-2 bg-white rounded-xl shadow-md text-emerald-600 text-xs">
+                  <FaUserEdit />
                 </div>
+              </div>
             </div>
           </div>
 

@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { 
-  FaUserCircle, 
   FaSignOutAlt, 
   FaEdit, 
   FaEnvelope, 
@@ -29,9 +28,16 @@ const Profile = () => {
     phone: "+1-555-1234",
   };
 
+  // Auto-hide request status after 5 seconds
+  useEffect(() => {
+    if (!requestStatus) return;
+    const timer = setTimeout(() => setRequestStatus(""), 5000);
+    return () => clearTimeout(timer);
+  }, [requestStatus]);
+
   const signout = () => {
-    if(confirm("Are you sure you want to sign out?")) {
-        alert("Signed out");
+    if (confirm("Are you sure you want to sign out?")) {
+      alert("Signed out");
     }
   };
 
@@ -56,7 +62,7 @@ const Profile = () => {
             <p className="text-slate-500 font-medium mt-2 text-xl italic">Manage your personal information and security.</p>
           </div>
           <button
-            onClick={() => router.push("profile/editProfile")}
+            onClick={() => router.push("/dashboard/profile/editProfile")}
             className="flex items-center gap-3 bg-white border border-slate-200 text-slate-700 px-6 py-3.5 rounded-2xl shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all font-black text-base uppercase tracking-wider"
           >
             <FaEdit className="text-blue-500 text-lg" /> Edit Profile
@@ -70,7 +76,7 @@ const Profile = () => {
             <div className="bg-white rounded-[3rem] p-10 shadow-sm border border-slate-100 flex flex-col items-center text-center transition-transform hover:scale-[1.01]">
               <div className="relative p-2 rounded-full bg-gradient-to-tr from-emerald-400 to-blue-500 shadow-2xl mb-8">
                 <img
-                  src={user.photoURL}
+                  src={user.photoURL || "/default-avatar.png"}
                   alt="avatar"
                   className="w-40 h-40 rounded-full object-cover border-4 border-white bg-white"
                 />
@@ -152,6 +158,7 @@ const Profile = () => {
                   {requestStatus}
                 </div>
               )}
+
               {/* Abstract decoration */}
               <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl"></div>
             </div>

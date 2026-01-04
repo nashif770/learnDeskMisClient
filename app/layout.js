@@ -6,21 +6,21 @@ import LayoutWrapper from "./Auth/layoutWrapper";
 export const metadata = {
   title: "LearnDesk MIS Software",
   description:
-    "Empowering the next generation of righteous and educated women through faith and learning.",
+    "A modern Management Information System for training centers, institutes, and educational organizations.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <UserProvider>
-        <body className="flex flex-col text-black font-sans antialiased ">
+      <body className="min-h-screen text-black font-sans antialiased bg-white">
+        <UserProvider>
           <LayoutWrapper>
-          <main className="flex-grow w-full max-w-[1980px] mx-auto bg-emerald-100">
-            {children}
-          </main>
+            <main className="flex-grow w-full max-w-[1980px] mx-auto">
+              {children}
+            </main>
           </LayoutWrapper>
-        </body>
-      </UserProvider>
+        </UserProvider>
+      </body>
     </html>
   );
 }

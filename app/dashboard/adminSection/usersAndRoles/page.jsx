@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import {
-  UsersIcon,
   UserPlusIcon,
   ShieldCheckIcon,
   MagnifyingGlassIcon,
@@ -15,49 +14,60 @@ const UsersAndRoles = () => {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const flattenedUsers = allUsers.map((u) => ({
+  const users = allUsers.map((u) => ({
     id: u.id,
     name: u.userdata?.name || "N/A",
     email: u.userdata?.email || "N/A",
     role: u.role || "guest",
     status: u.status || "active",
-    initials: (u.userdata?.name || "U").split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)
+    initials: (u.userdata?.name || "U")
+      .split(" ")
+      .map(n => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase(),
   }));
 
-  const filteredUsers = flattenedUsers.filter((u) => {
-    const matchesSearch = u.name.toLowerCase().includes(search.toLowerCase()) || 
-                          u.email.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = activeFilter === "all" || u.role === activeFilter;
-    return matchesSearch && matchesFilter;
+  const filteredUsers = users.filter(u => {
+    const matchesSearch =
+      u.name.toLowerCase().includes(search.toLowerCase()) ||
+      u.email.toLowerCase().includes(search.toLowerCase());
+    const matchesRole = activeFilter === "all" || u.role === activeFilter;
+    return matchesSearch && matchesRole;
   });
 
   const badgeStyles = {
-    guest: "bg-slate-100 text-slate-600 border-slate-200",
-    student: "bg-emerald-50 text-emerald-700 border-emerald-100",
-    teacher: "bg-blue-50 text-blue-700 border-blue-100",
-    staff: "bg-purple-50 text-purple-700 border-purple-100",
-    headteacher: "bg-amber-50 text-amber-700 border-amber-100",
-    admin: "bg-rose-50 text-rose-700 border-rose-100",
+    guest: "bg-slate-100 text-slate-700 border-slate-300",
+    student: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    teacher: "bg-blue-100 text-blue-800 border-blue-300",
+    staff: "bg-purple-100 text-purple-800 border-purple-300",
+    headteacher: "bg-amber-100 text-amber-800 border-amber-300",
+    admin: "bg-rose-100 text-rose-800 border-rose-300",
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] p-6 md:p-12 space-y-10">
-      
+    <div className="min-h-screen bg-slate-50 px-4 py-6 md:p-10 space-y-8">
+
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-5xl font-black text-slate-900 tracking-tight flex items-center gap-4">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900">
             User Directory
           </h1>
-          <p className="text-slate-500 font-medium text-xl italic mt-2">Manage permissions and account statuses</p>
+          <p className="text-slate-600">
+            Manage permissions and account status
+          </p>
         </div>
-        <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-100 shadow-sm">
-          {["all", "admin", "teacher", "student"].map((f) => (
+
+        <div className="flex bg-white border rounded-lg p-1 shadow-sm">
+          {["all", "admin", "teacher", "student"].map(f => (
             <button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`px-5 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] transition-all ${
-                activeFilter === f ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
+              className={`px-4 py-2 text-xs font-bold uppercase rounded-md transition ${
+                activeFilter === f
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-600 hover:bg-slate-100"
               }`}
             >
               {f}
@@ -66,90 +76,111 @@ const UsersAndRoles = () => {
         </div>
       </div>
 
-      {/* Controls Bar */}
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="relative flex-1 group">
-          <MagnifyingGlassIcon className="w-6 h-6 text-slate-400 absolute left-5 top-1/2 -translate-y-1/2 group-focus-within:text-emerald-500 transition-colors" />
-          <input
-            type="text"
-            placeholder="Search users by name, email, or ID..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-14 pr-6 py-5 bg-white border border-slate-100 rounded-[2rem] outline-none focus:ring-4 focus:ring-emerald-50 transition-all font-semibold text-lg text-slate-600 shadow-sm placeholder:text-slate-300"
-          />
-        </div>
+      {/* Search */}
+      <div className="relative max-w-xl">
+        <MagnifyingGlassIcon className="w-5 h-5 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
+        <input
+          type="text"
+          placeholder="Search by name or email"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-300 text-slate-800 font-medium focus:ring-2 focus:ring-emerald-200 outline-none"
+        />
       </div>
 
-      {/* Modern Table Container */}
-      <div className="bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden">
-        <table className="w-full text-left border-separate border-spacing-0">
-          <thead>
-            <tr className="bg-slate-50/50">
-              <th className="px-10 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">User Details</th>
-              <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">System Role</th>
-              <th className="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Status</th>
-              <th className="px-10 py-6 text-xs font-black text-slate-400 uppercase tracking-[0.2em] text-right">Access</th>
+      {/* Desktop Table */}
+      <div className="hidden md:block bg-white rounded-2xl border shadow-sm overflow-hidden">
+        <table className="w-full">
+          <thead className="bg-slate-100 text-xs font-bold uppercase text-slate-600">
+            <tr>
+              <th className="px-6 py-4 text-left">User</th>
+              <th className="px-6 py-4">Role</th>
+              <th className="px-6 py-4">Status</th>
+              <th className="px-6 py-4 text-right">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
-            {filteredUsers.map((u) => (
-              <tr key={u.id} className="group hover:bg-slate-50/30 transition-colors">
-                {/* User Identity */}
-                <td className="px-10 py-6">
-                  <div className="flex items-center gap-5">
-                    <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-500 font-black text-sm border border-slate-200 group-hover:bg-emerald-500 group-hover:text-white group-hover:border-emerald-400 transition-all shadow-sm">
-                      {u.initials}
-                    </div>
-                    <div>
-                      <div className="text-lg font-black text-slate-800 tracking-tight">{u.name}</div>
-                      <div className="text-sm font-bold text-slate-400">{u.email}</div>
-                    </div>
+          <tbody className="divide-y">
+            {filteredUsers.map(u => (
+              <tr key={u.id} className="hover:bg-slate-50">
+                <td className="px-6 py-4 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-slate-200 flex items-center justify-center font-bold text-slate-700">
+                    {u.initials}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900">{u.name}</p>
+                    <p className="text-sm text-slate-600">{u.email}</p>
                   </div>
                 </td>
 
-                {/* Role Chip */}
-                <td className="px-8 py-6">
-                  <span className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-[0.1em] border ${badgeStyles[u.role] || badgeStyles.guest}`}>
+                <td className="px-6 py-4">
+                  <span className={`px-3 py-1 text-xs font-bold rounded-full border ${badgeStyles[u.role]}`}>
                     {u.role}
                   </span>
                 </td>
 
-                {/* Status Dot */}
-                <td className="px-8 py-6">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-2 h-2 rounded-full ${u.status === 'active' ? 'bg-emerald-500' : u.status === 'pending' ? 'bg-amber-500' : 'bg-rose-500'} shadow-sm`} />
-                    <span className="text-sm font-black text-slate-600 capitalize tracking-tight">{u.status}</span>
-                  </div>
+                <td className="px-6 py-4">
+                  <span className="text-sm font-semibold text-slate-700 capitalize">
+                    {u.status}
+                  </span>
                 </td>
 
-                {/* Action Buttons */}
-                <td className="px-10 py-6 text-right">
-                  <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                    {u.status === "pending" ? (
-                      <button className="p-3 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 shadow-xl shadow-emerald-100 transition-all hover:-translate-y-1">
-                        <UserPlusIcon className="w-5 h-5" />
-                      </button>
-                    ) : (
-                      <button className="p-3 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm">
-                        <ShieldCheckIcon className="w-5 h-5" />
-                      </button>
-                    )}
-                  </div>
+                <td className="px-6 py-4 text-right">
+                  {u.status === "pending" ? (
+                    <button className="px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700">
+                      Approve
+                    </button>
+                  ) : (
+                    <button className="px-4 py-2 border rounded-lg text-slate-700 hover:bg-slate-900 hover:text-white">
+                      Manage
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-
-        {filteredUsers.length === 0 && (
-          <div className="py-24 text-center">
-            <div className="w-20 h-20 bg-slate-50 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
-               <FunnelIcon className="w-10 h-10 text-slate-200" />
-            </div>
-            <p className="text-slate-400 font-black text-lg tracking-tight">No results found.</p>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-4">
+        {filteredUsers.map(u => (
+          <div key={u.id} className="bg-white border rounded-xl p-4 shadow-sm space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-slate-200 rounded-lg flex items-center justify-center font-bold">
+                {u.initials}
+              </div>
+              <div>
+                <p className="font-bold text-slate-900">{u.name}</p>
+                <p className="text-sm text-slate-600">{u.email}</p>
+              </div>
+            </div>
+
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-600">Role</span>
+              <span className={`px-2 py-0.5 rounded border text-xs font-bold ${badgeStyles[u.role]}`}>
+                {u.role}
+              </span>
+            </div>
+
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-600">Status</span>
+              <span className="font-semibold">{u.status}</span>
+            </div>
+
+            <button className="w-full py-2 rounded-lg bg-slate-900 text-white font-semibold">
+              Manage User
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {filteredUsers.length === 0 && (
+        <div className="text-center py-20 bg-white rounded-xl border border-dashed">
+          <FunnelIcon className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+          <p className="text-slate-500 font-semibold">No users found</p>
+        </div>
+      )}
     </div>
   );
 };
