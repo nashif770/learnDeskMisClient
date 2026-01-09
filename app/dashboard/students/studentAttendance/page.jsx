@@ -10,7 +10,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 const StudentAttendance = () => {
-  const { studentData } = useStudentData();
+  // Assuming useStudentData provides an isLoading boolean
+  const { studentData, isLoading } = useStudentData();
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
@@ -54,24 +55,27 @@ const StudentAttendance = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <SummaryCard 
             label="Total Enrollment" 
-            value={totalFilteredStudents} 
-            sub="Active Database"
+            value={isLoading ? "..." : totalFilteredStudents} 
+            sub={isLoading ? "Loading Registry" : "Active Database"}
             icon={<UserGroupIcon className="w-8 h-8 text-emerald-600" />}
-            color="emerald"
+            bgColor="bg-emerald-50"
+            isLoading={isLoading}
           />
           <SummaryCard 
             label="Avg. Attendance" 
-            value={`${averageAttendance}%`} 
-            sub="System Performance"
+            value={isLoading ? "..." : `${averageAttendance}%`} 
+            sub={isLoading ? "Calculating" : "System Performance"}
             icon={<ArrowTrendingUpIcon className="w-8 h-8 text-blue-600" />}
-            color="blue"
+            bgColor="bg-blue-50"
+            isLoading={isLoading}
           />
           <SummaryCard 
             label="Total Class Days" 
-            value={totalClassDays} 
-            sub="Year to Date"
+            value={isLoading ? "..." : totalClassDays} 
+            sub={isLoading ? "Syncing Calendar" : "Year to Date"}
             icon={<CalendarDaysIcon className="w-8 h-8 text-purple-600" />}
-            color="purple"
+            bgColor="bg-purple-50"
+            isLoading={isLoading}
           />
         </div>
 
@@ -100,7 +104,22 @@ const StudentAttendance = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {filteredData.length > 0 ? (
+                {isLoading ? (
+                  /* SKELETON LOADING ROWS */
+                  [...Array(5)].map((_, i) => (
+                    <tr key={i} className="animate-pulse">
+                      <td className="px-4 py-6 text-center"><div className="h-4 w-6 bg-gray-200 rounded mx-auto"></div></td>
+                      <td className="px-4 py-6">
+                        <div className="h-5 w-32 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-3 w-20 bg-gray-100 rounded"></div>
+                      </td>
+                      <td className="px-4 py-6"><div className="h-4 w-10 bg-gray-200 rounded mx-auto"></div></td>
+                      <td className="px-4 py-6"><div className="h-4 w-10 bg-gray-200 rounded mx-auto"></div></td>
+                      <td className="px-4 py-6"><div className="h-2 w-full bg-gray-200 rounded-full"></div></td>
+                      <td className="px-4 py-6 text-center"><div className="h-6 w-20 bg-gray-100 rounded-xl mx-auto"></div></td>
+                    </tr>
+                  ))
+                ) : filteredData.length > 0 ? (
                   filteredData.map((s, index) => {
                     const percentage = ((s.present / s.total) * 100).toFixed(1);
                     const isWarning = parseFloat(percentage) < 75;
@@ -159,14 +178,18 @@ const StudentAttendance = () => {
   );
 };
 
-const SummaryCard = ({ label, value, sub, icon, color }) => (
+const SummaryCard = ({ label, value, sub, icon, bgColor, isLoading }) => (
   <div className="bg-white p-6 md:p-8 rounded-3xl shadow-md border border-gray-200 flex items-center justify-between transition-all hover:shadow-lg hover:border-gray-300">
-    <div className="space-y-1 md:space-y-2">
+    <div className={`space-y-1 md:space-y-2 ${isLoading ? 'animate-pulse w-2/3' : ''}`}>
       <p className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-widest">{label}</p>
-      <p className="text-3xl md:text-5xl font-black text-gray-800 tracking-tight">{value}</p>
+      {isLoading ? (
+        <div className="h-10 w-24 bg-gray-200 rounded mt-2"></div>
+      ) : (
+        <p className="text-3xl md:text-5xl font-black text-gray-800 tracking-tight">{value}</p>
+      )}
       <p className="text-sm md:text-base font-bold text-gray-500 italic">{sub}</p>
     </div>
-    <div className={`w-16 h-16 md:w-20 md:h-20 bg-${color}-50 rounded-3xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-inner`}>
+    <div className={`w-16 h-16 md:w-20 md:h-20 ${bgColor} rounded-3xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-inner`}>
       {icon}
     </div>
   </div>

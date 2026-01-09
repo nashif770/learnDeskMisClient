@@ -1,168 +1,183 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import useStudentData from "@/app/Hooks/useStudentData";
 import {
   IdentificationIcon,
-  UserCircleIcon,
+  UserGroupIcon,
   MapPinIcon,
-  ChevronRightIcon,
+  PhoneIcon,
+  PencilSquareIcon,
+  UserMinusIcon,
+  PlusIcon,
+  ArrowUpRightIcon
 } from "@heroicons/react/24/outline";
 
 const StudentList = () => {
-  const { studentData } = useStudentData();
+  const { studentData, setStudentData, isLoading } = useStudentData(); 
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
 
+  // FIX: Added isLoading to dependencies and ensured data exists before setting
   useEffect(() => {
-    if (studentData) setFilteredData(studentData);
-  }, [studentData]);
+    if (!isLoading && studentData) {
+      setFilteredData(studentData);
+    }
+  }, [studentData, isLoading]);
+
+  const handleRemove = (studentId) => {
+    if (confirm("⚠️ Permanent Action: Are you sure you want to remove this student?")) {
+      const updatedStudents = studentData.filter((s) => s.Id !== studentId);
+      if (setStudentData) setStudentData(updatedStudents);
+      setFilteredData(updatedStudents);
+    }
+  };
 
   const handleDetailsClick = (id) => {
     router.push(`/dashboard/students/studentProfile/${id}`);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-12 space-y-10">
-      <div className="max-w-7xl mx-auto space-y-10">
-
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
-              Student Directory
+    <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-10 font-sans text-slate-900">
+      <div className="max-w-7xl mx-auto space-y-8">
+        
+        {/* HEADER AREA */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div className="space-y-1">
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+              Student Roster
             </h1>
-            <p className="text-gray-500 font-medium mt-2 md:mt-3 text-lg italic">
-              Comprehensive registry of all enrolled academic profiles.
-            </p>
-          </div>
-          <div className="flex items-center gap-4 bg-blue-600 px-6 md:px-8 py-3 md:py-4 rounded-2xl shadow-xl shadow-blue-100 transition-transform hover:scale-105">
-            <UserCircleIcon className="w-7 h-7 text-blue-100" />
-            <div>
-              <p className="text-[10px] md:text-xs font-black text-blue-200 uppercase tracking-[0.2em]">
-                Total Records
-              </p>
-              <p className="text-2xl md:text-3xl font-black text-white leading-none">
-                {filteredData.length}
-              </p>
+            <div className="flex items-center gap-2 text-slate-500 font-medium text-sm">
+              <UserGroupIcon className="w-4 h-4" />
+              <span>{isLoading ? "Syncing Ledger..." : `${filteredData.length} Students Enrolled`}</span>
             </div>
           </div>
+
+          <Link href="/dashboard/students/addStudents">
+            <button className="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:bg-blue-600 transition-all active:scale-95 flex items-center gap-2">
+              <PlusIcon className="w-5 h-5 stroke-[2.5]" />
+              New Registration
+            </button>
+          </Link>
         </div>
 
-        {/* Search Bar */}
-        <div className="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-gray-200">
+        {/* SEARCH BAR */}
+        <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
           <UniversalSearchBar
             data={studentData || []}
-            filterKeys={["education"]}
-            sortKeys={["Id", "education", "userNameEn"]}
+            filterKeys={["class"]}
+            sortKeys={["Id", "class", "userNameEn"]}
             onFilter={(data) => setFilteredData(data)}
           />
         </div>
 
-        {/* Student Table */}
-        <div className="bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden">
+        {/* DATA TABLE */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[700px] border-separate border-spacing-0">
+            <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-100">
-                  {["Index", "Student Identity", "Academic Level", "Contact & Region", "Family Details", "Profile"].map((header, i) => (
-                    <th
-                      key={i}
-                      className="px-4 md:px-10 py-4 md:py-6 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center md:text-left"
-                    >
-                      {header}
-                    </th>
-                  ))}
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="p-6 text-xs font-semibold uppercase text-slate-500 tracking-wider">Student Profile</th>
+                  <th className="p-6 text-xs font-semibold uppercase text-slate-500 tracking-wider">Guardian Info</th>
+                  <th className="p-6 text-xs font-semibold uppercase text-slate-500 tracking-wider">Contact</th>
+                  <th className="p-6 text-xs font-semibold uppercase text-slate-500 tracking-wider text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
-                {filteredData.length > 0 ? (
-                  filteredData.map((s, index) => (
-                    <tr
-                      key={s._id}
-                      className="group hover:bg-blue-50/30 transition-all"
-                    >
-                      {/* Index */}
-                      <td className="px-4 md:px-10 py-4 text-center font-mono font-bold text-gray-400">
-                        {String(index + 1).padStart(2, "0")}
+              <tbody className="divide-y divide-slate-100">
+                {/* CASE 1: LOADING STATE (Skeleton Rows) */}
+                {isLoading ? (
+                  [...Array(5)].map((_, i) => (
+                    <tr key={i} className="animate-pulse">
+                      <td className="p-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-slate-200" />
+                          <div className="space-y-2">
+                            <div className="h-4 w-32 bg-slate-200 rounded" />
+                            <div className="h-3 w-20 bg-slate-100 rounded" />
+                          </div>
+                        </div>
                       </td>
-
-                      {/* Student Identity */}
-                      <td className="px-4 md:px-8 py-4">
-                        <div className="flex items-center gap-4 md:gap-5">
-                          <div className="w-12 md:w-14 h-12 md:h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-black text-lg border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
-                            {s.userNameEn?.charAt(0)}
+                      <td className="p-6">
+                        <div className="space-y-2">
+                          <div className="h-4 w-24 bg-slate-200 rounded" />
+                          <div className="h-3 w-16 bg-slate-100 rounded" />
+                        </div>
+                      </td>
+                      <td className="p-6">
+                        <div className="space-y-2">
+                          <div className="h-4 w-28 bg-slate-200 rounded" />
+                          <div className="h-3 w-24 bg-slate-100 rounded" />
+                        </div>
+                      </td>
+                      <td className="p-6">
+                        <div className="flex justify-center gap-2">
+                          <div className="w-10 h-10 bg-slate-100 rounded-lg" />
+                          <div className="w-10 h-10 bg-slate-100 rounded-lg" />
+                          <div className="w-10 h-10 bg-slate-100 rounded-lg" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : filteredData.length > 0 ? (
+                  // CASE 2: DATA LOADED
+                  filteredData.map((student) => (
+                    <tr key={student.Id} className="group hover:bg-slate-50/50 transition-colors">
+                      <td className="p-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            {student.userNameEn?.charAt(0)}
                           </div>
                           <div>
-                            <p className="text-base md:text-lg font-black text-gray-800 group-hover:text-blue-700 transition-colors">
-                              {s.userNameEn}
-                            </p>
-                            <p className="text-xs md:text-sm font-bold text-gray-400 uppercase tracking-wide mt-0.5 flex items-center gap-1">
-                              <IdentificationIcon className="w-3.5 h-3.5" /> ID: {s.Id}
-                            </p>
+                            <p className="font-semibold text-slate-900 text-base">{student.userNameEn}</p>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <IdentificationIcon className="w-3.5 h-3.5 text-slate-400" />
+                              <span className="text-xs text-slate-400 font-medium">ID: {student.Id}</span>
+                            </div>
                           </div>
                         </div>
                       </td>
-
-                      {/* Academic Level */}
-                      <td className="px-4 md:px-8 py-4">
-                        <span className="px-3 md:px-4 py-1 bg-gray-900 text-white rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest shadow-lg shadow-gray-200">
-                          {s.education || "General"}
-                        </span>
-                        <p className="text-xs md:text-sm font-bold text-gray-500 mt-1 ml-1 italic">
-                          Roll: {s.roll || "—"}
-                        </p>
+                      <td className="p-6">
+                        <div className="space-y-0.5">
+                          <p className="text-sm font-semibold text-slate-700">{student.fatherName}</p>
+                          <p className="text-xs text-slate-400">M: {student.motherName}</p>
+                        </div>
                       </td>
-
-                      {/* Contact & Region */}
-                      <td className="px-4 md:px-8 py-4">
-                        <p className="text-sm md:text-base font-black text-gray-700">
-                          {s.mobile}
-                        </p>
-                        <p className="text-xs md:text-sm font-bold text-blue-500 uppercase tracking-tight flex items-center gap-1 mt-1">
-                          <MapPinIcon className="w-3.5 h-3.5" /> {s.currentDistrict}
-                        </p>
-                      </td>
-
-                      {/* Family Details */}
-                      <td className="px-4 md:px-8 py-4">
+                      <td className="p-6">
                         <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                            <p className="text-sm font-bold text-gray-600 truncate max-w-[150px]">
-                              {s.fatherName}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
-                            <p className="text-sm font-bold text-gray-600 truncate max-w-[150px]">
-                              {s.motherName}
-                            </p>
-                          </div>
+                           <div className="flex items-center gap-2 text-slate-700">
+                             <PhoneIcon className="w-3.5 h-3.5 text-blue-500" />
+                             <span className="font-medium text-sm">{student.mobile}</span>
+                           </div>
+                           <div className="flex items-center gap-2 text-slate-400 text-xs">
+                             <MapPinIcon className="w-3.5 h-3.5" />
+                             <span>{student.currentDistrict || "Not Specified"}</span>
+                           </div>
                         </div>
                       </td>
-
-                      {/* Profile Button */}
-                      <td className="px-4 md:px-10 py-4 text-right">
-                        <button
-                          onClick={() => handleDetailsClick(s._id)}
-                          className="inline-flex items-center gap-2 px-5 md:px-6 py-2 md:py-3 bg-white border-2 border-gray-200 text-gray-900 text-xs md:text-sm font-black uppercase tracking-widest rounded-2xl shadow-sm hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all active:scale-95 group/btn"
-                        >
-                          View Profile
-                          <ChevronRightIcon className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                        </button>
+                      <td className="p-6">
+                        <div className="flex justify-center items-center gap-2">
+                          <button onClick={() => handleDetailsClick(student._id)} className="p-2.5 bg-white border border-slate-200 text-slate-400 rounded-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                            <ArrowUpRightIcon className="w-5 h-5" />
+                          </button>
+                          <button className="p-2.5 bg-white border border-slate-200 text-slate-400 rounded-lg hover:bg-slate-900 hover:text-white transition-all shadow-sm">
+                            <PencilSquareIcon className="w-5 h-5" />
+                          </button>
+                          <button onClick={() => handleRemove(student.Id)} className="p-2.5 bg-rose-50 border border-rose-100 text-rose-500 rounded-lg hover:bg-rose-600 hover:text-white transition-all shadow-sm">
+                            <UserMinusIcon className="w-5 h-5" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
                 ) : (
+                  // CASE 3: LOADED BUT TRULY EMPTY
                   <tr>
-                    <td colSpan="6" className="py-24 text-center">
-                      <div className="flex flex-col items-center justify-center space-y-4 opacity-30">
-                        <div className="text-6xl md:text-7xl">🔍</div>
-                        <p className="text-xl md:text-2xl font-black text-gray-900 uppercase tracking-widest">
-                          No Matches Found
-                        </p>
+                    <td colSpan="4" className="py-24">
+                      <div className="flex flex-col items-center justify-center space-y-2 opacity-40">
+                        <UserGroupIcon className="w-12 h-12 text-slate-400" />
+                        <p className="font-medium text-slate-500 text-lg">No student records found</p>
                       </div>
                     </td>
                   </tr>
