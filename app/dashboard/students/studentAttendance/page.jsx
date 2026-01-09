@@ -3,14 +3,13 @@ import useStudentData from "@/app/Hooks/useStudentData";
 import UniversalSearchBar from "@/app/shared/UniversalSearchBar";
 import React, { useEffect, useState } from "react";
 import { 
-  ChartBarIcon, 
-  UserGroupIcon, 
-  CalendarDaysIcon, 
-  ArrowTrendingUpIcon 
-} from "@heroicons/react/24/outline";
+  ChartBarSquareIcon, 
+  UsersIcon, 
+  CalendarIcon, 
+  ArrowUpRightIcon 
+} from "@heroicons/react/20/solid"; // Using smaller 20px icons
 
-const StudentAttendance = () => {
-  // Assuming useStudentData provides an isLoading boolean
+const overallAttendnace = () => {
   const { studentData, isLoading } = useStudentData();
   const [filteredData, setFilteredData] = useState([]);
 
@@ -24,7 +23,7 @@ const StudentAttendance = () => {
   
   const averageAttendance = totalFilteredStudents
     ? (
-        filteredData.reduce((acc, s) => acc + (s.present / s.total) * 100, 0) /
+        filteredData.reduce((acc, s) => acc + (Number(s.present) / Number(s.total)) * 100, 0) /
         totalFilteredStudents
       ).toFixed(1)
     : 0;
@@ -32,55 +31,50 @@ const StudentAttendance = () => {
   const totalClassDays = filteredData[0]?.total || 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-12 space-y-10">
-      <div className="max-w-7xl mx-auto space-y-10">
+    <div className="min-h-screen bg-[#FDFDFD] p-4 md:p-8 font-sans antialiased text-slate-900">
+      <div className="max-w-7xl mx-auto space-y-6">
 
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
+        {/* --- Minimal Header --- */}
+        <div className="flex justify-between items-end border-b border-slate-100 pb-6">
           <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight flex items-center gap-4">
-              Attendance Analytics
-            </h1>
-            <p className="text-gray-500 md:text-xl font-medium mt-2 md:mt-3 italic">
-              Real-time monitoring of student presence and academic engagement.
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Attendance</h1>
+            <p className="text-xs font-medium text-slate-500 mt-1">
+              Spring 2026 Academic Cycle
             </p>
           </div>
-          <div className="bg-white px-6 py-3 rounded-2xl border border-gray-200 shadow-sm text-right">
-            <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Academic Term</p>
-            <p className="text-lg font-black text-emerald-600">Spring 2026</p>
+          <div className="hidden md:block text-right">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">System Status</span>
+            <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" /> Live Sync Active
+            </span>
           </div>
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-          <SummaryCard 
-            label="Total Enrollment" 
+        {/* --- Modern Metric Grid --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <MetricCard 
+            label="Enrollment" 
             value={isLoading ? "..." : totalFilteredStudents} 
-            sub={isLoading ? "Loading Registry" : "Active Database"}
-            icon={<UserGroupIcon className="w-8 h-8 text-emerald-600" />}
-            bgColor="bg-emerald-50"
+            icon={<UsersIcon className="w-4 h-4" />}
             isLoading={isLoading}
           />
-          <SummaryCard 
-            label="Avg. Attendance" 
+          <MetricCard 
+            label="Avg. Rate" 
             value={isLoading ? "..." : `${averageAttendance}%`} 
-            sub={isLoading ? "Calculating" : "System Performance"}
-            icon={<ArrowTrendingUpIcon className="w-8 h-8 text-blue-600" />}
-            bgColor="bg-blue-50"
+            icon={<ArrowUpRightIcon className="w-4 h-4" />}
             isLoading={isLoading}
+            isIndigo
           />
-          <SummaryCard 
-            label="Total Class Days" 
+          <MetricCard 
+            label="Class Days" 
             value={isLoading ? "..." : totalClassDays} 
-            sub={isLoading ? "Syncing Calendar" : "Year to Date"}
-            icon={<CalendarDaysIcon className="w-8 h-8 text-purple-600" />}
-            bgColor="bg-purple-50"
+            icon={<CalendarIcon className="w-4 h-4" />}
             isLoading={isLoading}
           />
         </div>
 
-        {/* Search Bar */}
-        <div className="bg-white p-4 md:p-5 rounded-2xl shadow-md border border-gray-200">
+        {/* --- Search Interface --- */}
+        <div className="bg-white rounded-xl border border-slate-200/60 p-2 shadow-sm">
           <UniversalSearchBar
             data={studentData || []}
             filterKeys={["class"]}
@@ -89,86 +83,61 @@ const StudentAttendance = () => {
           />
         </div>
 
-        {/* Attendance Table */}
-        <div className="bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden">
+        {/* --- High-Density Table --- */}
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[700px] border-separate border-spacing-0">
+            <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 md:px-10 py-4 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">SL</th>
-                  <th className="px-4 md:px-8 py-4 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-left">Student</th>
-                  <th className="px-4 md:px-8 py-4 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Sessions</th>
-                  <th className="px-4 md:px-8 py-4 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Present</th>
-                  <th className="px-4 md:px-8 py-4 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Performance</th>
-                  <th className="px-4 md:px-10 py-4 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Verdict</th>
+                <tr className="bg-slate-50/50 border-b border-slate-100">
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">#</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Student Details</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Days</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Present</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Progress</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
-                {isLoading ? (
-                  /* SKELETON LOADING ROWS */
-                  [...Array(5)].map((_, i) => (
-                    <tr key={i} className="animate-pulse">
-                      <td className="px-4 py-6 text-center"><div className="h-4 w-6 bg-gray-200 rounded mx-auto"></div></td>
-                      <td className="px-4 py-6">
-                        <div className="h-5 w-32 bg-gray-200 rounded mb-2"></div>
-                        <div className="h-3 w-20 bg-gray-100 rounded"></div>
-                      </td>
-                      <td className="px-4 py-6"><div className="h-4 w-10 bg-gray-200 rounded mx-auto"></div></td>
-                      <td className="px-4 py-6"><div className="h-4 w-10 bg-gray-200 rounded mx-auto"></div></td>
-                      <td className="px-4 py-6"><div className="h-2 w-full bg-gray-200 rounded-full"></div></td>
-                      <td className="px-4 py-6 text-center"><div className="h-6 w-20 bg-gray-100 rounded-xl mx-auto"></div></td>
-                    </tr>
-                  ))
-                ) : filteredData.length > 0 ? (
-                  filteredData.map((s, index) => {
-                    const percentage = ((s.present / s.total) * 100).toFixed(1);
-                    const isWarning = parseFloat(percentage) < 75;
+              <tbody className="divide-y divide-slate-50">
+                {!isLoading && filteredData.map((s, index) => {
+                  const percentage = ((Number(s.present) / Number(s.total)) * 100).toFixed(0);
+                  const isWarning = parseInt(percentage) < 75;
 
-                    return (
-                      <tr key={s.Id || index} className="hover:bg-gray-50 transition-all">
-                        <td className="px-4 md:px-10 py-4 text-sm font-mono font-bold text-gray-400 text-center">{String(index + 1).padStart(2, '0')}</td>
-                        <td className="px-4 md:px-8 py-4">
-                          <p className="text-base md:text-lg font-bold text-gray-800">{s.userNameEn}</p>
-                          <p className="text-xs md:text-sm text-gray-400 uppercase tracking-wide mt-0.5">
-                            Class: {s.class || "N/A"}
-                          </p>
-                        </td>
-                        <td className="px-4 md:px-8 py-4 text-center text-sm md:text-base font-bold text-gray-700">{s.total}</td>
-                        <td className="px-4 md:px-8 py-4 text-center text-sm md:text-base font-black text-emerald-600">{s.present}</td>
-                        <td className="px-4 md:px-8 py-4 text-center">
-                          <div className="w-full max-w-xs mx-auto">
-                            <span className={`text-base md:text-lg font-black ${isWarning ? 'text-rose-500' : 'text-blue-600'}`}>
-                              {percentage}%
-                            </span>
-                            <div className="h-2 w-full bg-gray-200 rounded-full mt-2 overflow-hidden">
-                              <div 
-                                className={`h-full ${isWarning ? 'bg-rose-500' : 'bg-blue-500'}`} 
-                                style={{ width: `${percentage}%` }}
-                              />
-                            </div>
+                  return (
+                    <tr key={s.Id || index} className="hover:bg-slate-50/80 transition-colors group">
+                      <td className="px-4 py-3 text-xs font-medium text-slate-400 text-center">{index + 1}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">{s.userNameEn}</span>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Class {s.class || "—"}</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-center text-xs font-semibold text-slate-600">{s.total}</td>
+                      <td className="px-4 py-3 text-center text-xs font-bold text-emerald-600">{s.present}</td>
+                      <td className="px-4 py-3 min-w-[140px]">
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full rounded-full transition-all duration-500 ${isWarning ? 'bg-rose-500' : 'bg-indigo-500'}`} 
+                              style={{ width: `${percentage}%` }}
+                            />
                           </div>
-                        </td>
-                        <td className="px-4 md:px-10 py-4 text-center">
-                          <div className={`inline-flex items-center px-4 py-1.5 rounded-xl text-xs font-black uppercase tracking-wide border-2 ${
-                            isWarning 
-                              ? 'bg-rose-50 text-rose-600 border-rose-100 shadow-sm shadow-rose-50' 
-                              : 'bg-emerald-50 text-emerald-600 border-emerald-100 shadow-sm shadow-emerald-50'
-                          }`}>
-                            {isWarning ? '⚠️ Low' : '✅ Stable'}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan="6" className="py-20 text-center">
-                      <p className="text-gray-400 font-black text-xl md:text-2xl italic uppercase opacity-40">
-                        No Attendance Data Found
-                      </p>
-                    </td>
-                  </tr>
-                )}
+                          <span className={`text-[11px] font-bold w-7 ${isWarning ? 'text-rose-500' : 'text-slate-700'}`}>
+                            {percentage}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter ${
+                          isWarning 
+                            ? 'bg-rose-50 text-rose-600' 
+                            : 'bg-emerald-50 text-emerald-600'
+                        }`}>
+                          {isWarning ? 'Attention' : 'Optimal'}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -178,21 +147,20 @@ const StudentAttendance = () => {
   );
 };
 
-const SummaryCard = ({ label, value, sub, icon, bgColor, isLoading }) => (
-  <div className="bg-white p-6 md:p-8 rounded-3xl shadow-md border border-gray-200 flex items-center justify-between transition-all hover:shadow-lg hover:border-gray-300">
-    <div className={`space-y-1 md:space-y-2 ${isLoading ? 'animate-pulse w-2/3' : ''}`}>
-      <p className="text-xs md:text-sm font-black text-gray-400 uppercase tracking-widest">{label}</p>
+const MetricCard = ({ label, value, icon, isLoading, isIndigo }) => (
+  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+    <div>
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
       {isLoading ? (
-        <div className="h-10 w-24 bg-gray-200 rounded mt-2"></div>
+        <div className="h-6 w-16 bg-slate-100 animate-pulse rounded" />
       ) : (
-        <p className="text-3xl md:text-5xl font-black text-gray-800 tracking-tight">{value}</p>
+        <p className={`text-xl font-bold tracking-tight ${isIndigo ? 'text-indigo-600' : 'text-slate-900'}`}>{value}</p>
       )}
-      <p className="text-sm md:text-base font-bold text-gray-500 italic">{sub}</p>
     </div>
-    <div className={`w-16 h-16 md:w-20 md:h-20 ${bgColor} rounded-3xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-inner`}>
+    <div className={`p-2 rounded-lg ${isIndigo ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-50 text-slate-400'}`}>
       {icon}
     </div>
   </div>
 );
 
-export default StudentAttendance;
+export default overallAttendnace;

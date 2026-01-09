@@ -17,7 +17,7 @@ const SetupGuide = () => {
   const videoCategories = [
     {
       title: "Getting Started",
-      icon: <VideoCameraIcon className="w-6 h-6" />,
+      icon: <VideoCameraIcon className="w-5 h-5" />,
       roles: ["Guest", "Admin", "Super Admin"],
       videos: [
         { title: "Welcome to LearnDesk MIS", youtubeId: "VIDEO_ID_1" },
@@ -26,7 +26,7 @@ const SetupGuide = () => {
     },
     {
       title: "Academic Setup",
-      icon: <AcademicCapIcon className="w-6 h-6" />,
+      icon: <AcademicCapIcon className="w-5 h-5" />,
       roles: ["Admin", "Super Admin", "Head Teacher"],
       videos: [
         { title: "Setting Academic Year & Terms", youtubeId: "VIDEO_ID_3" },
@@ -36,7 +36,7 @@ const SetupGuide = () => {
     },
     {
       title: "Teacher Guide",
-      icon: <UserGroupIcon className="w-6 h-6" />,
+      icon: <UserGroupIcon className="w-5 h-5" />,
       roles: ["Teacher", "Head Teacher"],
       videos: [
         { title: "Managing Student Attendance", youtubeId: "VIDEO_ID_6" },
@@ -45,7 +45,7 @@ const SetupGuide = () => {
     },
     {
       title: "Administration & Finance",
-      icon: <BanknotesIcon className="w-6 h-6" />,
+      icon: <BanknotesIcon className="w-5 h-5" />,
       roles: ["Admin", "Super Admin"],
       videos: [
         { title: "User Roles & Permissions", youtubeId: "VIDEO_ID_10" },
@@ -59,46 +59,48 @@ const SetupGuide = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] py-12 px-6">
-      <div className="max-w-6xl mx-auto space-y-12">
+    <div className="min-h-screen bg-slate-50 py-10 px-6 font-sans">
+      <div className="max-w-6xl mx-auto space-y-10">
         
-        {/* HEADER */}
-        <div className="border-b-4 border-slate-900 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        {/* EXECUTIVE HEADER */}
+        <div className="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-slate-300 pb-6">
           <div>
-            <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">
-              Video Setup Guide
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+              Training & Setup Guide
             </h1>
-            <p className="text-xl text-slate-500 font-bold mt-2 italic">
-              Master the LearnDesk platform with role-specific training.
+            <p className="text-slate-500 font-medium mt-1">
+              Select a module below to view step-by-step video instructions.
             </p>
           </div>
-          <div className="bg-slate-100 px-4 py-2 rounded-xl flex items-center gap-2 border border-slate-200">
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Viewing as:</span>
-            <span className="text-sm font-black text-slate-900">{role}</span>
+          <div className="flex items-center gap-3 bg-white border border-slate-200 px-4 py-2 rounded-lg shadow-sm">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Account Role:</span>
+            <span className="text-sm font-bold text-indigo-600">{role}</span>
           </div>
         </div>
 
-        {/* CONTENT */}
+        {/* CONTENT SECTION */}
         {visibleCategories.length > 0 ? (
-          <div className="space-y-16">
+          <div className="space-y-12">
             {visibleCategories.map((category, index) => (
               <div key={index} className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg">
+                {/* Category Label */}
+                <div className="flex items-center gap-3 border-l-4 border-indigo-600 pl-4">
+                  <div className="text-indigo-600">
                     {category.icon}
                   </div>
-                  <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+                  <h2 className="text-xl font-bold text-slate-800 tracking-tight uppercase">
                     {category.title}
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {category.videos.map((video, idx) => (
                     <div
                       key={idx}
-                      className="group bg-white border-2 border-slate-100 rounded-[2rem] shadow-sm hover:shadow-xl hover:border-emerald-500/30 transition-all overflow-hidden"
+                      className="group bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
                     >
-                      <div className="aspect-video bg-slate-200 relative">
+                      {/* Video Container */}
+                      <div className="aspect-video bg-slate-900 relative">
                         <iframe
                           className="w-full h-full relative z-10"
                           src={`https://www.youtube.com/embed/${video.youtubeId}`}
@@ -106,17 +108,15 @@ const SetupGuide = () => {
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />
-                        {/* Fake thumbnail overlay to maintain style before play */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-0">
-                           <PlayIcon className="w-12 h-12 text-white/20" />
-                        </div>
                       </div>
-                      <div className="p-6 flex items-center justify-between gap-4">
-                        <p className="text-lg font-black text-slate-800 leading-tight">
+                      
+                      {/* Video Title Card */}
+                      <div className="p-4 flex items-start justify-between gap-3 bg-white">
+                        <p className="text-sm font-bold text-slate-700 leading-snug">
                           {video.title}
                         </p>
-                        <div className="p-3 bg-slate-50 rounded-xl group-hover:bg-emerald-500 group-hover:text-white transition-colors text-slate-400">
-                          <PlayIcon className="w-5 h-5" />
+                        <div className="bg-slate-100 p-2 rounded group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                          <PlayIcon className="w-4 h-4" />
                         </div>
                       </div>
                     </div>
@@ -126,11 +126,12 @@ const SetupGuide = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white p-16 rounded-[3rem] border-2 border-dashed border-slate-200 text-center space-y-4">
-            <InformationCircleIcon className="w-16 h-16 text-slate-200 mx-auto" />
-            <h3 className="text-2xl font-black text-slate-900">Custom Guide Pending</h3>
-            <p className="text-slate-500 font-bold max-w-sm mx-auto">
-              We are currently preparing specialized video tutorials for the <span className="text-slate-900">{role}</span> role.
+          /* Empty State */
+          <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-4 shadow-sm">
+            <InformationCircleIcon className="w-12 h-12 text-slate-200 mx-auto" />
+            <h3 className="text-xl font-bold text-slate-900 tracking-tight">Tutorials Pending</h3>
+            <p className="text-slate-500 font-medium max-w-sm mx-auto text-sm">
+              We are finalizing specific training materials for the <span className="font-bold text-indigo-600">{role}</span> module. Please check back shortly.
             </p>
           </div>
         )}

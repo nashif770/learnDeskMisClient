@@ -5,7 +5,8 @@ import {
   BuildingLibraryIcon, 
   MapPinIcon, 
   UserCircleIcon,
-  CheckBadgeIcon
+  CheckBadgeIcon,
+  ChevronDownIcon
 } from "@heroicons/react/24/outline";
 
 const RegisterCenter = () => {
@@ -20,25 +21,25 @@ const RegisterCenter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] py-12 px-6">
-      <div className="max-w-5xl mx-auto space-y-12">
+    <div className="min-h-screen bg-slate-50 py-10 px-6 font-sans">
+      <div className="max-w-4xl mx-auto space-y-8">
         
         {/* EXECUTIVE HEADER */}
-        <div className="border-b-4 border-slate-900 pb-8">
-          <h1 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">
+        <div className="border-b border-slate-300 pb-6">
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
             Center Registration
           </h1>
-          <p className="text-xl text-slate-500 font-bold mt-2 italic">
-            Onboard a new institutional branch to the MIS network.
+          <p className="text-slate-500 font-medium mt-1">
+            Official onboarding for new institutional branches into the MIS network.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-16">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
           
           {/* SECTION 1: CORE DETAILS */}
           <FormSection 
             title="Institutional Profile" 
-            icon={<BuildingLibraryIcon className="w-8 h-8 text-emerald-600" />}
+            icon={<BuildingLibraryIcon className="w-6 h-6 text-indigo-600" />}
           >
             <Input
               label="Legal Center Name"
@@ -78,7 +79,7 @@ const RegisterCenter = () => {
           {/* SECTION 2: CONTACT & GEOGRAPHY */}
           <FormSection 
             title="Location & Connectivity" 
-            icon={<MapPinIcon className="w-8 h-8 text-blue-600" />}
+            icon={<MapPinIcon className="w-6 h-6 text-indigo-600" />}
           >
             <div className="md:col-span-2">
               <Textarea
@@ -124,7 +125,7 @@ const RegisterCenter = () => {
           {/* SECTION 3: ADMINISTRATION */}
           <FormSection 
             title="Administrative Control" 
-            icon={<UserCircleIcon className="w-8 h-8 text-amber-600" />}
+            icon={<UserCircleIcon className="w-6 h-6 text-indigo-600" />}
           >
             <Input
               label="Master Admin Name"
@@ -142,17 +143,17 @@ const RegisterCenter = () => {
           </FormSection>
 
           {/* SUBMIT ACTIONS */}
-          <div className="bg-slate-900 rounded-[2.5rem] p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
-            <div className="text-white">
-              <p className="text-emerald-400 text-xs font-black uppercase tracking-widest">Finalization</p>
-              <h3 className="text-xl font-bold">Review information before submitting</h3>
+          <div className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+            <div>
+              <p className="text-slate-900 font-bold">Review Data Accuracy</p>
+              <p className="text-slate-500 text-sm">Ensure all legal information is correct before authorization.</p>
             </div>
             <button
               type="submit"
-              className="w-full md:w-auto px-12 py-5 bg-emerald-500 text-white font-black uppercase tracking-widest rounded-2xl hover:bg-emerald-400 transition-all active:scale-95 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/20"
+              className="w-full md:w-auto px-10 py-3 bg-indigo-600 text-white font-bold text-sm uppercase tracking-widest rounded-lg hover:bg-indigo-700 transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-md"
             >
-              <CheckBadgeIcon className="w-6 h-6" />
-              Authorize & Register
+              <CheckBadgeIcon className="w-5 h-5" />
+              Register Branch
             </button>
           </div>
         </form>
@@ -164,74 +165,76 @@ const RegisterCenter = () => {
 /* ---------------- UI COMPONENTS ---------------- */
 
 const FormSection = ({ title, icon, children }) => (
-  <div className="space-y-8">
-    <div className="flex items-center gap-4">
-      <div className="p-3 bg-white border-2 border-slate-100 rounded-2xl shadow-sm">
-        {icon}
-      </div>
-      <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+  <div className="space-y-4">
+    <div className="flex items-center gap-2 px-1">
+      {icon}
+      <h2 className="text-lg font-bold text-slate-800 tracking-tight">
         {title}
       </h2>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-10 rounded-[2.5rem] border-2 border-slate-100 shadow-sm">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
       {children}
     </div>
   </div>
 );
 
 const Input = React.forwardRef(({ label, error, type = "text", ...props }, ref) => (
-  <div className="space-y-2">
-    <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+  <div className="space-y-1.5">
+    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
       {label}
     </label>
     <input
       ref={ref}
       type={type}
       {...props}
-      className={`w-full px-5 py-4 text-lg font-bold rounded-2xl border-2 transition-all focus:outline-none ${
+      className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all focus:outline-none ${
         error
-          ? "border-red-500 bg-red-50 text-red-900"
-          : "border-slate-100 bg-slate-50 focus:border-slate-900 focus:bg-white"
+          ? "border-red-300 bg-red-50 text-red-900"
+          : "border-slate-200 bg-white focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
       }`}
     />
-    {error && <p className="text-xs font-black text-red-600 uppercase tracking-tighter">{error.message}</p>}
+    {error && <p className="text-[10px] font-bold text-red-600 uppercase mt-1">{error.message}</p>}
   </div>
 ));
 
 const Textarea = React.forwardRef(({ label, error, ...props }, ref) => (
-  <div className="space-y-2">
-    <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+  <div className="space-y-1.5">
+    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
       {label}
     </label>
     <textarea
       ref={ref}
       rows={3}
       {...props}
-      className={`w-full px-5 py-4 text-lg font-bold rounded-2xl border-2 transition-all focus:outline-none ${
+      className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all focus:outline-none ${
         error
-          ? "border-red-500 bg-red-50 text-red-900"
-          : "border-slate-100 bg-slate-50 focus:border-slate-900 focus:bg-white"
+          ? "border-red-300 bg-red-50 text-red-900"
+          : "border-slate-200 bg-white focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
       }`}
     />
-    {error && <p className="text-xs font-black text-red-600 uppercase tracking-tighter">{error.message}</p>}
+    {error && <p className="text-[10px] font-bold text-red-600 uppercase mt-1">{error.message}</p>}
   </div>
 ));
 
 const Select = React.forwardRef(({ label, options, error, ...props }, ref) => (
-  <div className="space-y-2">
-    <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+  <div className="space-y-1.5 relative">
+    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
       {label}
     </label>
-    <select
-      ref={ref}
-      {...props}
-      className={`w-full px-5 py-4 text-lg font-bold rounded-2xl border-2 transition-all focus:outline-none appearance-none bg-slate-50 focus:border-slate-900 focus:bg-white ${
-        error ? "border-red-500" : "border-slate-100"
-      }`}
-    >
-      <option value="">Choose...</option>
-      {options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
-    </select>
+    <div className="relative">
+      <select
+        ref={ref}
+        {...props}
+        className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all appearance-none focus:outline-none bg-white ${
+          error ? "border-red-300" : "border-slate-200 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
+        }`}
+      >
+        <option value="">Select Option</option>
+        {options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+      </select>
+      <ChevronDownIcon className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+    </div>
+    {error && <p className="text-[10px] font-bold text-red-600 uppercase mt-1">Required</p>}
   </div>
 ));
 

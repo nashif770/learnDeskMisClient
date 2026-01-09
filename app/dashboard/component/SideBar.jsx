@@ -68,7 +68,7 @@ const SideBar = () => {
 
     // ================== STUDENTS ==================
     {
-      title: "Students",
+      title: "Student Information",
       active: true,
       roles: ["Super Admin", "Admin", "Head Teacher", "Teacher", "Student"],
       links: [
@@ -96,11 +96,6 @@ const SideBar = () => {
           label: "ID Cards",
           href: "/dashboard/students/id-cards",
           roles: ["Admin", "Super Admin"],
-        },
-        {
-          label: "My Results",
-          href: "/dashboard/students/my-performance",
-          roles: ["Student"],
         },
       ],
     },

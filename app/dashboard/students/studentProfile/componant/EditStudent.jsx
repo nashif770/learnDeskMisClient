@@ -7,17 +7,14 @@ import {
   MapPinIcon, 
   HeartIcon, 
   AcademicCapIcon,
-  CheckCircleIcon
-} from "@heroicons/react/24/outline";
+  CheckBadgeIcon
+} from "@heroicons/react/20/solid"; 
 
 const EditStudentModal = ({ isOpen, onClose, student, onSave }) => {
   const [formData, setFormData] = useState({});
 
-  // Sync state with the student prop when it opens
   useEffect(() => {
-    if (student) {
-      setFormData(student);
-    }
+    if (student) setFormData(student);
   }, [student]);
 
   if (!isOpen) return null;
@@ -35,7 +32,7 @@ const EditStudentModal = ({ isOpen, onClose, student, onSave }) => {
 
   const InputField = ({ label, name, type = "text", placeholder }) => (
     <div className="flex flex-col gap-1">
-      <label className="text-xs font-black text-slate-500 uppercase tracking-wider">
+      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">
         {label}
       </label>
       <input
@@ -44,131 +41,133 @@ const EditStudentModal = ({ isOpen, onClose, student, onSave }) => {
         value={formData[name] || ""}
         onChange={handleChange}
         placeholder={placeholder}
-        className="px-4 py-2 border-2 border-slate-200 rounded-lg focus:border-emerald-500 focus:outline-none font-semibold text-slate-800 transition-all"
+        className="px-3 py-2 bg-white border border-slate-200 rounded-md focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 focus:outline-none text-sm font-medium text-slate-700 transition-all placeholder:text-slate-300"
       />
     </div>
   );
 
   const SectionHeader = ({ title, icon: Icon }) => (
-    <div className="flex items-center gap-2 border-b-2 border-slate-100 pb-2 mb-4 mt-6">
-      <Icon className="w-5 h-5 text-emerald-600" />
-      <h3 className="font-black text-slate-900 uppercase text-sm tracking-widest">{title}</h3>
+    <div className="flex items-center gap-2 border-b border-slate-100 pb-2 mb-4 mt-8 first:mt-0">
+      <Icon className="w-4 h-4 text-emerald-500" />
+      <h3 className="font-bold text-slate-800 uppercase text-[10px] tracking-widest">{title}</h3>
     </div>
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-      <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-[2px] p-4">
+      <div className="bg-white w-full max-w-4xl max-h-[85vh] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-slate-200">
         
         {/* MODAL HEADER */}
-        <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+        <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-emerald-50/30">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 uppercase">Edit Student Profile</h2>
-            <p className="text-sm text-slate-500 font-bold">Modifying Records for: <span className="text-emerald-600">{student?.userNameEn}</span></p>
+            <h2 className="text-lg font-bold text-slate-900">Edit Student Profile</h2>
+            <p className="text-[11px] text-slate-500 font-medium">Record ID: <span className="text-emerald-600 font-bold">{student?.Id || student?._id}</span></p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-full transition-colors">
-            <XMarkIcon className="w-8 h-8 text-slate-400" />
+          <button onClick={onClose} className="p-1.5 hover:bg-slate-200 rounded-md transition-colors text-slate-400">
+            <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
 
-        {/* MODAL BODY (Scrollable) */}
-        <form onSubmit={handleSubmit} className="p-8 overflow-y-auto space-y-2">
+        {/* MODAL BODY */}
+        <form onSubmit={handleSubmit} className="p-6 overflow-y-auto overflow-x-hidden">
           
           {/* PERSONAL INFORMATION */}
-          <SectionHeader title="Basic Identification" icon={UserIcon} />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <InputField label="Name (English)" name="userNameEn" />
-            <InputField label="Name (Bangla)" name="userNameBn" />
-            <InputField label="System ID" name="Id" />
+          <SectionHeader title="Core Identity" icon={UserIcon} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
+            <InputField label="Full Name (EN)" name="userNameEn" />
+            <InputField label="Full Name (BN)" name="userNameBn" />
             <InputField label="Blood Group" name="bloodGroup" />
-            <InputField label="Religion" name="religion" />
             <InputField label="Date of Birth" name="dobReg" type="date" />
-            <InputField label="BNID / Registration" name="BNID" />
-            <InputField label="Place of Birth" name="birthPlace" />
-            <InputField label="Mobile Number" name="mobile" />
+            <InputField label="BNID / NID" name="BNID" />
+            <InputField label="Primary Mobile" name="mobile" />
           </div>
 
           {/* FAMILY DETAILS */}
-          <SectionHeader title="Family & Guardians" icon={HeartIcon} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <p className="text-[10px] font-black text-emerald-600 uppercase">Father's Details</p>
-                <InputField label="Father's Name" name="fatherName" />
+          <SectionHeader title="Guardianship" icon={HeartIcon} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-3 p-4 bg-emerald-50/20 rounded-lg border border-emerald-100/50">
+              <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-tighter">Father's Information</p>
+              <InputField label="Name" name="fatherName" />
+              <div className="grid grid-cols-2 gap-2">
                 <InputField label="Occupation" name="fatherOccupation" />
-                <InputField label="Mobile" name="fatherMobile" />
+                <InputField label="Contact" name="fatherMobile" />
+              </div>
             </div>
-            <div className="space-y-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                <p className="text-[10px] font-black text-emerald-600 uppercase">Mother's Details</p>
-                <InputField label="Mother's Name" name="motherName" />
+            <div className="space-y-3 p-4 bg-emerald-50/20 rounded-lg border border-emerald-100/50">
+              <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-tighter">Mother's Information</p>
+              <InputField label="Name" name="motherName" />
+              <div className="grid grid-cols-2 gap-2">
                 <InputField label="Occupation" name="motherOccupation" />
-                <InputField label="Mobile" name="motherMobile" />
+                <InputField label="Contact" name="motherMobile" />
+              </div>
             </div>
           </div>
 
           {/* ADDRESS DETAILS */}
-          <SectionHeader title="Residential Information" icon={MapPinIcon} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SectionHeader title="Residential Records" icon={MapPinIcon} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-                <p className="text-[10px] font-black text-blue-600 uppercase">Current Address</p>
-                <InputField label="Street Address" name="currentAddress" />
-                <div className="grid grid-cols-2 gap-2">
-                    <InputField label="Thana" name="currentThana" />
-                    <InputField label="District" name="currentDistrict" />
-                </div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight border-l-2 border-emerald-500 pl-2">Current Residence</p>
+              <InputField label="Street Address" name="currentAddress" />
+              <div className="grid grid-cols-2 gap-3">
+                <InputField label="Thana" name="currentThana" />
+                <InputField label="District" name="currentDistrict" />
+              </div>
             </div>
             <div className="space-y-4">
-                <p className="text-[10px] font-black text-slate-400 uppercase">Permanent Address</p>
-                <InputField label="Street Address" name="permanentAddress" />
-                <div className="grid grid-cols-2 gap-2">
-                    <InputField label="Thana" name="permanentThana" />
-                    <InputField label="District" name="permanentDistrict" />
-                </div>
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight border-l-2 border-slate-200 pl-2">Permanent Root</p>
+              <InputField label="Street Address" name="permanentAddress" />
+              <div className="grid grid-cols-2 gap-3">
+                <InputField label="Thana" name="permanentThana" />
+                <InputField label="District" name="permanentDistrict" />
+              </div>
             </div>
           </div>
 
           {/* ACADEMICS & PLEDGES */}
-          <SectionHeader title="Commitments & Extra" icon={AcademicCapIcon} />
-          <div className="space-y-4">
-            <InputField label="Education Level" name="education" />
-            <InputField label="Extra Curricular Activities" name="extraCurriculumn" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-1">
-                    <label className="text-xs font-black text-slate-500 uppercase">Student Pledge</label>
-                    <textarea 
-                        name="studentPledge" 
-                        value={formData.studentPledge || ""} 
-                        onChange={handleChange}
-                        className="p-4 border-2 border-slate-200 rounded-lg h-24 font-medium"
-                    />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <label className="text-xs font-black text-slate-500 uppercase">Guardian Pledge</label>
-                    <textarea 
-                        name="guardianPledge" 
-                        value={formData.guardianPledge || ""} 
-                        onChange={handleChange}
-                        className="p-4 border-2 border-slate-200 rounded-lg h-24 font-medium"
-                    />
-                </div>
+          <SectionHeader title="Academics & Declarations" icon={AcademicCapIcon} />
+          <div className="space-y-5 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <InputField label="Education Level" name="education" />
+              <InputField label="Extra Curricular" name="extraCurriculumn" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Student Pledge</label>
+                <textarea 
+                  name="studentPledge" 
+                  value={formData.studentPledge || ""} 
+                  onChange={handleChange}
+                  className="p-3 bg-white border border-slate-200 rounded-md h-20 text-sm font-medium focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Guardian Pledge</label>
+                <textarea 
+                  name="guardianPledge" 
+                  value={formData.guardianPledge || ""} 
+                  onChange={handleChange}
+                  className="p-3 bg-white border border-slate-200 rounded-md h-20 text-sm font-medium focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
+                />
+              </div>
             </div>
           </div>
-
         </form>
 
         {/* MODAL FOOTER */}
-        <div className="p-6 border-t border-slate-100 flex justify-end gap-4 bg-slate-50">
+        <div className="px-6 py-4 border-t border-slate-100 flex justify-end items-center gap-3 bg-slate-50/50">
           <button 
             onClick={onClose}
-            className="px-6 py-2 border-2 border-slate-300 rounded-lg font-bold text-slate-600 hover:bg-slate-200 transition-all"
+            className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-slate-600 transition-all"
           >
-            Cancel
+            Discard Changes
           </button>
           <button 
             onClick={handleSubmit}
-            className="flex items-center gap-2 px-8 py-2 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 shadow-lg shadow-emerald-200 transition-all"
+            className="flex items-center gap-2 px-6 py-2 bg-emerald-600 text-white rounded-md text-xs font-bold hover:bg-emerald-700 shadow-sm shadow-emerald-200 transition-all active:scale-95"
           >
-            <CheckCircleIcon className="w-5 h-5" />
-            Save Changes
+            <CheckBadgeIcon className="w-4 h-4" />
+            Update Record
           </button>
         </div>
       </div>

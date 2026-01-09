@@ -5,8 +5,9 @@ import {
   AcademicCapIcon, 
   TrophyIcon, 
   PresentationChartLineIcon,
-  StarIcon 
-} from "@heroicons/react/24/outline";
+  StarIcon,
+  ChevronRightIcon
+} from "@heroicons/react/20/solid";
 
 const StudentPerformance = () => {
   const { studentData } = useStudentData();
@@ -35,133 +36,105 @@ const StudentPerformance = () => {
   };
 
   const getGradeStyles = (avg) => {
-    if (!avg) return { label: "N/A", bg: "bg-gray-100 text-gray-400 border-gray-200" };
+    if (!avg) return { label: "N/A", color: "text-slate-400 bg-slate-50" };
     const num = parseFloat(avg);
-    if (num >= 90) return { label: "A+", bg: "bg-emerald-50 text-emerald-700 border-emerald-200" };
-    if (num >= 80) return { label: "A", bg: "bg-teal-50 text-teal-700 border-teal-200" };
-    if (num >= 70) return { label: "B", bg: "bg-blue-50 text-blue-700 border-blue-200" };
-    if (num >= 60) return { label: "C", bg: "bg-amber-50 text-amber-700 border-amber-200" };
-    return { label: "D", bg: "bg-rose-50 text-rose-700 border-rose-200" };
+    if (num >= 90) return { label: "A+", color: "text-emerald-600 bg-emerald-50" };
+    if (num >= 80) return { label: "A", color: "text-blue-600 bg-blue-50" };
+    if (num >= 70) return { label: "B", color: "text-indigo-600 bg-indigo-50" };
+    if (num >= 60) return { label: "C", color: "text-amber-600 bg-amber-50" };
+    return { label: "D", color: "text-rose-600 bg-rose-50" };
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-12 space-y-10">
-      <div className="max-w-7xl mx-auto space-y-10">
+    <div className="min-h-screen bg-[#FDFDFD] p-4 md:p-8 font-sans antialiased text-slate-900">
+      <div className="max-w-7xl mx-auto space-y-6">
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        {/* --- Slim Header --- */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
           <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
-              Academic Performance
-            </h1>
-            <p className="text-gray-500 md:text-lg mt-2 md:mt-3 italic">
-              Analyzing student achievement benchmarks and attendance correlation.
-            </p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Academic Analytics</h1>
+            <p className="text-xs font-medium text-slate-500 mt-1">Benchmark assessment for current term</p>
           </div>
-          <div className="bg-emerald-900 px-5 md:px-6 py-3 md:py-4 rounded-3xl shadow-xl flex items-center gap-4">
-            <TrophyIcon className="w-7 h-7 text-emerald-400" />
-            <div>
-              <p className="text-[10px] md:text-xs font-black uppercase tracking-widest opacity-60">Top Performer</p>
-              <p className="text-sm md:text-lg font-bold tracking-tight">Spring 2026 Batch</p>
-            </div>
+          <div className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-lg">
+            <TrophyIcon className="w-4 h-4 text-amber-400" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">Top Batch: 2026</span>
           </div>
         </div>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-          <StatCard 
-            title="Total Students" 
-            value={students.length} 
-            icon={<AcademicCapIcon className="w-7 h-7" />} 
-            color="emerald" 
-          />
-          <StatCard 
-            title="Average Batch GPA" 
-            value="3.84" 
-            icon={<PresentationChartLineIcon className="w-7 h-7" />} 
-            color="blue" 
-          />
-          <StatCard 
-            title="Excellence Rate" 
-            value="84%" 
-            icon={<StarIcon className="w-7 h-7" />} 
-            color="amber" 
-          />
+        {/* --- Performance Metrics --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <CompactStatCard title="Enrollment" value={students.length} icon={AcademicCapIcon} />
+          <CompactStatCard title="Average GPA" value="3.84" icon={PresentationChartLineIcon} highlight />
+          <CompactStatCard title="Excellence" value="84%" icon={StarIcon} />
         </div>
 
-        {/* Table */}
-        <div className="bg-white rounded-3xl shadow-md border border-gray-200 overflow-hidden">
+        {/* --- High-Density Performance Ledger --- */}
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[700px] border-separate border-spacing-0">
+            <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-4 md:px-10 py-4 md:py-6 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Rank</th>
-                  <th className="px-4 md:px-8 py-4 md:py-6 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest">Student</th>
-                  <th className="px-4 md:px-8 py-4 md:py-6 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Avg Score</th>
-                  <th className="px-4 md:px-8 py-4 md:py-6 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest text-center">Grade</th>
-                  <th className="px-4 md:px-10 py-4 md:py-6 text-xs md:text-sm font-black text-gray-500 uppercase tracking-widest">Attendance</th>
+                <tr className="bg-slate-50/50 border-b border-slate-100">
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center w-16">Rank</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Student Profile</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Score</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Grade</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Attendance Track</th>
+                  <th className="px-4 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
-                {students.length > 0 ? (
-                  students.map((student, index) => {
-                    const avg = calculateAverage(student.performance);
-                    const grade = getGradeStyles(avg);
-                    const attendance = parseInt(student.performance?.attendance) || 0;
+              <tbody className="divide-y divide-slate-50">
+                {students.map((student, index) => {
+                  const avg = calculateAverage(student.performance);
+                  const grade = getGradeStyles(avg);
+                  const attendance = parseInt(student.performance?.attendance) || 0;
 
-                    return (
-                      <tr key={student.Id || index} className="group hover:bg-gray-50 transition-all">
-                        <td className="px-4 md:px-10 py-4 text-center font-mono font-bold text-gray-400">
-                          #{String(index + 1).padStart(2, "0")}
-                        </td>
-                        <td className="px-4 md:px-8 py-4">
-                          <div className="flex items-center gap-3 md:gap-5">
-                            <div className="w-12 md:w-14 h-12 md:h-14 rounded-2xl bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-400 font-black text-lg group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm">
-                              {(student.userNameEn || student.userdata?.name || "U").charAt(0)}
-                            </div>
-                            <div>
-                              <p className="text-base md:text-lg font-black text-gray-800">{student.userNameEn || student.userdata?.name}</p>
-                              <p className="text-xs md:text-sm font-semibold text-gray-400 uppercase tracking-wide mt-0.5">
-                                UID: {student.Id || "0000"}
-                              </p>
-                            </div>
+                  return (
+                    <tr key={student.Id || index} className="group hover:bg-slate-50/80 transition-colors">
+                      <td className="px-4 py-4 text-center">
+                        <span className="text-xs font-bold text-slate-300">#{index + 1}</span>
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs border border-slate-200 uppercase">
+                            {(student.userNameEn || "U").charAt(0)}
                           </div>
-                        </td>
-                        <td className="px-4 md:px-8 py-4 text-center text-lg md:text-xl font-black text-gray-800">
-                          {avg || "—"}
-                        </td>
-                        <td className="px-4 md:px-8 py-4 text-center">
-                          <span className={`px-4 py-1.5 md:px-5 md:py-2 rounded-xl text-sm md:text-base font-black shadow-sm border-2 ${grade.bg}`}>
-                            {grade.label}
-                          </span>
-                        </td>
-                        <td className="px-4 md:px-10 py-4">
-                          <div className="flex items-center gap-3 md:gap-5">
-                            <div className="flex-1 h-3 md:h-4 bg-gray-200 rounded-full overflow-hidden shadow-inner min-w-[140px]">
-                              <div
-                                className={`h-full rounded-full transition-all duration-1000 ${
-                                  attendance > 80 ? "bg-emerald-500" :
-                                  attendance > 60 ? "bg-amber-400" :
-                                  "bg-rose-500"
-                                }`}
-                                style={{ width: `${attendance}%` }}
-                              />
-                            </div>
-                            <span className="text-base md:text-lg font-black text-gray-700 w-12">{attendance}%</span>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-slate-800 group-hover:text-indigo-600 transition-colors">
+                              {student.userNameEn}
+                            </span>
+                            <span className="text-[10px] font-bold text-slate-400">ID: {student.Id || "N/A"}</span>
                           </div>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="py-24 text-center">
-                      <p className="text-gray-400 font-black text-xl md:text-2xl uppercase italic opacity-40">
-                        No performance records available.
-                      </p>
-                    </td>
-                  </tr>
-                )}
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <span className="text-sm font-bold text-slate-700">{avg || "—"}</span>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tight ${grade.color}`}>
+                          {grade.label}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4 min-w-[140px]">
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full transition-all duration-700 ${
+                                attendance > 80 ? "bg-emerald-500" : attendance > 60 ? "bg-amber-400" : "bg-rose-500"
+                              }`}
+                              style={{ width: `${attendance}%` }}
+                            />
+                          </div>
+                          <span className="text-[11px] font-bold text-slate-500 w-8">{attendance}%</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                         <button className="p-1 hover:bg-indigo-50 rounded text-slate-300 hover:text-indigo-500 transition-colors">
+                            <ChevronRightIcon className="w-4 h-4" />
+                         </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -171,22 +144,16 @@ const StudentPerformance = () => {
   );
 };
 
-const StatCard = ({ title, value, icon, color }) => {
-  const colorMap = {
-    emerald: "text-emerald-700 bg-emerald-50 border-emerald-200 shadow-emerald-100",
-    blue: "text-blue-700 bg-blue-50 border-blue-200 shadow-blue-100",
-    amber: "text-amber-700 bg-amber-50 border-amber-200 shadow-amber-100",
-  };
-
-  return (
-    <div className={`p-6 md:p-8 bg-white rounded-3xl border shadow-md flex flex-col gap-3 hover:shadow-lg transition-transform hover:-translate-y-2 ${colorMap[color]}`}>
-      <div className="flex items-center justify-between opacity-80">
-        <p className="text-xs md:text-sm font-black uppercase tracking-widest">{title}</p>
-        <div className="opacity-50">{icon}</div>
-      </div>
-      <p className="text-4xl md:text-5xl font-black tracking-tight">{value}</p>
+const CompactStatCard = ({ title, value, icon: Icon, highlight }) => (
+  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+    <div className="space-y-1">
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{title}</p>
+      <p className={`text-xl font-bold tracking-tight ${highlight ? 'text-indigo-600' : 'text-slate-900'}`}>{value}</p>
     </div>
-  );
-};
+    <div className={`p-2 rounded-lg ${highlight ? 'bg-indigo-50 text-indigo-500' : 'bg-slate-50 text-slate-400'}`}>
+      <Icon className="w-4 h-4" />
+    </div>
+  </div>
+);
 
 export default StudentPerformance;

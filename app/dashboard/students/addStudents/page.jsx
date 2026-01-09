@@ -2,6 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { formCategories } from "../componenets/formFields";
 import { useForm } from "react-hook-form";
+import { 
+  CheckCircleIcon, 
+  ArrowPathIcon, 
+  TrashIcon, 
+  CloudArrowUpIcon,
+  UserPlusIcon
+} from "@heroicons/react/24/outline";
 
 const AddStudents = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -10,15 +17,8 @@ const AddStudents = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors }, // ✅ only errors kept
+    formState: { errors },
   } = useForm();
-
-  // ✅ Optional side-effect (logging / analytics / toast hook)
-  useEffect(() => {
-    if (submitting) {
-      console.log(`Submitting student data ${submitting}`);
-    }
-  }, [submitting]);
 
   const onSubmit = async (data) => {
     try {
@@ -35,28 +35,28 @@ const AddStudents = () => {
 
       if (!res.ok) throw new Error(result.message || "Failed to submit");
       reset();
-      alert("🎉 Student successfully added to the database!");
+      alert("✅ Registration Successful: The student has been added to the system.");
     } catch (error) {
       console.error(error);
-      alert("❌ Submission failed. Please check your connection.");
+      alert("❌ Error: Could not reach the server. Please check your internet.");
     } finally {
       setSubmitting(false);
-      console.log("submitted false");
     }
   };
 
   const renderField = (field) => {
-    const commonClass =
-      "w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 outline-none transition-all duration-200 focus:bg-white focus:ring-4 focus:ring-emerald-100 focus:border-emerald-500 placeholder:text-gray-400";
+    const commonClass = `w-full bg-slate-50 border ${
+      errors[field.name] ? "border-red-300 ring-1 ring-red-100" : "border-slate-200"
+    } rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 outline-none transition-all focus:bg-white focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 placeholder:text-slate-400 shadow-sm`;
 
     switch (field.type) {
       case "text":
         return (
           <input
             type="text"
-            placeholder={`Enter ${field.label.toLowerCase()}...`}
+            placeholder={`e.g. ${field.label}`}
             className={commonClass}
-            {...register(field.name)}
+            {...register(field.name, { required: `${field.label} is required` })}
           />
         );
 
@@ -64,7 +64,7 @@ const AddStudents = () => {
         return (
           <textarea
             rows={3}
-            placeholder={`Provide details about ${field.label.toLowerCase()}...`}
+            placeholder={`Enter details...`}
             className={commonClass}
             {...register(field.name)}
           />
@@ -72,36 +72,25 @@ const AddStudents = () => {
 
       case "select":
         return (
-          <select className={commonClass} {...register(field.name)}>
-            <option value="">Select Option</option>
+          <select className={commonClass} {...register(field.name, { required: true })}>
+            <option value="">Choose Option</option>
             {field.options?.map((opt, i) => (
-              <option key={i} value={opt}>
-                {opt}
-              </option>
+              <option key={i} value={opt}>{opt}</option>
             ))}
           </select>
         );
 
       case "file":
         return (
-          <input
-            type="file"
-            className={commonClass}
-            {...register(field.name)}
-          />
-        );
-
-      case "checkbox":
-        return (
-          <div className="flex items-center pt-2">
+          <div className="relative group">
             <input
-              type="checkbox"
-              className="h-5 w-5 text-emerald-600"
+              type="file"
+              className="absolute inset-0 opacity-0 cursor-pointer z-10"
               {...register(field.name)}
             />
-            <span className="ml-2 text-sm text-gray-500">
-              Enable this option
-            </span>
+            <div className="w-full bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-500 flex items-center gap-2 group-hover:border-indigo-400 group-hover:text-indigo-600 transition-all">
+              <CloudArrowUpIcon className="w-5 h-5" /> Upload Document
+            </div>
           </div>
         );
 
@@ -110,7 +99,7 @@ const AddStudents = () => {
           <input
             type="date"
             className={commonClass}
-            {...register(field.name)}
+            {...register(field.name, { required: true })}
           />
         );
 
@@ -120,43 +109,48 @@ const AddStudents = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-10">
-      <div className="max-w-5xl mx-auto mb-10 text-center">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">
-          New Student Registration
+    <div className="min-h-screen bg-[#F8FAFC] py-12 px-6">
+      <div className="max-w-5xl mx-auto mb-12">
+        <div className="flex items-center gap-3 text-indigo-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-3">
+          <UserPlusIcon className="w-4 h-4" />
+          Student Admissions
+        </div>
+        <h2 className="text-4xl font-black text-slate-900 tracking-tight">
+          Enroll New Student
         </h2>
-        <p className="text-slate-600 text-base md:text-lg">
-          Please fill in the information below to create a new student record.
+        <p className="text-slate-500 font-medium mt-2">
+          Complete all mandatory fields to generate a new unique Student ID and Profile.
         </p>
       </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-5xl mx-auto space-y-8"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-5xl mx-auto space-y-10">
         {formCategories.map((section, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-3xl border border-gray-200 p-6 md:p-8 shadow-sm"
+            className="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm hover:shadow-md transition-shadow"
           >
-            <div className="flex items-center gap-4 mb-6 md:mb-8">
-              <span className="w-8 h-8 md:w-10 md:h-10 rounded-2xl bg-emerald-50 text-emerald-600 font-bold flex items-center justify-center">
-                {idx + 1}
+            <div className="flex items-center gap-4 mb-10 border-b border-slate-50 pb-6">
+              <span className="w-10 h-10 rounded-xl bg-slate-900 text-white font-bold flex items-center justify-center text-sm">
+                0{idx + 1}
               </span>
-              <h3 className="text-lg md:text-xl font-bold text-slate-900">
-                {section.category}
-              </h3>
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 uppercase tracking-tight">
+                  {section.category}
+                </h3>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Section Details</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {section.fields.map((field, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  <label className="text-xs font-bold uppercase text-slate-600">
+                <div key={i} className="flex flex-col gap-2">
+                  <label className="text-[10px] font-black uppercase text-slate-500 tracking-widest ml-1 flex justify-between">
                     {field.label}
+                    {errors[field.name] && <span className="text-red-500 italic">!</span>}
                   </label>
                   {renderField(field)}
                   {errors[field.name] && (
-                    <p className="text-red-600 text-xs mt-1">
+                    <p className="text-red-500 text-[10px] font-bold mt-1 uppercase tracking-tighter">
                       {errors[field.name]?.message}
                     </p>
                   )}
@@ -166,25 +160,36 @@ const AddStudents = () => {
           </div>
         ))}
 
-        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
+        {/* SUBMIT ACTIONS */}
+        <div className="flex flex-col sm:flex-row justify-end items-center gap-4 pt-10 border-t border-slate-200">
           <button
             type="button"
             onClick={() => reset()}
-            className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+            className="flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all"
           >
-            Reset Form
+            <TrashIcon className="w-4 h-4" /> Discard Draft
           </button>
 
           <button
             type="submit"
             disabled={submitting}
-            className={`px-12 py-3 rounded-xl text-white font-bold transition ${
+            className={`min-w-[240px] flex items-center justify-center gap-3 px-12 py-5 rounded-2xl text-white font-black text-xs uppercase tracking-[0.15em] transition-all shadow-xl active:scale-95 ${
               submitting
-                ? "bg-emerald-400 cursor-not-allowed"
-                : "bg-emerald-600 hover:bg-emerald-700"
+                ? "bg-slate-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-slate-900 shadow-indigo-200"
             }`}
           >
-            {submitting ? "Saving Student..." : "Complete Registration"}
+            {submitting ? (
+              <>
+                <ArrowPathIcon className="w-5 h-5 animate-spin" />
+                Encrypting & Saving...
+              </>
+            ) : (
+              <>
+                <CheckCircleIcon className="w-5 h-5" />
+                Finalize Enrollment
+              </>
+            )}
           </button>
         </div>
       </form>

@@ -8,11 +8,12 @@ import {
   IdentificationIcon,
   ChevronUpDownIcon,
   CalendarDaysIcon,
-  ArrowsRightLeftIcon
+  ArrowsRightLeftIcon,
+  EnvelopeIcon,
+  PhoneIcon
 } from "@heroicons/react/24/outline";
 
 const AcademyInfo = () => {
-  // Mock data for registered institutes under this user
   const myInstitutes = [
     { id: "USTI-MYM-01", name: "UCEP Mymensingh TVET" },
     { id: "USTI-DHK-04", name: "UCEP Gazipur Campus" },
@@ -42,22 +43,22 @@ const AcademyInfo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] py-8 px-6 font-sans">
+    <div className="min-h-screen bg-slate-50 py-8 px-6 font-sans text-slate-900">
       <div className="max-w-6xl mx-auto space-y-6">
         
-        {/* INSTITUTE SWITCHER NAVIGATOR */}
-        <div className="bg-white border-2 border-slate-100 rounded-3xl p-4 flex items-center justify-between shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="bg-slate-900 p-2.5 rounded-2xl">
+        {/* TOP NAV: INSTITUTE SWITCHER */}
+        <div className="bg-white border border-slate-200 rounded-xl p-3 flex flex-col md:flex-row items-center justify-between shadow-sm gap-4">
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="bg-indigo-600 p-2 rounded-lg shrink-0">
               <ArrowsRightLeftIcon className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Switch Institute</p>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Active Institution</span>
               <div className="relative inline-block">
                 <select 
                   value={activeCenterId}
                   onChange={(e) => setActiveCenterId(e.target.value)}
-                  className="appearance-none bg-transparent pr-8 font-black text-slate-900 focus:outline-none cursor-pointer"
+                  className="appearance-none bg-transparent pr-8 font-bold text-slate-900 focus:outline-none cursor-pointer text-sm"
                 >
                   {myInstitutes.map((inst) => (
                     <option key={inst.id} value={inst.id}>{inst.name}</option>
@@ -67,102 +68,106 @@ const AcademyInfo = () => {
               </div>
             </div>
           </div>
-          <div className="hidden md:block h-8 w-px bg-slate-100" />
-          <div className="hidden md:flex items-center gap-3">
-            <span className="text-[10px] font-bold text-slate-400 uppercase italic">Managed by you</span>
+          <div className="hidden md:block h-8 w-px bg-slate-200" />
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administrative Access</span>
             <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center text-[10px] font-bold">
-                  {i}
+              {[1, 2].map((i) => (
+                <div key={i} className="w-7 h-7 rounded-full border-2 border-white bg-slate-800 flex items-center justify-center text-[10px] text-white font-bold">
+                  {i === 1 ? 'JD' : 'NA'}
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* PRIMARY HEADER CARD */}
-        <header className="bg-white border-b-8 border-slate-900 rounded-[2.5rem] p-8 md:p-10 shadow-sm">
+        {/* HEADER SECTION */}
+        <header className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="px-4 py-1.5 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full">
+                <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wider rounded border border-emerald-200">
                   {center.status}
                 </span>
-                <span className="text-slate-400 font-bold text-xs uppercase tracking-widest flex items-center gap-1.5">
+                <span className="text-slate-400 font-bold text-xs uppercase tracking-widest flex items-center gap-1.5 border-l border-slate-200 pl-3">
                   <IdentificationIcon className="w-4 h-4" /> {center.code}
                 </span>
               </div>
-              <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter">
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
                 {center.name}
               </h1>
+              <p className="text-slate-500 font-medium flex items-center gap-2 uppercase text-xs tracking-widest">
+                <BuildingOfficeIcon className="w-4 h-4 text-indigo-600" /> {center.type}
+              </p>
             </div>
-            <div className="bg-slate-900 text-white p-6 rounded-3xl shadow-xl">
-              <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 opacity-70">Licensing Tier</p>
-              <p className="text-xl font-black text-emerald-400 tracking-tight">{center.subscription}</p>
+            <div className="bg-slate-900 text-white p-6 rounded-xl shadow-lg border-b-4 border-indigo-500 min-w-[200px]">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Service Tier</p>
+              <p className="text-xl font-bold text-white tracking-tight">{center.subscription}</p>
             </div>
           </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* LEFT COLUMN: METRICS */}
+          {/* STATS COLUMN */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="bg-white border-2 border-slate-100 rounded-[2.5rem] p-10 shadow-sm">
-              <h2 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] mb-10">Occupancy</h2>
+            <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-6">Capacity Utilization</p>
               <div className="space-y-6">
                 <div>
-                  <p className="text-6xl font-black text-slate-900 tracking-tighter">{center.currentStudents}</p>
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Active Students</p>
+                  <p className="text-5xl font-bold text-slate-900 tracking-tight">{center.currentStudents}</p>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Enrolled Students</p>
                 </div>
                 <div className="space-y-2">
-                  <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-slate-900" 
+                      className="h-full bg-indigo-600 rounded-full" 
                       style={{ width: `${(center.currentStudents/center.studentCapacity)*100}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-[10px] font-black uppercase text-slate-400">
-                    <span>Utilization</span>
-                    <span>Max: {center.studentCapacity}</span>
+                  <div className="flex justify-between text-[10px] font-bold uppercase text-slate-400 tracking-tighter">
+                    <span>{Math.round((center.currentStudents/center.studentCapacity)*100)}% Occupied</span>
+                    <span>Max Limit: {center.studentCapacity}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-emerald-500 rounded-[2.5rem] p-8 text-white flex items-center justify-between">
+            <div className="bg-indigo-600 rounded-xl p-6 text-white flex items-center justify-between shadow-md">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-80 mb-1">Faculty Size</p>
-                <p className="text-4xl font-black">{center.totalTeachers}</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-200 mb-1">Faculty Strength</p>
+                <p className="text-3xl font-bold">{center.totalTeachers} Teachers</p>
               </div>
-              <UserGroupIcon className="w-12 h-12 opacity-30" />
+              <UserGroupIcon className="w-10 h-10 text-indigo-400 opacity-50" />
             </div>
           </div>
 
-          {/* RIGHT COLUMN: CORE DATA */}
+          {/* CORE DATA COLUMN */}
           <div className="lg:col-span-8 space-y-6">
-            <div className="bg-white border-2 border-slate-100 rounded-[2.5rem] p-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-12">
-                <DataRow label="Institutional Address" value={center.address} fullWidth />
+            <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm h-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12">
+                <DataRow label="Institutional Address" value={center.address} icon={<MapPinIcon className="w-4 h-4"/>} fullWidth />
                 <DataRow label="Regional Hub" value={`${center.district}, ${center.division}`} />
-                <DataRow label="Est. Year" value={center.established} />
-                <DataRow label="Contact Line" value={center.phone} />
-                <DataRow label="Email Access" value={center.email} />
+                <DataRow label="Founding Year" value={center.established} />
+                <DataRow label="Official Contact" value={center.phone} icon={<PhoneIcon className="w-4 h-4"/>} />
+                <DataRow label="Email Access" value={center.email} icon={<EnvelopeIcon className="w-4 h-4"/>} />
               </div>
-            </div>
-
-            <div className="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 flex flex-col md:flex-row justify-between items-center gap-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-slate-100 rounded-2xl flex items-center justify-center">
-                  <ShieldCheckIcon className="w-6 h-6 text-slate-900" />
+              
+              {/* SYSTEM FOOTER */}
+              <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
+                    <ShieldCheckIcon className="w-5 h-5 text-indigo-600" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Principal Admin</p>
+                    <p className="text-base font-bold text-slate-800">{center.adminName}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Master Administrator</p>
-                  <p className="text-lg font-black text-slate-900">{center.adminName}</p>
+                <div className="flex gap-8">
+                  <AuditDate label="Onboarding Date" date={center.createdAt} />
+                  <AuditDate label="Last Sync" date={center.updatedAt} />
                 </div>
-              </div>
-              <div className="flex gap-10">
-                <AuditDate label="Record Created" date={center.createdAt} />
-                <AuditDate label="System Update" date={center.updatedAt} />
               </div>
             </div>
           </div>
@@ -172,18 +177,24 @@ const AcademyInfo = () => {
   );
 };
 
-const DataRow = ({ label, value, fullWidth = false }) => (
+/* REUSABLE UI HELPERS */
+
+const DataRow = ({ label, value, icon, fullWidth = false }) => (
   <div className={fullWidth ? "md:col-span-2" : ""}>
-    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">{label}</p>
-    <p className="text-xl font-bold text-slate-900 leading-tight">{value}</p>
+    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+      {label}
+    </p>
+    <p className="text-lg font-bold text-slate-800 leading-tight">
+      {value}
+    </p>
   </div>
 );
 
 const AuditDate = ({ label, date }) => (
-  <div>
-    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-    <div className="flex items-center gap-1.5 text-slate-600 font-bold text-xs uppercase">
-      <CalendarDaysIcon className="w-3.5 h-3.5" /> {date}
+  <div className="text-right md:text-left">
+    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+    <div className="flex items-center gap-1.5 text-slate-700 font-bold text-xs">
+      <CalendarDaysIcon className="w-3.5 h-3.5 text-slate-400" /> {date}
     </div>
   </div>
 );
