@@ -12,6 +12,7 @@ import {
   EnvelopeIcon,
   PhoneIcon
 } from "@heroicons/react/24/outline";
+import theme from "@/theme";
 
 const AcademyInfo = () => {
   const myInstitutes = [
@@ -43,130 +44,228 @@ const AcademyInfo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-6 font-sans text-slate-900">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div 
+      className="min-h-screen py-6 px-4 font-sans"
+      style={{ backgroundColor: theme.colors.background, color: theme.colors.textMain }}
+    >
+      <div className="max-w-5xl mx-auto space-y-4">
         
-        {/* TOP NAV: INSTITUTE SWITCHER */}
-        <div className="bg-white border border-slate-200 rounded-xl p-3 flex flex-col md:flex-row items-center justify-between shadow-sm gap-4">
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <div className="bg-indigo-600 p-2 rounded-lg shrink-0">
-              <ArrowsRightLeftIcon className="w-5 h-5 text-white" />
+        {/* TOP NAV: COMPACT INSTITUTE SWITCHER */}
+        <div 
+          className="border rounded-lg p-2.5 flex flex-col md:flex-row items-center justify-between shadow-sm gap-3"
+          style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+        >
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <div 
+              className="p-1.5 rounded-md shrink-0 shadow-sm"
+              style={{ backgroundColor: theme.colors.primary }}
+            >
+              <ArrowsRightLeftIcon className="w-4 h-4 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Active Institution</span>
+              <span 
+                className="text-[9px] font-bold uppercase tracking-wider leading-none mb-1"
+                style={{ color: theme.colors.textDisabled }}
+              >
+                Active Institution
+              </span>
               <div className="relative inline-block">
                 <select 
                   value={activeCenterId}
                   onChange={(e) => setActiveCenterId(e.target.value)}
-                  className="appearance-none bg-transparent pr-8 font-bold text-slate-900 focus:outline-none cursor-pointer text-sm"
+                  className="appearance-none bg-transparent pr-6 font-bold focus:outline-none cursor-pointer text-xs"
+                  style={{ color: theme.colors.textMain }}
                 >
                   {myInstitutes.map((inst) => (
                     <option key={inst.id} value={inst.id}>{inst.name}</option>
                   ))}
                 </select>
-                <ChevronUpDownIcon className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400" />
+                <ChevronUpDownIcon 
+                  className="w-3 h-3 absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none"
+                  style={{ color: theme.colors.textDisabled }}
+                />
               </div>
             </div>
           </div>
-          <div className="hidden md:block h-8 w-px bg-slate-200" />
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administrative Access</span>
-            <div className="flex -space-x-2">
-              {[1, 2].map((i) => (
-                <div key={i} className="w-7 h-7 rounded-full border-2 border-white bg-slate-800 flex items-center justify-center text-[10px] text-white font-bold">
-                  {i === 1 ? 'JD' : 'NA'}
+          <div className="flex items-center gap-4">
+            <span 
+              className="text-[9px] font-bold uppercase tracking-widest"
+              style={{ color: theme.colors.textDisabled }}
+            >
+              Admin Access
+            </span>
+            <div className="flex -space-x-1.5">
+              {['JD', 'NA'].map((initials, i) => (
+                <div 
+                  key={i} 
+                  className="w-6 h-6 rounded-full border-2 flex items-center justify-center text-[8px] text-white font-bold"
+                  style={{ backgroundColor: theme.colors.textMain, borderColor: theme.colors.surface }}
+                >
+                  {initials}
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* HEADER SECTION */}
-        <header className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wider rounded border border-emerald-200">
+        {/* COMPACT HEADER SECTION */}
+        <header 
+          className="border rounded-lg p-5 shadow-sm"
+          style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+        >
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span 
+                  className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded border"
+                  style={{ 
+                    backgroundColor: `${theme.colors.primary}10`, 
+                    color: theme.colors.primary,
+                    borderColor: `${theme.colors.primary}30`
+                  }}
+                >
                   {center.status}
                 </span>
-                <span className="text-slate-400 font-bold text-xs uppercase tracking-widest flex items-center gap-1.5 border-l border-slate-200 pl-3">
-                  <IdentificationIcon className="w-4 h-4" /> {center.code}
+                <span 
+                  className="font-bold text-[10px] uppercase tracking-widest flex items-center gap-1 border-l pl-2"
+                  style={{ color: theme.colors.textDisabled, borderColor: theme.colors.border }}
+                >
+                  <IdentificationIcon className="w-3 h-3" /> {center.code}
                 </span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+              <h1 className="text-xl md:text-2xl font-bold tracking-tight leading-tight" style={{ color: theme.colors.textMain }}>
                 {center.name}
               </h1>
-              <p className="text-slate-500 font-medium flex items-center gap-2 uppercase text-xs tracking-widest">
-                <BuildingOfficeIcon className="w-4 h-4 text-indigo-600" /> {center.type}
+              <p 
+                className="font-semibold flex items-center gap-1.5 uppercase text-[10px] tracking-wider"
+                style={{ color: theme.colors.textMuted }}
+              >
+                <BuildingOfficeIcon className="w-3 h-3" style={{ color: theme.colors.primary }} /> {center.type}
               </p>
             </div>
-            <div className="bg-slate-900 text-white p-6 rounded-xl shadow-lg border-b-4 border-indigo-500 min-w-[200px]">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Service Tier</p>
-              <p className="text-xl font-bold text-white tracking-tight">{center.subscription}</p>
+            <div 
+              className="py-3 px-4 rounded-lg border-b-2 w-full md:w-auto shadow-md"
+              style={{ backgroundColor: theme.colors.textMain, borderColor: theme.colors.primary }}
+            >
+              <p 
+                className="text-[8px] font-bold uppercase tracking-widest mb-0.5"
+                style={{ color: theme.colors.textDisabled }}
+              >
+                Service Tier
+              </p>
+              <p className="text-sm font-bold text-white tracking-wide">{center.subscription}</p>
             </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           
           {/* STATS COLUMN */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-6">Capacity Utilization</p>
-              <div className="space-y-6">
+          <div className="lg:col-span-4 space-y-4">
+            <div 
+              className="border rounded-lg p-5 shadow-sm"
+              style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+            >
+              <p 
+                className="text-[9px] font-bold uppercase tracking-widest mb-4"
+                style={{ color: theme.colors.textDisabled }}
+              >
+                Capacity Utilization
+              </p>
+              <div className="space-y-4">
                 <div>
-                  <p className="text-5xl font-bold text-slate-900 tracking-tight">{center.currentStudents}</p>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Enrolled Students</p>
+                  <p className="text-3xl font-extrabold tracking-tight" style={{ color: theme.colors.textMain }}>
+                    {center.currentStudents}
+                  </p>
+                  <p 
+                    className="text-[9px] font-bold uppercase tracking-wider mt-0.5"
+                    style={{ color: theme.colors.textMuted }}
+                  >
+                    Enrolled Students
+                  </p>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                <div className="space-y-1.5">
+                  <div 
+                    className="h-1.5 w-full rounded-full overflow-hidden"
+                    style={{ backgroundColor: theme.colors.background }}
+                  >
                     <div 
-                      className="h-full bg-indigo-600 rounded-full" 
-                      style={{ width: `${(center.currentStudents/center.studentCapacity)*100}%` }}
+                      className="h-full rounded-full" 
+                      style={{ 
+                        width: `${(center.currentStudents/center.studentCapacity)*100}%`,
+                        backgroundColor: theme.colors.primary 
+                      }}
                     />
                   </div>
-                  <div className="flex justify-between text-[10px] font-bold uppercase text-slate-400 tracking-tighter">
-                    <span>{Math.round((center.currentStudents/center.studentCapacity)*100)}% Occupied</span>
-                    <span>Max Limit: {center.studentCapacity}</span>
+                  <div 
+                    className="flex justify-between text-[8px] font-bold uppercase tracking-tighter"
+                    style={{ color: theme.colors.textDisabled }}
+                  >
+                    <span style={{ color: theme.colors.primary }}>
+                      {Math.round((center.currentStudents/center.studentCapacity)*100)}% Occupied
+                    </span>
+                    <span>Limit: {center.studentCapacity}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-indigo-600 rounded-xl p-6 text-white flex items-center justify-between shadow-md">
+            <div 
+              className="rounded-lg p-4 text-white flex items-center justify-between border-l-4 shadow-sm"
+              style={{ backgroundColor: theme.colors.textMain, borderLeftColor: theme.colors.primary }}
+            >
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-200 mb-1">Faculty Strength</p>
-                <p className="text-3xl font-bold">{center.totalTeachers} Teachers</p>
+                <p 
+                  className="text-[8px] font-bold uppercase tracking-widest mb-0.5"
+                  style={{ color: theme.colors.textDisabled }}
+                >
+                  Faculty Strength
+                </p>
+                <p className="text-xl font-bold">{center.totalTeachers} Teachers</p>
               </div>
-              <UserGroupIcon className="w-10 h-10 text-indigo-400 opacity-50" />
+              <UserGroupIcon className="w-6 h-6 opacity-20" />
             </div>
           </div>
 
           {/* CORE DATA COLUMN */}
-          <div className="lg:col-span-8 space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm h-full">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12">
-                <DataRow label="Institutional Address" value={center.address} icon={<MapPinIcon className="w-4 h-4"/>} fullWidth />
+          <div className="lg:col-span-8">
+            <div 
+              className="border rounded-lg p-6 shadow-sm h-full flex flex-col justify-between"
+              style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
+                <DataRow label="Address" value={center.address} icon={<MapPinIcon className="w-3 h-3"/>} fullWidth />
                 <DataRow label="Regional Hub" value={`${center.district}, ${center.division}`} />
                 <DataRow label="Founding Year" value={center.established} />
-                <DataRow label="Official Contact" value={center.phone} icon={<PhoneIcon className="w-4 h-4"/>} />
-                <DataRow label="Email Access" value={center.email} icon={<EnvelopeIcon className="w-4 h-4"/>} />
+                <DataRow label="Contact" value={center.phone} icon={<PhoneIcon className="w-3 h-3"/>} />
+                <DataRow label="Email" value={center.email} icon={<EnvelopeIcon className="w-3 h-3"/>} />
               </div>
               
               {/* SYSTEM FOOTER */}
-              <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center border border-slate-100">
-                    <ShieldCheckIcon className="w-5 h-5 text-indigo-600" />
+              <div 
+                className="mt-8 pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4"
+                style={{ borderColor: theme.colors.border }}
+              >
+                <div className="flex items-center gap-2.5">
+                  <div 
+                    className="w-8 h-8 rounded flex items-center justify-center border"
+                    style={{ backgroundColor: theme.colors.background, borderColor: theme.colors.border }}
+                  >
+                    <ShieldCheckIcon className="w-4 h-4" style={{ color: theme.colors.primary }} />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Principal Admin</p>
-                    <p className="text-base font-bold text-slate-800">{center.adminName}</p>
+                    <p 
+                      className="text-[8px] font-bold uppercase tracking-widest"
+                      style={{ color: theme.colors.textDisabled }}
+                    >
+                      Principal Admin
+                    </p>
+                    <p className="text-xs font-bold" style={{ color: theme.colors.textMain }}>{center.adminName}</p>
                   </div>
                 </div>
-                <div className="flex gap-8">
-                  <AuditDate label="Onboarding Date" date={center.createdAt} />
-                  <AuditDate label="Last Sync" date={center.updatedAt} />
+                <div className="flex gap-6">
+                  <AuditDate label="Created" date={center.createdAt} />
+                  <AuditDate label="Sync" date={center.updatedAt} />
                 </div>
               </div>
             </div>
@@ -177,14 +276,17 @@ const AcademyInfo = () => {
   );
 };
 
-/* REUSABLE UI HELPERS */
+/* COMPACT UI HELPERS */
 
 const DataRow = ({ label, value, icon, fullWidth = false }) => (
   <div className={fullWidth ? "md:col-span-2" : ""}>
-    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-      {label}
+    <p 
+      className="text-[9px] font-bold uppercase tracking-widest mb-1 flex items-center gap-1"
+      style={{ color: theme.colors.textDisabled }}
+    >
+      {icon && React.cloneElement(icon, { style: { color: theme.colors.primary } })} {label}
     </p>
-    <p className="text-lg font-bold text-slate-800 leading-tight">
+    <p className="text-sm font-semibold leading-snug" style={{ color: theme.colors.textMain }}>
       {value}
     </p>
   </div>
@@ -192,9 +294,17 @@ const DataRow = ({ label, value, icon, fullWidth = false }) => (
 
 const AuditDate = ({ label, date }) => (
   <div className="text-right md:text-left">
-    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
-    <div className="flex items-center gap-1.5 text-slate-700 font-bold text-xs">
-      <CalendarDaysIcon className="w-3.5 h-3.5 text-slate-400" /> {date}
+    <p 
+      className="text-[8px] font-bold uppercase tracking-widest mb-0.5"
+      style={{ color: theme.colors.textDisabled }}
+    >
+      {label}
+    </p>
+    <div 
+      className="flex items-center gap-1 font-bold text-[10px]"
+      style={{ color: theme.colors.textMuted }}
+    >
+      <CalendarDaysIcon className="w-3 h-3" style={{ color: theme.colors.textDisabled }} /> {date}
     </div>
   </div>
 );

@@ -9,6 +9,7 @@ import {
   BanknotesIcon,
   InformationCircleIcon 
 } from "@heroicons/react/24/solid";
+import theme from "@/theme";
 
 const SetupGuide = () => {
   const { user } = useUser();
@@ -59,36 +60,67 @@ const SetupGuide = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-6 font-sans">
-      <div className="max-w-6xl mx-auto space-y-10">
+    <div 
+      className="min-h-screen py-12 px-6 font-sans"
+      style={{ backgroundColor: theme.colors.background }}
+    >
+      <div className="max-w-6xl mx-auto space-y-12">
         
         {/* EXECUTIVE HEADER */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-slate-300 pb-6">
+        <div 
+          className="flex flex-col md:flex-row justify-between items-end gap-6 border-b pb-8"
+          style={{ borderColor: theme.colors.border }}
+        >
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-              Training & Setup Guide
+            <h1 
+              className="text-3xl font-extrabold tracking-tight"
+              style={{ color: theme.colors.textMain }}
+            >
+              Training <span style={{ color: theme.colors.primary }}>&</span> Setup Guide
             </h1>
-            <p className="text-slate-500 font-medium mt-1">
+            <p 
+              className="font-medium mt-1"
+              style={{ color: theme.colors.textMuted }}
+            >
               Select a module below to view step-by-step video instructions.
             </p>
           </div>
-          <div className="flex items-center gap-3 bg-white border border-slate-200 px-4 py-2 rounded-lg shadow-sm">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Account Role:</span>
-            <span className="text-sm font-bold text-indigo-600">{role}</span>
+          <div 
+            className="flex items-center gap-3 border px-4 py-2 rounded-lg"
+            style={{ backgroundColor: theme.colors.divider, borderColor: theme.colors.border }}
+          >
+            <span 
+              className="text-[11px] font-bold uppercase tracking-widest"
+              style={{ color: theme.colors.textDisabled }}
+            >
+              Role
+            </span>
+            <span 
+              className="text-sm font-bold"
+              style={{ color: theme.colors.textMain }}
+            >
+              {role}
+            </span>
           </div>
         </div>
 
         {/* CONTENT SECTION */}
         {visibleCategories.length > 0 ? (
-          <div className="space-y-12">
+          <div className="space-y-14">
             {visibleCategories.map((category, index) => (
               <div key={index} className="space-y-6">
                 {/* Category Label */}
-                <div className="flex items-center gap-3 border-l-4 border-indigo-600 pl-4">
-                  <div className="text-indigo-600">
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="text-white p-2 rounded-lg shadow-sm"
+                    style={{ backgroundColor: theme.colors.primary }}
+                  >
                     {category.icon}
                   </div>
-                  <h2 className="text-xl font-bold text-slate-800 tracking-tight uppercase">
+                  <h2 
+                    className="text-lg font-bold tracking-tight"
+                    style={{ color: theme.colors.textMain }}
+                  >
                     {category.title}
                   </h2>
                 </div>
@@ -97,25 +129,43 @@ const SetupGuide = () => {
                   {category.videos.map((video, idx) => (
                     <div
                       key={idx}
-                      className="group bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+                      className="group border rounded-xl overflow-hidden shadow-sm transition-all duration-300 hover:shadow-md"
+                      style={{ 
+                        backgroundColor: theme.colors.surface, 
+                        borderColor: theme.colors.border 
+                      }}
                     >
-                      {/* Video Container */}
-                      <div className="aspect-video bg-slate-900 relative">
+                      {/* Video Player Area */}
+                      <div 
+                        className="aspect-video relative"
+                        style={{ backgroundColor: theme.colors.divider }}
+                      >
                         <iframe
-                          className="w-full h-full relative z-10"
+                          className="w-full h-full relative z-10 border-none"
                           src={`https://www.youtube.com/embed/${video.youtubeId}`}
                           title={video.title}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />
                       </div>
                       
                       {/* Video Title Card */}
-                      <div className="p-4 flex items-start justify-between gap-3 bg-white">
-                        <p className="text-sm font-bold text-slate-700 leading-snug">
+                      <div className="p-4 flex items-center justify-between gap-3">
+                        <p 
+                          className="text-sm font-semibold"
+                          style={{ color: theme.colors.textMain }}
+                        >
                           {video.title}
                         </p>
-                        <div className="bg-slate-100 p-2 rounded group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                        <div 
+                          className="p-2 rounded-md transition-colors duration-300 group-hover:text-white"
+                          style={{ 
+                            backgroundColor: theme.colors.background, 
+                            color: theme.colors.textDisabled 
+                          }}
+                          // Note: In a real app, use a CSS class or styled-component for the hover primary color
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.colors.primary}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.colors.background}
+                        >
                           <PlayIcon className="w-4 h-4" />
                         </div>
                       </div>
@@ -127,11 +177,25 @@ const SetupGuide = () => {
           </div>
         ) : (
           /* Empty State */
-          <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-4 shadow-sm">
-            <InformationCircleIcon className="w-12 h-12 text-slate-200 mx-auto" />
-            <h3 className="text-xl font-bold text-slate-900 tracking-tight">Tutorials Pending</h3>
-            <p className="text-slate-500 font-medium max-w-sm mx-auto text-sm">
-              We are finalizing specific training materials for the <span className="font-bold text-indigo-600">{role}</span> module. Please check back shortly.
+          <div 
+            className="p-16 rounded-2xl border text-center space-y-4"
+            style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+          >
+            <InformationCircleIcon 
+              className="w-12 h-12 mx-auto" 
+              style={{ color: theme.colors.divider }}
+            />
+            <h3 
+              className="text-xl font-bold"
+              style={{ color: theme.colors.textMain }}
+            >
+              No Content Found
+            </h3>
+            <p 
+              className="max-w-sm mx-auto text-sm"
+              style={{ color: theme.colors.textMuted }}
+            >
+              We are finalizing training materials for the <span className="font-semibold" style={{ color: theme.colors.primary }}>{role}</span> profile.
             </p>
           </div>
         )}

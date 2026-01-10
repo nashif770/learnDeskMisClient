@@ -1,35 +1,83 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { 
   BuildingLibraryIcon, 
   MapPinIcon, 
   UserCircleIcon,
   CheckBadgeIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  ArrowPathIcon,
+  ArrowLeftIcon
 } from "@heroicons/react/24/outline";
+import theme from "@/theme";
 
 const RegisterCenter = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Center Registration Data:", data);
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      // Simulated API Latency
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Center Registration Data:", data);
+      setIsSuccess(true);
+      reset();
+    } catch (error) {
+      console.error("Submission failed", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
+  // SUCCESS STATE VIEW
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6" style={{ backgroundColor: theme.colors.background }}>
+        <div className="max-w-md w-full text-center space-y-6 p-10 rounded-2xl bg-white border shadow-xl" style={{ borderColor: theme.colors.border }}>
+          <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
+            <CheckBadgeIcon className="w-12 h-12 text-emerald-600" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold" style={{ color: theme.colors.textMain }}>Center Registered</h2>
+            <p className="mt-2 text-sm" style={{ color: theme.colors.textMuted }}>
+              The institutional branch has been successfully added to the MIS network. Verification credentials have been sent to the admin email.
+            </p>
+          </div>
+          <button 
+            onClick={() => setIsSuccess(false)}
+            className="w-full py-3 rounded-lg font-bold text-white flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+            style={{ backgroundColor: theme.colors.primary }}
+          >
+            <ArrowLeftIcon className="w-4 h-4" />
+            Register Another
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-6 font-sans">
+    <div 
+      className="min-h-screen py-10 px-6 font-sans"
+      style={{ backgroundColor: theme.colors.background }}
+    >
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* EXECUTIVE HEADER */}
-        <div className="border-b border-slate-300 pb-6">
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+        <div className="border-b pb-6" style={{ borderColor: theme.colors.border }}>
+          <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: theme.colors.textMain }}>
             Center Registration
           </h1>
-          <p className="text-slate-500 font-medium mt-1">
+          <p className="font-medium mt-1" style={{ color: theme.colors.textMuted }}>
             Official onboarding for new institutional branches into the MIS network.
           </p>
         </div>
@@ -39,7 +87,7 @@ const RegisterCenter = () => {
           {/* SECTION 1: CORE DETAILS */}
           <FormSection 
             title="Institutional Profile" 
-            icon={<BuildingLibraryIcon className="w-6 h-6 text-indigo-600" />}
+            icon={<BuildingLibraryIcon className="w-6 h-6" style={{ color: theme.colors.primary }} />}
           >
             <Input
               label="Legal Center Name"
@@ -79,7 +127,7 @@ const RegisterCenter = () => {
           {/* SECTION 2: CONTACT & GEOGRAPHY */}
           <FormSection 
             title="Location & Connectivity" 
-            icon={<MapPinIcon className="w-6 h-6 text-indigo-600" />}
+            icon={<MapPinIcon className="w-6 h-6" style={{ color: theme.colors.primary }} />}
           >
             <div className="md:col-span-2">
               <Textarea
@@ -125,7 +173,7 @@ const RegisterCenter = () => {
           {/* SECTION 3: ADMINISTRATION */}
           <FormSection 
             title="Administrative Control" 
-            icon={<UserCircleIcon className="w-6 h-6 text-indigo-600" />}
+            icon={<UserCircleIcon className="w-6 h-6" style={{ color: theme.colors.primary }} />}
           >
             <Input
               label="Master Admin Name"
@@ -143,17 +191,26 @@ const RegisterCenter = () => {
           </FormSection>
 
           {/* SUBMIT ACTIONS */}
-          <div className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+          <div 
+            className="border rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm"
+            style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+          >
             <div>
-              <p className="text-slate-900 font-bold">Review Data Accuracy</p>
-              <p className="text-slate-500 text-sm">Ensure all legal information is correct before authorization.</p>
+              <p className="font-bold" style={{ color: theme.colors.textMain }}>Review Data Accuracy</p>
+              <p className="text-sm" style={{ color: theme.colors.textMuted }}>Ensure all legal information is correct before authorization.</p>
             </div>
             <button
               type="submit"
-              className="w-full md:w-auto px-10 py-3 bg-indigo-600 text-white font-bold text-sm uppercase tracking-widest rounded-lg hover:bg-indigo-700 transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-md"
+              disabled={isSubmitting}
+              className="w-full md:w-auto px-10 py-3 text-white font-bold text-sm uppercase tracking-widest rounded-lg transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-md hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ backgroundColor: theme.colors.primary }}
             >
-              <CheckBadgeIcon className="w-5 h-5" />
-              Register Branch
+              {isSubmitting ? (
+                <ArrowPathIcon className="w-5 h-5 animate-spin" />
+              ) : (
+                <CheckBadgeIcon className="w-5 h-5" />
+              )}
+              {isSubmitting ? "Processing..." : "Register Branch"}
             </button>
           </div>
         </form>
@@ -168,11 +225,14 @@ const FormSection = ({ title, icon, children }) => (
   <div className="space-y-4">
     <div className="flex items-center gap-2 px-1">
       {icon}
-      <h2 className="text-lg font-bold text-slate-800 tracking-tight">
+      <h2 className="text-lg font-bold tracking-tight" style={{ color: theme.colors.textMain }}>
         {title}
       </h2>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+    <div 
+      className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 p-8 rounded-xl border shadow-sm"
+      style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
+    >
       {children}
     </div>
   </div>
@@ -180,18 +240,19 @@ const FormSection = ({ title, icon, children }) => (
 
 const Input = React.forwardRef(({ label, error, type = "text", ...props }, ref) => (
   <div className="space-y-1.5">
-    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+    <label className="text-[11px] font-bold uppercase tracking-wider" style={{ color: theme.colors.textDisabled }}>
       {label}
     </label>
     <input
       ref={ref}
       type={type}
       {...props}
-      className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all focus:outline-none ${
-        error
-          ? "border-red-300 bg-red-50 text-red-900"
-          : "border-slate-200 bg-white focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
-      }`}
+      style={{ 
+        borderColor: error ? "#fca5a5" : theme.colors.border,
+        backgroundColor: error ? "#fef2f2" : theme.colors.surface,
+        color: error ? "#7f1d1d" : theme.colors.textMain
+      }}
+      className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all focus:outline-none focus:ring-1 focus:ring-emerald-500`}
     />
     {error && <p className="text-[10px] font-bold text-red-600 uppercase mt-1">{error.message}</p>}
   </div>
@@ -199,18 +260,19 @@ const Input = React.forwardRef(({ label, error, type = "text", ...props }, ref) 
 
 const Textarea = React.forwardRef(({ label, error, ...props }, ref) => (
   <div className="space-y-1.5">
-    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+    <label className="text-[11px] font-bold uppercase tracking-wider" style={{ color: theme.colors.textDisabled }}>
       {label}
     </label>
     <textarea
       ref={ref}
       rows={3}
       {...props}
-      className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all focus:outline-none ${
-        error
-          ? "border-red-300 bg-red-50 text-red-900"
-          : "border-slate-200 bg-white focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
-      }`}
+      style={{ 
+        borderColor: error ? "#fca5a5" : theme.colors.border,
+        backgroundColor: error ? "#fef2f2" : theme.colors.surface,
+        color: error ? "#7f1d1d" : theme.colors.textMain
+      }}
+      className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all focus:outline-none focus:ring-1 focus:ring-emerald-500`}
     />
     {error && <p className="text-[10px] font-bold text-red-600 uppercase mt-1">{error.message}</p>}
   </div>
@@ -218,16 +280,18 @@ const Textarea = React.forwardRef(({ label, error, ...props }, ref) => (
 
 const Select = React.forwardRef(({ label, options, error, ...props }, ref) => (
   <div className="space-y-1.5 relative">
-    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+    <label className="text-[11px] font-bold uppercase tracking-wider" style={{ color: theme.colors.textDisabled }}>
       {label}
     </label>
     <div className="relative">
       <select
         ref={ref}
         {...props}
-        className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all appearance-none focus:outline-none bg-white ${
-          error ? "border-red-300" : "border-slate-200 focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600"
-        }`}
+        style={{ 
+            borderColor: error ? "#fca5a5" : theme.colors.border,
+            color: theme.colors.textMain
+        }}
+        className={`w-full px-4 py-2.5 text-sm font-semibold rounded-lg border transition-all appearance-none focus:outline-none bg-white focus:ring-1 focus:ring-emerald-500`}
       >
         <option value="">Select Option</option>
         {options.map((opt) => <option key={opt} value={opt}>{opt}</option>)}

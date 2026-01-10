@@ -13,7 +13,7 @@ const SideBar = () => {
   const categories = [
     // ------------------ Onboarding & Centers ------------------
     {
-      title: "Setup",
+      title: "Academy Setup",
       active: true,
       roles: ["Super Admin", "Admin", "Guest"],
       links: [
@@ -42,7 +42,15 @@ const SideBar = () => {
           href: "/dashboard/myCenter/pricing",
           roles: ["Guest", "Admin", "Super Admin"],
         },
+      ],
+    },
 
+    // ================== Year Setup ==================
+    {
+      title: "Academic Year",
+      active: true,
+      roles: ["Super Admin", "Admin", "Head Teacher", "Teacher", "Student"],
+      links: [
         {
           label: "Academic Year / Terms",
           href: "/dashboard/academicSetup/academicYear",
@@ -65,7 +73,6 @@ const SideBar = () => {
         },
       ],
     },
-
     // ================== STUDENTS ==================
     {
       title: "Student Information",
