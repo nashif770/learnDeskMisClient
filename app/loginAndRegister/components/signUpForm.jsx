@@ -28,35 +28,37 @@ const SignUpForm = () => {
 
     try {
       // 1️⃣ Create Firebase user
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const result = await createUserWithEmailAndPassword(auth, email, password);
       const firebaseUser = result.user;
 
-      // 2️⃣ Prepare user data for backend
+      // 2️⃣ Prepare guest user data (ERP-ready, meaningful defaults only)
       const userData = {
         uid: firebaseUser.uid,
         email: firebaseUser.email,
-        createdAt: new Date().toISOString(),
-        role: "guest", // default role
-        status: "pending", // default status
+        role: "guest",               // default role
+        status: "pending",           // waiting for verification or role assignment
+        displayName: "",             // editable later
+        profilePicture: "",          // optional default avatar
+        preferences: {
+          newsletter: true,
+          notifications: true,
+        },
+        metadata: {
+          createdAt: new Date().toISOString(),
+          signupSource: "website",
+        },
       };
 
-      console.log("User", userData);
+      console.log("Guest User Data:", userData);
 
       // 3️⃣ Send to backend
-      const res = await fetch(
-        "https://learndeskmisserver.onrender.com/userData",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        }
-      );
+      const res = await fetch("https://learndeskmisserver.onrender.com/userData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
 
       if (!res.ok) {
         const errorText = await res.text();
@@ -110,9 +112,7 @@ const SignUpForm = () => {
             className={tailwindClass.inputClass}
           />
           {errors.password && (
-            <p className="text-red-600 mt-1 text-xs">
-              {errors.password.message}
-            </p>
+            <p className="text-red-600 mt-1 text-xs">{errors.password.message}</p>
           )}
         </div>
 
@@ -122,17 +122,14 @@ const SignUpForm = () => {
           <input
             {...register("confirmPass", {
               required: "Please confirm your password",
-              validate: (value) =>
-                value === password || "Passwords do not match",
+              validate: (value) => value === password || "Passwords do not match",
             })}
             type="password"
             placeholder="••••••••"
             className={tailwindClass.inputClass}
           />
           {errors.confirmPass && (
-            <p className="text-red-600 mt-1 text-xs">
-              {errors.confirmPass.message}
-            </p>
+            <p className="text-red-600 mt-1 text-xs">{errors.confirmPass.message}</p>
           )}
         </div>
 

@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/24/outline";
 import theme from "@/theme";
 
-const AcademyInfo = () => {
+const thisCenter = () => {
   const myInstitutes = [
     { id: "USTI-MYM-01", name: "UCEP Mymensingh TVET" },
     { id: "USTI-DHK-04", name: "UCEP Gazipur Campus" },
@@ -309,4 +309,4 @@ const AuditDate = ({ label, date }) => (
   </div>
 );
 
-export default AcademyInfo;
+export default thisCenter;

@@ -1,0 +1,16 @@
+{
+  "uid": "FIREBASE_UID",
+  "email": "user@example.com",
+  "role": "guest",
+  "status": "pending",
+  "displayName": "",
+  "profilePicture": "",
+  "preferences": {
+    "newsletter": true,
+    "notifications": true
+  },
+  "metadata": {
+    "createdAt": "2026-01-11T08:00:00Z",
+    "signupSource": "website"
+  }
+}

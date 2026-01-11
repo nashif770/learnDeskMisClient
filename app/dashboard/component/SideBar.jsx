@@ -13,33 +13,33 @@ const SideBar = () => {
   const categories = [
     // ------------------ Onboarding & Centers ------------------
     {
-      title: "Academy Setup",
+      title: "Center Information",
       active: true,
       roles: ["Super Admin", "Admin", "Guest"],
       links: [
         {
           label: "Setup Guide",
-          href: "/dashboard//myCenter/setupGuide",
+          href: "/dashboard/centerInformation/setupGuide",
           roles: ["Guest", "Admin", "Super Admin"],
         },
         {
-          label: "Current Center",
-          href: "/dashboard/myCenter/thisAcademy",
+          label: "This Center",
+          href: "/dashboard/centerInformation/thisCenter",
           roles: ["Admin", "Super Admin"],
         },
         {
           label: "Register New Center",
-          href: "/dashboard/myCenter/registerCenter",
+          href: "/dashboard/centerInformation/registerCenter",
           roles: ["Guest", "Admin", "Super Admin"],
         },
         {
-          label: "Subscription & Billing",
-          href: "/dashboard/myCenter/billing",
+          label: "Billing Information",
+          href: "/dashboard/centerInformation/billing",
           roles: ["Admin", "Super Admin"],
         },
         {
-          label: "Pricing & Services",
-          href: "/dashboard/myCenter/pricing",
+          label: "Available Services",
+          href: "/dashboard/centerInformation/pricing",
           roles: ["Guest", "Admin", "Super Admin"],
         },
       ],
@@ -47,62 +47,70 @@ const SideBar = () => {
 
     // ================== Year Setup ==================
     {
-      title: "Academic Year",
+      title: "Academic Configuration",
       active: true,
       roles: ["Super Admin", "Admin", "Head Teacher", "Teacher", "Student"],
       links: [
         {
           label: "Academic Year / Terms",
-          href: "/dashboard/academicSetup/academicYear",
+          href: "/dashboard/academicConfiguration/academicYear",
           roles: ["Admin", "Super Admin"],
         },
         {
           label: "Classes & Sections",
-          href: "/dashboard/academicSetup/classAndSections",
+          href: "/dashboard/academicConfiguration/classAndSections",
           roles: ["Admin", "Super Admin"],
         },
         {
           label: "Subjects",
-          href: "/dashboard/academicSetup/subjects",
+          href: "/dashboard/academicConfiguration/subjects",
           roles: ["Admin", "Super Admin", "Head Teacher"],
         },
         {
           label: "Timetable",
-          href: "/dashboard/academicSetup/timetable",
+          href: "/dashboard/academicConfiguration/timetable",
           roles: ["Admin", "Super Admin", "Head Teacher", "Teacher"],
         },
       ],
     },
     // ================== STUDENTS ==================
     {
-      title: "Student Information",
+      title: "Student Management",
       active: true,
       roles: ["Super Admin", "Admin", "Head Teacher", "Teacher", "Student"],
       links: [
         {
           label: "Admissions",
-          href: "/dashboard/students/addStudents",
+          href: "/dashboard/studentManagement/addStudents",
           roles: ["Admin", "Super Admin", "Head Teacher"],
         },
         {
-          label: "Student List",
-          href: "/dashboard/students/studentProfile",
+          label: "Manage Students",
+          href: "/dashboard/studentManagement/studentProfile",
+          roles: ["Admin", "Super Admin", "Head Teacher", "Teacher"],
+        },
+      ],
+    },
+    // ================== Class Information ==================
+    {
+      title: "Class Management",
+      active: true,
+      roles: ["Super Admin", "Admin", "Head Teacher", "Teacher", "Student"],
+      links: [
+        {
+          label: "Manage Class",
+          href: "/dashboard/classManagement/manageClass",
+          roles: ["Admin", "Super Admin", "Head Teacher"],
+        },
+        {
+          label: "Attendance Information",
+          href: "/dashboard/classManagement/classAttendance",
           roles: ["Admin", "Super Admin", "Head Teacher", "Teacher"],
         },
         {
-          label: "Attendance",
-          href: "/dashboard/students/studentAttendance",
+          label: "Class Performance",
+          href: "/dashboard/classManagement/classPerformance",
           roles: ["Super Admin", "Head Teacher", "Teacher"],
-        },
-        {
-          label: "Marks & Results",
-          href: "/dashboard/students/studentPerformance",
-          roles: ["Super Admin", "Head Teacher", "Teacher", "Student"],
-        },
-        {
-          label: "ID Cards",
-          href: "/dashboard/students/id-cards",
-          roles: ["Admin", "Super Admin"],
         },
       ],
     },
@@ -138,7 +146,7 @@ const SideBar = () => {
 
     // ================== ACCOUNTS ==================
     {
-      title: "Accounts",
+      title: "Fees & Accounts",
       active: false,
       roles: ["Super Admin", "Admin", "Student"],
       links: [
@@ -164,31 +172,6 @@ const SideBar = () => {
         },
       ],
     },
-
-    // ================== INVENTORY ==================
-    {
-      title: "Inventory",
-      active: false,
-      roles: ["Super Admin", "Admin", "Head Teacher"],
-      links: [
-        {
-          label: "Assets",
-          href: "/dashboard/inventory/assets",
-          roles: ["Admin", "Super Admin"],
-        },
-        {
-          label: "Library",
-          href: "/dashboard/inventory/stock",
-          roles: ["Admin", "Super Admin", "Head Teacher", "Teacher", "Student"],
-        },
-        {
-          label: "Requests",
-          href: "/dashboard/inventory/requests",
-          roles: ["Admin", "Super Admin"],
-        },
-      ],
-    },
-
     // ================== REPORTS ==================
     {
       title: "Reports",
